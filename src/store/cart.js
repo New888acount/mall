@@ -1,0 +1,100 @@
+// stores/cart.js
+import { defineStore } from 'pinia'
+import { addCartApi, cartListApi, deleteCartApi, updateCartApi } from '@/api/cart'
+export const useCartStore = defineStore('cart', {
+  state: () => ({
+    list: [], // 购物车列表
+    selectedIds: [], // 已选列表
+    isAllSelected: false, //是否全选
+    cartSelectedTotalPrice: '0.00', // 选中项总金额
+  }),
+  getters: {
+    // 选择总价格
+    totalPriceSelected: (state) => {
+      let price = 0
+      if (!state.selectedIds.length) return price.toFixed(2)
+      state.list.forEach((item) => {
+        price += state.selectedIds.includes(item.id) ? Number(item.price) * item.quantity : 0
+      })
+      return price.toFixed(2)
+    },
+  },
+  actions: {
+    // 获取购物车列表
+    async getList() {
+      const { data: list } = await cartListApi()
+
+      list.forEach((it) => {
+        let str = ''
+        const obj = JSON.parse(it.spData)
+        Object.keys(obj).forEach((key) => {
+          str += key + '：' + obj[key] + ' '
+        })
+        it.spDataValue = str
+      })
+      this.list = list
+    },
+
+    // 添加购物车
+    async add(goodsInfo) {
+      const res = await addCartApi({
+        productId: goodsInfo.productId,
+        skuId: goodsInfo.id,
+        productName: goodsInfo.productName,
+        pic: goodsInfo.pic,
+        quantity: goodsInfo.buyNum,
+        spData: goodsInfo.spData,
+      })
+      if (res > 0) {
+        this.getList()
+      }
+    },
+    // 更新购物车
+    async update(goodsInfo) {
+      const res = await updateCartApi(goodsInfo)
+      if (res > 0) {
+        this.getList()
+      }
+    },
+    // 移除购物车
+    async delete(ids) {
+      if (Array.isArray(ids)) {
+        ids = ids.join(',')
+      }
+      const res = await deleteCartApi(ids)
+      if (res.code === 200) {
+        this.selectAll(false)
+        this.getList()
+      }
+    },
+    selectSingle(goodsId, checked) {
+      if (checked) {
+        if (!this.selectedIds.includes(goodsId)) {
+          this.selectedIds.push(goodsId)
+        }
+      } else {
+        this.selectedIds = this.selectedIds.filter((id) => id !== goodsId)
+      }
+
+      this.isAllSelected = this.selectedIds.length === this.list.length
+    },
+
+    selectAll(flag) {
+      if (flag) {
+        // 全选 → 直接赋值为所有商品 id
+        this.selectedIds = this.list.map((item) => item.id)
+      } else {
+        // 取消全选 → 清空
+        this.selectedIds = []
+      }
+      this.isAllSelected = flag
+    },
+    // 清空购物车
+    emptyList() {
+      this.list = []
+      this.selectedIds = []
+      this.isAllSelected = false
+      this.cartSelectedTotalPrice = '0.00'
+    },
+  },
+})

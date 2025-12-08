@@ -1,0 +1,40 @@
+.van-checkbox {
+    .van-badge__wrapper {
+      border-radius: 50%;
+
+    }
+
+    .van-checkbox__icon--checked .van-icon {
+      border-radius: 50%;
+      border: 1px solid #d1d1d1;
+      background: transparent;
+      color: var(--color-light);
+    }
+    .van-checkbox__label {
+        color: #717378;
+        font-size: 14px;
+    }
+  }
+
+
+  .van-overlay {
+    background: rgba(0, 0, 0, 0.4) !important;
+    transition: opacity 300ms, -webkit-transform 300ms, transform 300ms;
+    transform-origin: 50% 50%;
+  }
+
+  :root {
+    /* 点击态的高亮色（很多组件都会用到） */
+    --van-active-color: var(--color-light);
+  
+    /* Stepper 按钮点击态颜色（部分版本未使用该变量，但留着没坏处） */
+    --van-stepper-button-active-color: var(--color-light);
+  }
+
+  .my-toast {
+    background-color: rgba(0, 0, 0, 0.8) !important; /* 背景色 */
+  color: #fff !important;            /* 字体颜色 */
+  }
+  
+
+
