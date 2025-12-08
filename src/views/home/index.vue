@@ -27,15 +27,12 @@
 /** ***引入相关包start*****/
 import { ref, onMounted, reactive } from 'vue'
 import router from '@/router'
-import useLocalCache from '@/hooks/storage/localStorage'
 import { goodsListApi } from '@/api/goods'
-import { homeVisitApi } from '@/api/home'
 import MyImage from '@/components/MyImage'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const { setBuried } = useLocalCache()
 
 const state = reactive({
   listData: [], // 列表数据
@@ -93,9 +90,6 @@ const onLoad = async () => {
   prolist()
 }
 
-const homeVisit = async () => {
-  await homeVisitApi()
-}
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
@@ -103,12 +97,7 @@ onMounted(() => {
   // 用户成功注册后，上报首页访问数量+1并将字段值由False 修改为 True，后续登录或注册判断该字段值是否为False，若为False上报+1，若为True不上报。
   // 用户成功注册后，上报首页访问数量+1并将字段值由False 修改为 True
   // if (!userInfo.token) {}
-
-  // 设置初始值
-  setBuried(false)
   prolist()
-  // 首页统计接口
-  homeVisit()
 })
 /** ***生命周期end*****/
 </script>
