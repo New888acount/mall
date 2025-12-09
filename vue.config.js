@@ -11,7 +11,6 @@ module.exports = defineConfig({
   lintOnSave: false, // 关闭eslint
   devServer: {
     port: process.env.VUE_APP_PORT,
-    historyApiFallback: true, // 开启前端路由回退
     proxy: {
       '/mall': {
         target: 'https://hellofun789.one/', // 目标代理接口地址
