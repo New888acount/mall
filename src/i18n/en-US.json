@@ -29,7 +29,7 @@
   "goodList.tab1.pop3": "Price descending",
   "goodList.tab2": "New arrivals first",
   "goodList.buy": "Go to purchase",
-  "cart.title": "Cart({count})",
+  "cart.title": "Cart{count}",
   "cartHeader.title1": "Total",
   "cartHeader.title2": "Item",
   "cartHeader.edit": "Edit",

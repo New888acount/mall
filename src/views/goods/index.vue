@@ -30,7 +30,7 @@
       </div>
 
       <!-- 发货信息 -->
-      <div class="shipping-info">
+      <div class="shipping-info" v-if="false">
         <van-steps direction="vertical" :active="active">
           <van-step>
             <!-- 已激活图标 -->

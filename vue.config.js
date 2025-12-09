@@ -5,9 +5,9 @@ const Components = require('unplugin-vue-components/webpack')
 // 去掉注释js
 const TerserPlugin = require('terser-webpack-plugin')
 module.exports = defineConfig({
-  // outputDir: process.env.VUE_APP_PAGE_RHEME, // 打包生成的文件夹名称
-  // productionSourceMap: false, // 正式环境去掉sourcemap
-  // transpileDependencies: true, // true 表示开启 eslint,但不阻塞项目运行
+  outputDir: process.env.VUE_APP_PAGE_RHEME, // 打包生成的文件夹名称
+  productionSourceMap: false, // 正式环境去掉sourcemap
+  transpileDependencies: true, // true 表示开启 eslint,但不阻塞项目运行
   lintOnSave: false, // 关闭eslint
   devServer: {
     port: process.env.VUE_APP_PORT,
