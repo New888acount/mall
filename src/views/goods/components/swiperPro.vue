@@ -48,10 +48,10 @@ onMounted(() => {
 <style scoped lang="less">
 .pro-swiper {
   height: 375px;
-  width: 375px;
+  // width: 375px;
   position: relative;
   .my-swipe {
-    width: 375px;
+    // width: 375px;
     height: 375px;
     .van-swipe-item {
       color: #fff;

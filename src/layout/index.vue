@@ -25,8 +25,11 @@
 import { ref, onMounted, defineAsyncComponent, watch, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 
+import useAppStore from '@/store/app.js'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+// 获取store
+const appStore = useAppStore()
 // 路由信息
 const router = useRouter()
 // 路由信息存放

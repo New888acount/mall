@@ -99,9 +99,6 @@ importers:
       postcss-preset-env:
         specifier: ^9.5.0
         version: 9.6.0(postcss@8.5.6)
-      postcss-pxtorem:
-        specifier: ^6.1.0
-        version: 6.1.0(postcss@8.5.6)
       terser-webpack-plugin:
         specifier: ^5.3.10
         version: 5.3.14(webpack@5.103.0)
@@ -3755,11 +3752,6 @@ packages:
     engines: {node: ^14 || ^16 || >=18}
     peerDependencies:
       postcss: ^8.4
-
-  postcss-pxtorem@6.1.0:
-    resolution: {integrity: sha512-ROODSNci9ADal3zUcPHOF/K83TiCgNSPXQFSbwyPHNV8ioHIE4SaC+FPOufd8jsr5jV2uIz29v1Uqy1c4ov42g==}
-    peerDependencies:
-      postcss: ^8.0.0
 
   postcss-reduce-initial@5.1.2:
     resolution: {integrity: sha512-dE/y2XRaqAi6OvjzD22pjTUQ8eOfc6m/natGHgKFBK9DxFmIm69YmaRVQrGgFlEfc1HePIurY0TmDeROK05rIg==}
@@ -8748,10 +8740,6 @@ snapshots:
     dependencies:
       postcss: 8.5.6
       postcss-selector-parser: 6.1.2
-
-  postcss-pxtorem@6.1.0(postcss@8.5.6):
-    dependencies:
-      postcss: 8.5.6
 
   postcss-reduce-initial@5.1.2(postcss@8.5.6):
     dependencies:

@@ -109,7 +109,8 @@ onMounted(() => {
     display: flex;
     flex-wrap: wrap;
     .item {
-      width: 48%;
+      width: calc(50% - 4px);
+      flex-wrap: wrap;
       margin-right: 8px;
       margin-bottom: 8px;
       border-radius: 8px;

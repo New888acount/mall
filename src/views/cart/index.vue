@@ -217,7 +217,7 @@ onMounted(() => {
     position: sticky;
     top: 45px;
     width: 100%;
-    max-width: 375px; /* 跟 app 一样宽 */
+    // max-width: 375px; /* 跟 app 一样宽 */
     z-index: 99;
 
     display: flex;
@@ -312,7 +312,7 @@ onMounted(() => {
     transform: translateX(-50%); /* 保证居中 */
     bottom: 50px;
     width: 100%;
-    max-width: 375px; /* 跟 app 一样宽 */
+    // max-width: 375px; /* 跟 app 一样宽 */
     background: #fff;
     box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
 

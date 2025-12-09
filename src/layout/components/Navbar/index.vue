@@ -35,7 +35,7 @@ onMounted(() => {})
   left: 50%;
   transform: translateX(-50%); /* 保证居中 */
   width: 100%;
-  max-width: 375px; /* 跟 app 一样宽 */
+  // max-width: 375px; /* 跟 app 一样宽 */
   transition: background-color 0.3s ease; /* 平滑过渡 */
   z-index: 1000;
   .search {

@@ -13,7 +13,7 @@ module.exports = defineConfig({
     port: process.env.VUE_APP_PORT,
     proxy: {
       '/mall': {
-        target: 'https://hellofun789.one/', // 目标代理接口地址
+        target: 'https://hellofun789.one', // 目标代理接口地址
         changeOrigin: true,
         ws: false,
         secure: false,

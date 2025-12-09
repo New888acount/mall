@@ -42,7 +42,6 @@
     "postcss-import": "^16.0.1",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^9.5.0",
-    "postcss-pxtorem": "^6.1.0",
     "terser-webpack-plugin": "^5.3.10",
     "unplugin-auto-import": "^0.17.5",
     "unplugin-vue-components": "^0.26.0",

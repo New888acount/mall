@@ -17,10 +17,9 @@
     <!-- loading 自定义加载中的提示内容 -->
     <template v-slot:loading>
       <slot name="loading">
-        <div v-if="loadingType === 'game'" class="my-image__loading-game">
+        <div class="my-image__loading-skeleton">
           <i class="iconfont icon-jiazai" :style="{ fontSize: `${iconSize}px` }"></i>
         </div>
-        <div v-else class="my-image__loading-skeleton"></div>
       </slot>
     </template>
     <!-- error 自定义加载失败时的提示内容 -->
@@ -48,12 +47,6 @@ defineProps({
   iconSize: {
     type: String,
     default: '',
-  },
-
-  // 加载类型，
-  loadingType: {
-    type: String,
-    default: 'default', // 默认default加载是一闪一闪，game是游戏加载
   },
   // 是否图片懒加载
   lazyLoad: {
@@ -87,13 +80,10 @@ const handleLoadingComplete = () => {
     position: relative;
     width: 100%;
     height: 100%;
-    background-color: #fe771c;
-    background-image: linear-gradient(
-      90deg,
-      #fe771c,
-      rgb(230, 67, 67)71c,
-      #fe771c
-    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     background-repeat: no-repeat;
     background-size: 200% 100%;
     animation: my-image-skeleton-loading 1s infinite ease-in-out;
@@ -109,14 +99,6 @@ const handleLoadingComplete = () => {
         background-position: -100% 0;
       }
     }
-  }
-  &__loading-game {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    background-color: #fff;
     i {
       font-size: 50px;
       color: #fe771c;

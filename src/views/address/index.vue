@@ -176,7 +176,7 @@ onMounted(() => {
     left: 50%;
     transform: translateX(-50%); /* 保证居中 */
     width: 100%;
-    max-width: 375px; /* 跟 app 一样宽 */
+    // max-width: 375px; /* 跟 app 一样宽 */
     padding: 10px;
 
     .add-button {

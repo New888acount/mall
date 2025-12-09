@@ -108,11 +108,11 @@ onMounted(async () => {
       padding: 30px 10px 20px;
       text-align: center;
       color: var(--color-price);
-      font-size: 1.4375rem;
+      font-size: 23px;
       font-weight: bold;
     }
     h2 {
-      font-size: 0.8125rem;
+      font-size: 13px;
       font-weight: 500;
       color: #333333;
       padding: 15px;

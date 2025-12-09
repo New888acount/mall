@@ -103,7 +103,7 @@ export default {
   left: 50%;
   transform: translateX(-50%); /* 保证居中 */
   width: 100%;
-  max-width: 375px; /* 跟 app 一样宽 */
+  // max-width: 375px; /* 跟 app 一样宽 */
   :deep(.van-tabbar) {
     border-top: 1px solid #f4f4f4;
     background: #fff;
