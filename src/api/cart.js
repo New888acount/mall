@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const addCartApi = (data) =>
   request({
-    url: '/h5/cart/add',
+    url: '/mall/h5/cart/add',
     method: 'post',
     data,
   })
@@ -19,7 +19,7 @@ export const addCartApi = (data) =>
  */
 export const cartListApi = () =>
     request({
-      url: '/h5/cart/list',
+      url: '/mall/h5/cart/list',
       method: 'get',
     })
 
@@ -30,7 +30,7 @@ export const cartListApi = () =>
  */
 export const deleteCartApi = (ids) =>
     request({
-      url: `/h5/cart/remove`,
+      url: `/mall/h5/cart/remove`,
       method: 'DELETE',
       data: ids,
       // headers: {
@@ -46,7 +46,7 @@ export const deleteCartApi = (ids) =>
  */
 export const updateCartApi = (data) =>
     request({
-      url: '/h5/cart/modify',
+      url: '/mall/h5/cart/modify',
       method: 'POST',
       data,
     })

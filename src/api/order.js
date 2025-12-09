@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const orderCalcApi = (data) =>
   request({
-    url: '/h5/order/addOrderCheck',
+    url: '/mall/h5/order/addOrderCheck',
     method: 'POST',
     data,
   })
@@ -19,7 +19,7 @@ export const orderCalcApi = (data) =>
  */
 export const orderCreateApi = (data) =>
   request({
-    url: '/h5/order/add',
+    url: '/mall/h5/order/add',
     method: 'POST',
     data,
   })
@@ -31,7 +31,7 @@ export const orderCreateApi = (data) =>
  */
 export const orderListApi = (params) =>
   request({
-    url: '/h5/order/page',
+    url: '/mall/h5/order/page',
     method: 'get',
     params,
   })
@@ -43,7 +43,7 @@ export const orderListApi = (params) =>
  */
 export const orderCountApi = () =>
   request({
-    url: '/h5/order/countOrder',
+    url: '/mall/h5/order/countOrder',
     method: 'get',
   })
 
@@ -54,7 +54,7 @@ export const orderCountApi = () =>
  */
 export const orderDetailApi = (id) =>
   request({
-    url: `/h5/order/orderDetail?orderId=${id}`,
+    url: `/mall/h5/order/orderDetail?orderId=${id}`,
     method: 'GET',
   })
 
@@ -65,7 +65,7 @@ export const orderDetailApi = (id) =>
  */
 export const orderCancelApi = (data) =>
   request({
-    url: '/h5/order/orderCancel',
+    url: '/mall/h5/order/orderCancel',
     method: 'POST',
     data,
   })
@@ -77,7 +77,7 @@ export const orderCancelApi = (data) =>
  */
 export const orderDeleteApi = (id) =>
   request({
-    url: `/h5/order/order/${id}`,
+    url: `/mall/h5/order/order/${id}`,
     method: 'DELETE',
   })
 
@@ -90,7 +90,7 @@ export const orderDeleteApi = (id) =>
  */
 export const orderConfirmApi = (id) =>
   request({
-    url: `/h5/order/orderComplete?orderId=${id}`,
+    url: `/mall/h5/order/orderComplete?orderId=${id}`,
     method: 'GET',
     // params: {orderId: id},
   })

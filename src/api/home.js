@@ -7,6 +7,6 @@ import request from '@/utils/request'
  */
 export const homeVisitApi = () =>
   request({
-    url: '/api/home/visit',
+    url: '/mall/api/home/visit',
     method: 'get',
   })

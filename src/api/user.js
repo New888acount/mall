@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const loginApi = (data) =>
   request({
-    url: '/api/member/login',
+    url: '/mall/api/member/login',
     method: 'post',
     data,
   })
@@ -19,7 +19,7 @@ export const loginApi = (data) =>
  */
 export const getCodeApi = () =>
   request({
-    url: '/api/member/captcha',
+    url: '/mall/api/member/captcha',
     method: 'get',
   })
 
@@ -30,7 +30,7 @@ export const getCodeApi = () =>
  */
 export const registerApi = (data) =>
   request({
-    url: '/api/member/register',
+    url: '/mall/api/member/register',
     method: 'post',
     data,
   })
@@ -42,7 +42,7 @@ export const registerApi = (data) =>
  */
 export const profileApi = () =>
   request({
-    url: '/h5/member/info',
+    url: '/mall/h5/member/info',
     method: 'GET',
   })
 

@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const getAddressDefaultApi = () =>
   request({
-    url: '/h5/member/address/default',
+    url: '/mall/h5/member/address/default',
     method: 'GET',
   })
 
@@ -18,7 +18,7 @@ export const getAddressDefaultApi = () =>
  */
 export const addressListApi = () =>
   request({
-    url: '/h5/member/address/list',
+    url: '/mall/h5/member/address/list',
     method: 'GET',
   })
 
@@ -29,7 +29,7 @@ export const addressListApi = () =>
  */
 export const addressDetailApi = (id) =>
   request({
-    url: `/h5/member/address/${id}`,
+    url: `/mall/h5/member/address/${id}`,
     method: 'GET',
   })
 
@@ -40,7 +40,7 @@ export const addressDetailApi = (id) =>
  */
 export const areaApi = () =>
   request({
-    url: `/h5/area`,
+    url: `/mall/h5/area`,
     method: 'GET',
   })
 
@@ -51,7 +51,7 @@ export const areaApi = () =>
  */
 export const createAddressApi = (data) =>
   request({
-    url: `/h5/member/address/create`,
+    url: `/mall/h5/member/address/create`,
     method: 'POST',
     data,
   })
@@ -63,7 +63,7 @@ export const createAddressApi = (data) =>
  */
 export const updateAddressApi = (data) =>
   request({
-    url: `/h5/member/address/update`,
+    url: `/mall/h5/member/address/update`,
     method: 'PUT',
     data,
   })
@@ -75,6 +75,6 @@ export const updateAddressApi = (data) =>
  */
 export const deteleAddressApi = (id) =>
   request({
-    url: `/h5/member/address/${id}`,
+    url: `/mall/h5/member/address/${id}`,
     method: 'DELETE',
   })

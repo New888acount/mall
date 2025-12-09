@@ -7,7 +7,7 @@ import request from '@/utils/request'
  */
 export const goodsListApi = (data) =>
   request({
-    url: '/no-auth/product/list',
+    url: '/mall/no-auth/product/list',
     method: 'post',
     data,
   })
@@ -19,7 +19,7 @@ export const goodsListApi = (data) =>
  */
 export const goodsDetailsApi = (id) =>
   request({
-    url: '/no-auth/product/detail/' + id,
+    url: '/mall/no-auth/product/detail/' + id,
     method: 'get',
   })
 

@@ -13,20 +13,8 @@ module.exports = defineConfig({
     port: process.env.VUE_APP_PORT,
     historyApiFallback: true, // 开启前端路由回退
     proxy: {
-      '/api': {
-        target: 'https://hellofun789.one/mall',
-        changeOrigin: true,
-        ws: false,
-        secure: false,
-      },
-      '/h5': {
-        target: 'https://hellofun789.one/mall',
-        changeOrigin: true,
-        secure: false,
-        ws: false,
-      },
-      '/no-auth': {
-        target: 'https://hellofun789.one/mall',
+      '/mall': {
+        target: 'https://hellofun789.one/', // 目标代理接口地址
         changeOrigin: true,
         ws: false,
         secure: false,

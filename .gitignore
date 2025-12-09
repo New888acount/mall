@@ -1,7 +1,10 @@
 .DS_Store
 node_modules
 /dist
-
+/pop-pro
+*.local
+*.zip
+*.tar
 
 # local env files
 .env.local
