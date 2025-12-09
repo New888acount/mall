@@ -194,7 +194,7 @@ const changeStepper = (val) => {
 const buttonhandle = (val) => {
   if (state.selectedSkuPrice.id) {
     if (state.selectedSkuPrice.stock < 1) {
-      customToast(t('goodIndex.stockTip'))
+      customToast(t('goodIndex.selectTip'))
     } else {
       emit('handleFun', state.selectedSkuPrice, val)
     }
@@ -238,7 +238,6 @@ onMounted(() => {
 <style lang="less">
 .my__spec {
   &.my-popup {
-    margin-bottom: 56px;
     border-radius: 10px 10px 0 0;
     background: linear-gradient(336deg, rgba(201, 255, 207, 0) 57.38%, rgba(255, 96, 0, 0.45) 123.57%), #fff;
     font-size: 16px;
@@ -339,10 +338,6 @@ onMounted(() => {
         padding: 8px 16px 8px 16px;
         justify-content: center;
         align-items: center;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
         background: #fff;
         box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
         z-index: 6;

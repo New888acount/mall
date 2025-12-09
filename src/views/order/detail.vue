@@ -45,16 +45,16 @@
         <div class="copy-button" @click="copyOrder(state.orderId)">{{ $t('order.detail.copy') }}</div>
       </div>
       <div class="detail-time">
-        <span>{{ $t('order.detail.time') }}</span>
+        <span>{{ $t('order.detail.ordertime') }}</span>
         {{ state.orderInfo.createTime }}
       </div>
       <!-- v-if="state.orderInfo.paymentTime" -->
       <div class="detail-time" v-if="state.orderInfo.paymentTime">
-        <span>支付时间：</span>
+        <span>{{ $t('order.detail.paytime') }}</span>
         {{ state.orderInfo.paymentTime }}
       </div>
       <div class="detail-time" v-if="state.orderInfo.deliverySn">
-        <span>快递单号：</span>
+        <span>{{ $t('order.detail.deliverySn') }}</span>
         {{ state.orderInfo.deliverySn }}
       </div>
     </div>
@@ -65,7 +65,7 @@
         <p>{{ state.orderInfo.totalAmount }}</p>
       </div>
       <div class="detail-required">
-        {{ [1, 2, 3].includes(state.status) ? '已付款：' : '需付款：' }}
+        {{ [1, 2, 3].includes(state.status) ? $t('order.detail.paid') : $t('order.detail.required') }}
         <span>{{ state.orderInfo.payAmount }}</span>
       </div>
     </div>
@@ -77,22 +77,22 @@
         @click="onConfirm(state.orderInfo)"
         class="continue-paying"
       >
-        确认收货
+        {{ $t('order.detail.button4') }}
       </div>
-      <div @click="canceltip(state.orderId)" v-if="state.orderInfo.status === 0">取消订单</div>
+      <div @click="canceltip(state.orderId)" v-if="state.orderInfo.status === 0">{{ $t('order.detail.button2') }}</div>
       <div
         @click="onPay({ orderSn: state.orderInfo.payId, totalAmount: state.orderInfo.totalAmount })"
         class="continue-paying"
         v-if="state.orderInfo.status === 0"
       >
-        继续支付
+      {{ $t('order.detail.button3') }}
       </div>
       <div
         @click="buyAgain(state.orderInfo)"
         v-if="state.orderInfo.status === 3 && state.orderInfo.aftersaleStatus === 1"
         class="continue-paying"
       >
-        再次购买
+      {{ $t('order.detail.button5') }}
       </div>
       <!-- <div @click="onDelete(state.orderInfo)" v-if="[0, 4, 5].includes(state.orderInfo.status)">删除订单</div> -->
     </div>
@@ -164,7 +164,7 @@ const canceltip = (item) => {
   // item = {id:1}
 
   showConfirmDialog({
-    title: t('order.cancel.title'),
+    title: t('pop.ancel.title'),
     message: t('order.cancel.text'),
     confirmButtonText: t('order.cancel.button2'),
     cancelButtonText: t('order.cancel.button1'),
@@ -187,8 +187,8 @@ const onConfirm = (item) => {
   // item = {id:1}
 
   showConfirmDialog({
-    title: '提示',
-    message: '请确认包裹全部到达后再确认收货',
+    title: t('pop.ancel.title'),
+    message: t('order.confirm.text'),
     confirmButtonText: t('order.cancel.button2'),
     cancelButtonText: t('order.cancel.button1'),
   })
@@ -219,8 +219,8 @@ const buyAgain = (item) => {
 // 删除订单
 const onDelete = (item) => {
   showConfirmDialog({
-    title: '提示',
-    message: '确定要删除订单吗?',
+    title: t('pop.ancel.title'),
+    message: t('order.delete.text'),
     confirmButtonText: t('order.cancel.button2'),
     cancelButtonText: t('order.cancel.button1'),
   })

@@ -7,8 +7,8 @@
       </template>
     </i18n-t> -->
     <div>
-      哦，不，这不应该发生 返回主页
-      <a href="/home">返回主页</a>
+      {{ $t('error.tip') }}
+      <a href="/home">{{ $t('error.back') }}</a>
     </div>
   </div>
 </template>

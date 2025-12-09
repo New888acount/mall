@@ -57,7 +57,7 @@ const state = reactive({
 /** ***函数 start*****/
 const deleteAddredd = (item) => {
   showConfirmDialog({
-    title: t('addressDetail.delete.tip'),
+    title: t('pop.ancel.title'),
     message: t('addressDetail.delete.text'),
     confirmButtonText: t('addressDetail.delete.button2'),
     cancelButtonText: t('addressDetail.delete.button1'),

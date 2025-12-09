@@ -56,7 +56,6 @@ const { getCacheToken } = useLocalCache()
 
 // 用户信息
 const userInfoStore = useUserInfoStore()
-// const showPicker= ref(false)
 const orderNav = [
   {
     text: t('order.tab1'),
@@ -133,7 +132,9 @@ const profileList = [
     fn: () => {
       userInfoStore.removeToken()
     },
-    loginShow: userInfoStore.token,
+    get loginShow() {
+      return !!userInfoStore.token
+    },
   },
 ]
 // 语言选项

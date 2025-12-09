@@ -45,31 +45,31 @@
               </div>
 
               <div class="data-operate">
-                <div @click="detailHandle(item)" v-if="item.aftersaleStatus === 1">查看详情</div>
+                <div @click="detailHandle(item)" v-if="item.aftersaleStatus === 1">{{ $t('order.list.button1') }}</div>
                 <div
                   v-if="item.status === 2 && item.aftersaleStatus === 1"
                   @click="onConfirm(item)"
                   class="continue-paying"
                 >
-                  确认收货
+                  {{ $t('order.list.button4') }}
                 </div>
-                <div @click="canceltip(item)" v-if="item.status === 0">取消订单</div>
+                <div @click="canceltip(item)" v-if="item.status === 0">{{ $t('order.list.button2') }}</div>
                 <div
                   @click="onPay({ orderSn: item.payId, totalAmount: item.totalAmount })"
                   class="continue-paying"
                   v-if="item.status === 0"
                 >
-                  继续支付
+                  {{ $t('order.list.button3') }}
                 </div>
                 <div
                   @click="buyAgain(item)"
                   v-if="item.status === 3 && item.aftersaleStatus === 1"
                   class="continue-paying"
                 >
-                  再次购买
+                  {{ $t('order.list.button5') }}
                 </div>
                 <!-- <div @click="onExpress(order.orderId)" class="continue-paying">查看物流</div> -->
-                <div @click="onDelete(item)" v-if="[0, 4, 5].includes(item.status)">删除订单</div>
+                <div @click="onDelete(item)" v-if="[0, 4, 5].includes(item.status)">{{ $t('order.list.button6') }}</div>
               </div>
             </div>
           </div>
@@ -180,7 +180,7 @@ const canceltip = (item) => {
   selectItem.value = item
 
   showConfirmDialog({
-    title: t('order.cancel.title'),
+    title: t('pop.ancel.title'),
     message: t('order.cancel.text'),
     confirmButtonText: t('order.cancel.button2'),
     cancelButtonText: t('order.cancel.button1'),
@@ -205,8 +205,8 @@ const onConfirm = (item) => {
   selectItem.value = item
 
   showConfirmDialog({
-    title: '提示',
-    message: '请确认包裹全部到达后再确认收货',
+    title: t('pop.ancel.title'),
+    message: t('order.confirm.text'),
     confirmButtonText: t('order.cancel.button2'),
     cancelButtonText: t('order.cancel.button1'),
   })
@@ -235,8 +235,8 @@ const buyAgain = (item) => {
 // 删除订单
 const onDelete = (item) => {
   showConfirmDialog({
-    title: '提示',
-    message: '确定要删除订单吗?',
+    title: t('pop.ancel.title'),
+    message: t('order.delete.text'),
     confirmButtonText: t('order.cancel.button2'),
     cancelButtonText: t('order.cancel.button1'),
   })

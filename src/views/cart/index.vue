@@ -78,13 +78,13 @@
           >
             {{ $t('cart.allSelect') }}
           </van-checkbox>
-          <div class="sum-price">合计 {{ state.totalPriceSelected }}</div>
+          <div class="sum-price">{{ $t('cart.sum') }} {{ state.totalPriceSelected }}</div>
         </div>
         <!-- <div class="cart-sum">
       <div class="sum-freight">{{ $t('cart.freight') }}</div>
     </div> -->
 
-        <div class="sum-submit" @click="onDelete" v-if="state.editMode">删除</div>
+        <div class="sum-submit" @click="onDelete" v-if="state.editMode">{{ $t('cart.delete') }}</div>
         <div class="sum-submit" @click="submitOrder" v-else>
           {{ $t('cart.submit') }}{{ selectedIds?.length ? `(${selectedIds.length})` : '' }}
         </div>
@@ -157,7 +157,7 @@ const submitOrder = () => {
     })
   })
   if (goods_list.length === 0) {
-    customToast('请选择商品')
+    customToast(t('cart.submitTip'))
     return
   }
 

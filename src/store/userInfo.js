@@ -9,8 +9,9 @@ import { registerApi, loginApi, profileApi } from '@/api/user'
 import { orderCountApi } from '@/api/order'
 import i18n from '@/i18n/index'
 import { homeVisitApi } from '@/api/home'
-const { setCacheToken, removeCacheToken, getCacheToken, setIsRegister, getIsRegister, removeBuried } = useLocalCache()
+import resetFun from '@/store/reset.js'
 
+const { setCacheToken, removeCacheToken, getCacheToken, setIsRegister, getIsRegister } = useLocalCache()
 // const { handleRecharge } = handleRechargeComposation()
 const t = i18n.global.t
 // 默认订单、优惠券等其他资产信息
@@ -102,7 +103,7 @@ const useUserInfoStore = defineStore('userInfo', {
       this.userInfo = {}
       removeCacheToken()
       // // 还原整个store
-      // resetFun()
+      resetFun()
     },
 
     // 获取订单、优惠券等其他资产信息

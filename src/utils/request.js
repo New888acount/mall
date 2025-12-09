@@ -77,7 +77,7 @@ service.interceptors.response.use(
       router.push('/home')
       // 对多个token过期弹窗提示做防抖处理
       debounceShowInfo(res)
-      ShowLogin({ type: 'login' }).catch(() => {})
+      ShowLogin().catch(() => {})
       useUserInfoStore().removeToken()
       return Promise.reject(res)
     }

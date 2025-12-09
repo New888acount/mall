@@ -175,8 +175,20 @@ const onSkuChange = (e) => {
   state.selectedSkuPrice = e
   state.currentSkuMap = e
 }
+
+const checkLogin = () => {
+  if (!userInfo.token) {
+    state.showSelectSku = false
+    proxy.$showLogin().catch(() => {})
+    return false
+  }
+  return true
+}
+
 const handleFunEvent = async (data, val) => {
   state.showSelectSku = true
+  // 登录校验，两个操作都需要
+  if (!checkLogin()) return
 
   if (val === 'cart') {
     try {
@@ -192,12 +204,6 @@ const handleFunEvent = async (data, val) => {
       console.log('finally')
     }
   } else if (val === 'buy') {
-    if (!userInfo.token) {
-      state.showSelectSku = false
-
-      proxy.$showLogin({ type: 'login' }).catch(() => {})
-      return false
-    }
     // 进入订单
     router.push({
       path: '/order', // 跳转的路径

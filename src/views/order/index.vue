@@ -19,7 +19,7 @@
           <div class="person-text">
             <div class="tag">
               <van-tag color="var(--color-light)" class="spec-info-tag" v-if="state.addressInfo?.isDefault">
-                {{ state.addressInfo?.isDefault ? '默认' : '' }}
+                {{ state.addressInfo?.isDefault ? $t('order.index.tag') : '' }}
               </van-tag>
             </div>
             <div class="name">{{ state.addressInfo?.name }}</div>
