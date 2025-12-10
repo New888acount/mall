@@ -1,8 +1,12 @@
 <template>
   <div class="profile">
     <div class="profile-info" @click="gotoLogin">
-      <img src="" alt="" />
-      <p>{{ userInfoStore?.userInfo?.nickname || '用户名' }}</p>
+      <MyImage v-if="$imgBaseUrl + userInfoStore.userInfo?.avatar" :src="$imgBaseUrl + userInfoStore.userInfo?.avatar" alt="" fit="initial" class="profile-img" >
+      <template #error>
+        <i class="iconfont icon-morentouxiang"></i>
+      </template>
+      </MyImage>
+      <p>{{ userInfoStore?.userInfo?.nickname || $t('profile.username') }}</p>
     </div>
     <div class="profile-order">
       <div v-for="item in orderNav" :key="item.name" @click="orderTabSwitch(item)">
@@ -181,6 +185,8 @@ const onChange = ({ selectedOptions }) => {
 /** ***生命周期start*****/
 onMounted(() => {
   getCacheToken() && userInfoStore.getCustomInfo()
+
+  console.log(userInfoStore.userInfo)
 })
 /** ***生命周期end*****/
 </script>
@@ -193,11 +199,15 @@ onMounted(() => {
     align-items: center;
     background: url('@/assets/images/profile.png') center top / 100% no-repeat rgb(246, 246, 246);
     padding: 70px 0 10px;
-    img {
+    .profile-img {
       width: 50px;
       height: 50px;
       border-radius: 50px;
       margin: 25px 18px 10px;
+
+      .icon-morentouxiang {
+        font-size: 30px;
+      }
     }
   }
 

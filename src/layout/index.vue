@@ -1,5 +1,5 @@
 <template>
-  <div class="page">
+  <!-- <div class="page"> -->
     <Navbar :style="{ backgroundColor: navBg }" v-if="routeInfo.meta.navShow.navbar"></Navbar>
 
 
@@ -17,7 +17,7 @@
     <!-- 底部导航 -->
     <!-- 移动端底部导航栏 -->
     <TabbarMobileComponent v-if="routeInfo.meta.navShow.navigation" />
-  </div>
+  <!-- </div> -->
 </template>
 
 <script setup>
