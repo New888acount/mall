@@ -1,10 +1,14 @@
 <template>
-  <!-- <div class="page"> -->
+  <!-- 如果是 PC，就用 iframe 包裹 -->
+  <div v-if="appStore.device === 'desktop'" class="iframe-container">
+    <iframe src="/" width="375" frameborder="0"></iframe>
+  </div>
+  
+ <!-- 如果是移动端，直接渲染 Vue 应用 -->
+  <div v-else>
     <Navbar :style="{ backgroundColor: navBg }" v-if="routeInfo.meta.navShow.navbar"></Navbar>
 
-
-    <div class="main-content" :style="{marginBottom: routeInfo.meta.navShow.navigation ? '50px' : '0px'}">
-
+    <div class="main-content" :style="{ marginBottom: routeInfo.meta.navShow.navigation ? '50px' : '0px' }">
       <router-view v-slot="{ Component }" :key="$route.fullPath">
         <transition name="slide" mode="out-in">
           <div class="router-view-container" :key="$route.fullPath">
@@ -17,7 +21,7 @@
     <!-- 底部导航 -->
     <!-- 移动端底部导航栏 -->
     <TabbarMobileComponent v-if="routeInfo.meta.navShow.navigation" />
-  <!-- </div> -->
+  </div>
 </template>
 
 <script setup>
@@ -64,6 +68,7 @@ const handleScroll = () => {
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
+  console.log(appStore.device)
   ele.addEventListener('scroll', handleScroll, { passive: true })
 })
 onUnmounted(() => {
@@ -81,6 +86,20 @@ watch(
 </script>
 
 <style scoped lang="less">
+.iframe-container {
+  display: flex;
+  justify-content: center;
+}
+
+iframe {
+  width: 375px;
+  height: 100vh;
+  // border-radius: 16px; /* 圆角边框 */
+  border: 1px solid #e0e0e0; /* 淡灰色边框 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), /* 底部柔和阴影 */ 0 0 15px rgba(0, 0, 0, 0.05); /* 四周轻微发光 */
+  background-color: #fff;
+}
+
 .main-content {
   width: 100%;
   flex-grow: 1;
