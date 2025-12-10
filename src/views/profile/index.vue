@@ -185,8 +185,6 @@ const onChange = ({ selectedOptions }) => {
 /** ***生命周期start*****/
 onMounted(() => {
   getCacheToken() && userInfoStore.getCustomInfo()
-
-  console.log(userInfoStore.userInfo)
 })
 /** ***生命周期end*****/
 </script>

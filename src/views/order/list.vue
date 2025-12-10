@@ -135,7 +135,7 @@ const state = reactive({
   loading: false,
   pagination: {
     current: 1,
-    pageSize: 2,
+    pageSize: 10,
     total: 0,
   },
   status: 0,
@@ -152,7 +152,7 @@ const onTabChange = (name) => {
     state.list = []
     state.loading = false
     state.pagination.current = 1
-    state.pagination.pageSize = 2
+    state.pagination.pageSize = 10
     state.pagination.total = 0
     getOrderList()
   }

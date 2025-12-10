@@ -4,7 +4,7 @@ import setVueAppConfig from '@/utils/vueAppConfig'
 import App from './App.vue'
 import Vant from 'vant'
 
-// import './permission'
+import './permission'
 /** ****** vant 部分没办法自动导入css 组件CSS start  ********/
 // import 'vant/es/toast/style'
 // import 'vant/es/dialog/style'

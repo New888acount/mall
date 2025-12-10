@@ -12,6 +12,8 @@
               {{ item.price }}
             </div>
           </div>
+
+          <!-- <ProductItem :item="item" :imgBaseUrl="$imgBaseUrl" @click="productHandle" /> -->
         </template>
       </div>
 
@@ -30,6 +32,7 @@ import router from '@/router'
 import { goodsListApi } from '@/api/goods'
 import MyImage from '@/components/MyImage'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
+import ProductItem from '@/components/MyGoodsItem/index.vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
