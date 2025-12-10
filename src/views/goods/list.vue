@@ -4,7 +4,7 @@
       <template #title>
         <div class="search">
           <i class="iconfont icon-sousuo"></i>
-          <van-field v-model="keyword" placeholder="请输入关键字" clearable />
+          <van-field v-model="state.search" placeholder="请输入关键字" clearable @keyup.enter="onSearch"/>
         </div>
       </template>
     </MobileHeader>
@@ -77,6 +77,7 @@
                 </div>
               </div>
             </div>
+            <!-- <ProductItem :item="item" :imgBaseUrl="$imgBaseUrl" :isVertical="switchListFlag" @click="productHandle" /> -->
           </template>
         </div>
 
@@ -100,6 +101,7 @@ import MyImage from '@/components/MyImage'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+// import ProductItem from '@/components/MyGoodsItem/index.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const keyword = ref()
@@ -119,7 +121,7 @@ const state = reactive({
   search: '',
   pagination: {
     current: 1,
-    pageSize: 2,
+    pageSize: 10,
     total: 0,
   },
   // 类型
@@ -128,6 +130,11 @@ const state = reactive({
 
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
+const onSearch = () => {
+  initState()
+  prolist()
+}
+
 // 切换列表排列方式
 const switchList = () => {
   switchListFlag.value = !switchListFlag.value
@@ -162,7 +169,7 @@ const recommendHandle = (val) => {
 
 const initState = () => {
   state.pagination.current = 1
-  state.pagination.pageSize = 2
+  state.pagination.pageSize = 10
   state.listData = []
 }
 // 综合推荐弹窗选择
@@ -354,7 +361,7 @@ onMounted(() => {
     padding: 0 10px;
     .item {
       display: flex;
-      // width: 100%;
+      width: 100%;
       // margin-right: 8px;
       margin-bottom: 8px;
       border-radius: 8px;
