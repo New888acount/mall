@@ -62,7 +62,7 @@
       <MyPullRefreshList v-model:loading="state.loading" :finished="state.finished" @load="onLoad">
         <div :class="[switchListFlag ? 'list-data-vertical' : 'list-data-cube']">
           <template v-for="(item, i) in state.listData" :key="i">
-            <div class="item" @click="productHandle(item)">
+            <!-- <div class="item" @click="productHandle(item)">
               <div class="item-img">
                 <MyImage v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
               </div>
@@ -76,8 +76,9 @@
                   <div v-if="switchListFlag" class="buy">{{ $t('goodList.buy') }}</div>
                 </div>
               </div>
-            </div>
-            <!-- <ProductItem :item="item" :imgBaseUrl="$imgBaseUrl" :isVertical="switchListFlag" @click="productHandle" /> -->
+            </div> -->
+            <GoodsVertical v-if="switchListFlag" :item="item" @click="productHandle" :buyButton="true" />
+            <GoodsCube v-else :item="item" @click="productHandle" />
           </template>
         </div>
 
@@ -102,6 +103,7 @@ import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
 // import ProductItem from '@/components/MyGoodsItem/index.vue'
+// import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const keyword = ref()
