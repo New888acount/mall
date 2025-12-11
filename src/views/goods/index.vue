@@ -125,19 +125,20 @@
 import { goodsDetailsApi } from '@/api/goods'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import logisticsPop from '@/componentsFun/logisticsPop'
-import i18n from '@/i18n/index'
 import router from '@/router'
 import { useCartStore } from '@/store/cart'
 import useUserInfoStore from '@/store/userInfo.js'
 import { customToast } from '@/utils/index'
 import { computed, getCurrentInstance, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import openSpecPopup from './components/selectSpec.vue'
 import SwiperPro from './components/swiperPro.vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const t = i18n.global.t
+const { t } = useI18n()
+
 const route = useRoute()
 const active = ref(1)
 const { proxy } = getCurrentInstance()

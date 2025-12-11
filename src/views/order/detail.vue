@@ -1,74 +1,75 @@
 <template>
-  <div class="order-detail">
+  <div class="order-detail" v-loading="state.isLoading">
     <MobileHeader class="paysuccess-header" :title="$t('order.detail.title')" :backicon="false"></MobileHeader>
 
-    <div class="detail-one">
-      <div class="detail-status" :style="formatOrderColor(state.status)">{{ getOrderStatusName(state.status) }}</div>
+    <main>
+      <div class="detail-one">
+        <div class="detail-status" :style="formatOrderColor(state.status)">{{ getOrderStatusName(state.status) }}</div>
 
-      <div class="detail-address" v-if="state.address">
-        <div>
-          {{ state.address.receiverName }}
-          <span>{{ state.address.receiverPhone }}</span>
+        <div class="detail-address" v-if="state.address">
+          <div>
+            {{ state.address.receiverName }}
+            <span>{{ state.address.receiverPhone }}</span>
+          </div>
+          <div class="address-text">{{ state.address.fullAddress }}</div>
         </div>
-        <div class="address-text">{{ state.address.fullAddress }}</div>
       </div>
-    </div>
 
-    <div class="detail-two">
-      <div class="order-item" v-for="item in state.orderInfo.orderItemList" :key="item.id">
-        <div class="left">
-          <MyImage class="box-img" v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
-          <!-- <div class="good-id">
+      <div class="detail-two">
+        <div class="order-item" v-for="item in state.orderInfo.orderItemList" :key="item.id">
+          <div class="left">
+            <MyImage class="box-img" v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
+            <!-- <div class="good-id">
                   <p>商品ID:</p>
                   <p>DG80000348</p>
                 </div> -->
-        </div>
-        <div class="right">
-          <div class="good-title">
-            {{ item.productName }}
           </div>
-          <div class="good-tag">{{ item.spDataValue }}</div>
-          <div class="good-info">
-            <div class="good-price">{{ item.salePrice }}</div>
-            <div class="good-qua">x {{ item.quantity }}</div>
+          <div class="right">
+            <div class="good-title">
+              {{ item.productName }}
+            </div>
+            <div class="good-tag">{{ item.spDataValue }}</div>
+            <div class="good-info">
+              <div class="good-price">{{ item.salePrice }}</div>
+              <div class="good-qua">x {{ item.quantity }}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="detail-timeinfo">
-      <div class="detail-box">
-        <div class="detail-orderid">
-          <span>{{ $t('order.detail.orderid') }}</span>
-          {{ state.orderInfo.orderSn }}
+      <div class="detail-timeinfo">
+        <div class="detail-box">
+          <div class="detail-orderid">
+            <span>{{ $t('order.detail.orderid') }}</span>
+            {{ state.orderInfo.orderSn }}
+          </div>
+          <div class="copy-button" @click="copyOrder(state.orderId)">{{ $t('order.detail.copy') }}</div>
         </div>
-        <div class="copy-button" @click="copyOrder(state.orderId)">{{ $t('order.detail.copy') }}</div>
+        <div class="detail-time">
+          <span>{{ $t('order.detail.ordertime') }}</span>
+          {{ state.orderInfo.createTime }}
+        </div>
+        <div class="detail-time" v-if="state.orderInfo.createTime">
+          <span>{{ $t('order.detail.paytime') }}</span>
+          {{ formatDateTimer(state.orderInfo.createTime, 'YYYY-MM-DD hh:mm:ss') }}
+        </div>
+        <div class="detail-time" v-if="state.orderInfo.deliverySn">
+          <span>{{ $t('order.detail.deliverySn') }}</span>
+          {{ state.orderInfo.deliverySn }}
+        </div>
       </div>
-      <div class="detail-time">
-        <span>{{ $t('order.detail.ordertime') }}</span>
-        {{ state.orderInfo.createTime }}
-      </div>
-      <!-- v-if="state.orderInfo.paymentTime" -->
-      <div class="detail-time" v-if="state.orderInfo.paymentTime">
-        <span>{{ $t('order.detail.paytime') }}</span>
-        {{ state.orderInfo.paymentTime }}
-      </div>
-      <div class="detail-time" v-if="state.orderInfo.deliverySn">
-        <span>{{ $t('order.detail.deliverySn') }}</span>
-        {{ state.orderInfo.deliverySn }}
-      </div>
-    </div>
 
-    <div class="detail-sum">
-      <div class="deatil-total">
-        <span>{{ $t('order.detail.sum') }}</span>
-        <p>{{ state.orderInfo.totalAmount }}</p>
+      <div class="detail-sum">
+        <div class="deatil-total">
+          <span>{{ $t('order.detail.sum') }}</span>
+          <p>{{ state.orderInfo.totalAmount }}</p>
+        </div>
+        <div class="detail-required">
+          {{ [1, 2, 3].includes(state.status) ? $t('order.detail.paid') : $t('order.detail.required') }}
+          <span>{{ state.orderInfo.payAmount }}</span>
+        </div>
       </div>
-      <div class="detail-required">
-        {{ [1, 2, 3].includes(state.status) ? $t('order.detail.paid') : $t('order.detail.required') }}
-        <span>{{ state.orderInfo.payAmount }}</span>
-      </div>
-    </div>
+    </main>
 
     <!-- 根据状态展示这部分的结构  取消状态不展示 -->
     <div class="detail-operate">
@@ -77,22 +78,22 @@
         @click="onConfirm(state.orderInfo)"
         class="continue-paying"
       >
-        {{ $t('order.detail.button4') }}
+        {{ $t('order.list.button4') }}
       </div>
-      <div @click="canceltip(state.orderId)" v-if="state.orderInfo.status === 0">{{ $t('order.detail.button2') }}</div>
+      <div @click="canceltip(state.orderId)" v-if="state.orderInfo.status === 0">{{ $t('order.list.button2') }}</div>
       <div
         @click="onPay({ orderSn: state.orderInfo.payId, totalAmount: state.orderInfo.totalAmount })"
         class="continue-paying"
         v-if="state.orderInfo.status === 0"
       >
-      {{ $t('order.detail.button3') }}
+        {{ $t('order.list.button3') }}
       </div>
       <div
         @click="buyAgain(state.orderInfo)"
         v-if="state.orderInfo.status === 3 && state.orderInfo.aftersaleStatus === 1"
         class="continue-paying"
       >
-      {{ $t('order.detail.button5') }}
+        {{ $t('order.list.button5') }}
       </div>
       <!-- <div @click="onDelete(state.orderInfo)" v-if="[0, 4, 5].includes(state.orderInfo.status)">删除订单</div> -->
     </div>
@@ -101,19 +102,18 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, reactive } from 'vue'
+import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderDetailApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import { useRoute } from 'vue-router'
-import { orderDetailApi } from '@/api/order'
-import { getOrderStatusName, formatOrderColor } from '@/hooks/storage/useGoods'
-import { showConfirmDialog } from 'vant'
+import { formatOrderColor, getOrderStatusName } from '@/hooks/storage/useGoods'
 import router from '@/router'
-import { orderCancelApi, orderConfirmApi, orderDeleteApi } from '@/api/order'
-import i18n from '@/i18n/index'
-import { copyText, customToast } from '@/utils/index'
+import { copyText, customToast, formatDateTimer } from '@/utils/index'
+import { showConfirmDialog } from 'vant'
+import { onMounted, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const t = i18n.global.t
+const { t } = useI18n()
 const minute = ref(0)
 const second = ref(0)
 function time(endTime) {
@@ -139,6 +139,7 @@ const state = reactive({
   orderId: null,
   address: {},
   status: null,
+  isLoading: false,
 })
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
@@ -236,43 +237,42 @@ const onDelete = (item) => {
     })
 }
 const getOrderDetail = async (id) => {
-  const { data: res } = await orderDetailApi(id)
-  // console.log(res)
-  res.orderItemList.forEach((item) => {
-    let str = ''
-    const obj = JSON.parse(item.spData)
-    Object.keys(obj).forEach((key) => {
-      str += key + '：' + obj[key] + ' '
-    })
-    item.spDataValue = str
-  })
-  state.orderInfo = res
-  state.orderId = res.orderId
-  // if (state.timeToPay) {
-  //   state.status = 0
-  //   time(res.timeToPay)
-  // } else {
-  state.status = res.status
-  // }
-  if (res.status === 0 && res.timeToPay) {
-    time(res.timeToPay)
-  }
-  const { receiverName, receiverPhone, receiverProvince, receiverCity, receiverDistrict, receiverDetailAddress } = res
-  state.address = {
-    receiverName,
-    receiverPhone,
-    fullAddress:
-      receiverProvince +
-      ' ' +
-      receiverCity +
-      ' ' +
-      receiverDistrict +
-      ' ' +
-      getHiddenDetailAddress(receiverDetailAddress),
-  }
+  try {
+    state.isLoading = true
+    const { data: res } = await orderDetailApi(id)
 
-  console.log(state.orderInfo)
-  console.log(state.address)
+    res.orderItemList.forEach((item) => {
+      let str = ''
+      const obj = JSON.parse(item.spData)
+      Object.keys(obj).forEach((key) => {
+        str += key + '：' + obj[key] + ' '
+      })
+      item.spDataValue = str
+    })
+    state.orderInfo = res
+    state.orderId = res.orderId
+    state.status = res.status
+    if (res.status === 0 && res.timeToPay) {
+      time(res.timeToPay)
+    }
+    const { receiverName, receiverPhone, receiverProvince, receiverCity, receiverDistrict, receiverDetailAddress } = res
+    state.address = {
+      receiverName,
+      receiverPhone,
+      fullAddress:
+        receiverProvince +
+        ' ' +
+        receiverCity +
+        ' ' +
+        receiverDistrict +
+        ' ' +
+        getHiddenDetailAddress(receiverDetailAddress),
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.isLoading = false
+  }
 }
 
 function getHiddenDetailAddress(data) {
@@ -306,14 +306,15 @@ onMounted(() => {
 .order-detail {
   font-size: 15px;
 
+  main {
+    padding: 8px 10px;
+  }
+
   .detail-one {
-    margin: 10px 8px 10px;
     background: #fff;
     border-radius: 5px;
     padding: 22px 17px 21px 10px;
     .detail-status {
-      // 状态颜色变化 取消是红色的
-      // color: var(--color-light);
       margin: auto 0;
       text-align: center;
       height: 45px;
@@ -331,7 +332,7 @@ onMounted(() => {
   .detail-two {
     background: #fff;
     border-radius: 5px;
-    margin: 10px;
+    margin-top: 10px;
 
     .order-item {
       display: flex;
@@ -399,7 +400,7 @@ onMounted(() => {
   .detail-timeinfo {
     background: #fff;
     border-radius: 5px;
-    margin: 10px;
+    margin-top: 10px;
     padding: 10px;
     .detail-box {
       display: flex;
@@ -409,6 +410,13 @@ onMounted(() => {
       margin-bottom: 12px;
       span {
         color: #999;
+      }
+
+      .detail-orderid {
+        margin-right: 8px;
+        overflow: hidden; /* 超出隐藏 */
+        white-space: nowrap; /* 不换行 */
+        text-overflow: ellipsis; /* 超出部分显示省略号 */
       }
       .copy-button {
         width: 50px;
@@ -434,7 +442,7 @@ onMounted(() => {
   .detail-sum {
     background: #fff;
     border-radius: 5px;
-    margin: 10px;
+    margin-top: 10px;
     padding: 10px;
     font-size: 14px;
     .deatil-total {

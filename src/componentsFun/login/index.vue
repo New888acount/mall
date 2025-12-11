@@ -25,20 +25,20 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, defineExpose, defineProps, onMounted, reactive, shallowRef } from 'vue'
 import MyPopup from '@/components/MyPopup/index.vue'
-import msgTaost from './index.js'
 import { getMaxZIndex } from '@/utils/index'
+import { defineExpose, defineProps, onMounted, reactive, ref, shallowRef } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Login from './components/Login/index.vue'
 import Register from './components/Register/index.vue'
-import i18n from '@/i18n/index'
+import msgTaost from './index.js'
 
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
 const show = ref(false)
 const active = ref('login')
-const t = i18n.global.t
+const { t } = useI18n()
 
 const props = defineProps({
   resolve: Function,

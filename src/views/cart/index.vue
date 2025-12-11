@@ -71,18 +71,18 @@ import MyEmptyData from '@/components/MyEmptyData/index.vue'
 import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import useLocalCache from '@/hooks/storage/localStorage.js'
-import i18n from '@/i18n/index'
 import router from '@/router'
 import { useCartStore } from '@/store/cart'
 import { customToast } from '@/utils'
 import { computed, onMounted, reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 // const userInfo = useUserInfoStore()
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 // 购物车数据
 const cartStore = useCartStore()
-const t = i18n.global.t
+const { t } = useI18n()
 const { getCacheToken } = useLocalCache()
 
 const state = reactive({

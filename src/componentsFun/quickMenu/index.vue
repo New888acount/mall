@@ -32,18 +32,18 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, defineExpose, defineProps, onMounted } from 'vue'
 import MyPopup from '@/components/MyPopup/index.vue'
-import quickmenu from './index.js'
-import { getMaxZIndex } from '@/utils/index'
 import router from '@/router/index.js'
-import i18n from '@/i18n/index'
+import { getMaxZIndex } from '@/utils/index'
+import { defineExpose, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+import quickmenu from './index.js'
 
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
 const show = ref(false)
-const t = i18n.global.t
+const { t } = useI18n()
 
 const quickList = [
   {

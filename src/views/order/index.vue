@@ -1,5 +1,5 @@
 <template>
-  <div class="order">
+  <div class="order" v-loading="state.isLoading">
     <MobileHeader :title="$t('order.index.title')" class="cart-header" :backicon="false"></MobileHeader>
 
     <!-- 收货地址   -->
@@ -110,16 +110,16 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, reactive, watch } from 'vue'
-import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import MyImage from '@/components/MyImage'
-import PaySuccess from './components/payResult.vue'
-import router from '@/router'
 import { getAddressDefaultApi } from '@/api/address'
 import { orderCalcApi, orderCreateApi } from '@/api/order'
-import { useRoute } from 'vue-router'
-import { useCartStore } from '@/store/cart'
+import MyImage from '@/components/MyImage'
+import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import router from '@/router'
 import { useAddressStore } from '@/store/address'
+import { useCartStore } from '@/store/cart'
+import { onMounted, reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import PaySuccess from './components/payResult.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const paysuccessShow = ref(false)
@@ -136,6 +136,7 @@ const state = reactive({
   showCoupon: false,
   couponInfo: [],
   showDiscount: false,
+  isLoading: false,
 })
 
 /** ***ref、reactive、props，等……end*****/
@@ -192,46 +193,57 @@ const onSelectAddress = () => {
 }
 
 const changeConsignee = async (addressInfo) => {
-  let finalAddress = addressInfo
+  state.isLoading = true
+  try {
+    let finalAddress = addressInfo
 
-  // 如果没有传入用户选择的地址，就去拿默认地址
-  if (!finalAddress) {
-    const { data } = await getAddressDefaultApi()
-    finalAddress = data
-  }
+    // 如果没有传入用户选择的地址，就去拿默认地址
+    if (!finalAddress) {
+      const { data } = await getAddressDefaultApi()
+      finalAddress = data
+    }
 
-  if (finalAddress) {
-    state.addressInfo = finalAddress
-    state.orderPayload.address_id = finalAddress.id
-    getOrderInfo()
-    // console.log('当前收货地址:', finalAddress)
+    if (finalAddress) {
+      state.addressInfo = finalAddress
+      state.orderPayload.address_id = finalAddress.id
+      await getOrderInfo()
+      // console.log('当前收货地址:', finalAddress)
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.isLoading = false
   }
 }
 
 // 检查库存&计算订单价格
 const getOrderInfo = async () => {
-  const skuList = state.orderPayload.goods_list.map((it) => {
-    return { skuId: it.skuId, quantity: it.goods_num }
-  })
-  let { code, data } = await orderCalcApi({ skuList })
-  if (!data) {
-    setTimeout(() => {
-      router.back()
-    }, 2000)
-    return
-  }
-  state.totalNumber = 0
-  state.orderInfo = data
-  state.orderInfo.skuList.forEach((item) => {
-    let str = ''
-    const obj = JSON.parse(item.spData)
-    Object.keys(obj).forEach((key) => {
-      str += key + ': ' + obj[key] + '  '
+  try {
+    const skuList = state.orderPayload.goods_list.map((it) => {
+      return { skuId: it.skuId, quantity: it.goods_num }
     })
-    item.spDataValue = str
-    state.totalNumber += item.quantity
-  })
-  state.orderPayload.payAmount = state.orderInfo.orderTotalAmount
+    let { code, data } = await orderCalcApi({ skuList })
+    if (!data) {
+      setTimeout(() => {
+        router.back()
+      }, 2000)
+      return
+    }
+    state.totalNumber = 0
+    state.orderInfo = data
+    state.orderInfo.skuList.forEach((item) => {
+      let str = ''
+      const obj = JSON.parse(item.spData)
+      Object.keys(obj).forEach((key) => {
+        str += key + ': ' + obj[key] + '  '
+      })
+      item.spDataValue = str
+      state.totalNumber += item.quantity
+    })
+    state.orderPayload.payAmount = state.orderInfo.orderTotalAmount
+  } catch (error) {
+    console.log(error)
+  }
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
