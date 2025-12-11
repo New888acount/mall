@@ -1,7 +1,6 @@
-import router from './router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import useAppStore from '@/store/app.js'
+import router from './router'
 // 用户信息
 import useUserInfoStore from '@/store/userInfo'
 // 登录框
@@ -52,17 +51,17 @@ router.beforeEach(async (to, from, next) => {
 // 进入页面
 router.afterEach((to) => {
   NProgress.done()
-// 滚动条滚到顶部
-  // app.scrollTo({ top: 0 })
-// 进入页面加载了吧全局loading撤销掉
+  // 滚动条滚到顶部
+  app.scrollTo({ top: 0 })
+  // 进入页面加载了吧全局loading撤销掉
   // document.querySelector('.skeleton-screen-main').style.display = 'none'
-// 改变HTML页面颜色
+  // 改变HTML页面颜色
   // console.log(useAppStore().device)
-// if (useAppStore().device) {
-//     document.getElementsByTagName('html')[0].className = to.meta.bgColor[useAppStore().device]
-//   } else {
-//     document.getElementsByTagName('html')[0].className = 'html-bg-default'
-//   }
+  // if (useAppStore().device) {
+  //     document.getElementsByTagName('html')[0].className = to.meta.bgColor[useAppStore().device]
+  //   } else {
+  //     document.getElementsByTagName('html')[0].className = 'html-bg-default'
+  //   }
   // if (process.env.VUE_APP_TITLE) {
   //   document.title = process.env.VUE_APP_TITLE
   // } else {

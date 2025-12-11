@@ -28,12 +28,11 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, reactive } from 'vue'
-import router from '@/router'
 import { goodsListApi } from '@/api/goods'
-import MyImage from '@/components/MyImage'
-import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
+import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
+import router from '@/router'
+import { onMounted, reactive } from 'vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -108,49 +107,11 @@ onMounted(() => {
 
 <style scoped lang="less">
 .goods {
-  padding: 45px 10px;
+  padding: 45px 10px 58px;
   .list {
-    display: flex;
-    flex-wrap: wrap;
-    .item {
-      width: calc(50% - 4px);
-      flex-wrap: wrap;
-      margin-right: 8px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      background-color: #ffffff;
-      :deep(.van-image) {
-        width: 100%;
-        height: 174px;
-        border-radius: 8px 8px 0 0;
-      }
-      :deep(.van-skeleton-image) {
-        width: 100%;
-        height: 174px;
-      }
-      .padding {
-        margin: 10px 8px;
-      }
-
-      .text {
-        font-size: 13px;
-        display: -webkit-box; /* 弹性伸缩盒子模型 */
-        -webkit-box-orient: vertical; /* 垂直排列子元素 */
-        -webkit-line-clamp: 2; /* 限制显示 2 行 */
-        overflow: hidden; /* 超出部分隐藏 */
-        text-overflow: ellipsis; /* 超出部分显示省略号 */
-        // line-height: 13px;
-      }
-
-      .price {
-        color: var(--color-price);
-        font-size: 15px;
-      }
-    }
-
-    .item:nth-child(2n) {
-      margin-right: 0px;
-    }
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
   }
 }
 </style>
