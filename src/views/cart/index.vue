@@ -1,6 +1,11 @@
 <template>
   <div class="cart">
-    <MobileHeader :title="$t('cart.title', { count: cartStore.cartCount })" class="cart-header">
+    <MobileHeader
+      :title="
+        $t('cart.title', { count: cartStore.list && cartStore.list.length > 0 ? `(${cartStore.list.length})` : '' })
+      "
+      class="cart-header"
+    >
       <!-- <template #right>
         <div class="cart-header-right" @click="manage">管理</div>
       </template> -->
@@ -10,7 +15,7 @@
       <div class="cart-edit">
         <p>
           {{ $t('cartHeader.title1') }}
-          <span class="qua">{{ cartStore.cartCount }}</span>
+          <span class="qua">{{ cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : 0 }}</span>
           {{ $t('cartHeader.title2') }}
         </p>
         <p :class="[state.editMode ? 'edit' : 'cancle']" @click="edithandle">
@@ -21,11 +26,6 @@
       <div class="cart-box">
         <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
           <div class="left">
-            <!-- <van-checkbox
-          :model-value="selectedIds.includes(item.id)"
-          shape="square"
-          @change="checked => cartStore.selectSingle(item.id, checked)"
-        ></van-checkbox> -->
             <van-checkbox-group v-model="selectedIds">
               <van-checkbox
                 :model-value="selectedIds.includes(item.id)"
@@ -39,32 +39,7 @@
               </van-checkbox>
             </van-checkbox-group>
           </div>
-          <div class="right">
-            <div class="cart-info">
-              <div>
-                <MyImage class="box-img" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
-              </div>
-              <div class="box-info">
-                <div class="title">
-                  {{ item.productName }}
-                </div>
-                <div class="tag">
-                  {{ item.spDataValue }}
-                </div>
-
-                <div class="item-price">{{ item.price }}</div>
-              </div>
-            </div>
-
-            <Stepper
-              v-if="!state.editMode"
-              class="cart-stepper"
-              v-model="item.quantity"
-              :min="1"
-              @change="onNumberChange($event, item)"
-            ></Stepper>
-            <!-- <div class="item-price">CNY 80.00</div> -->
-          </div>
+          <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
         </div>
       </div>
 
@@ -80,9 +55,6 @@
           </van-checkbox>
           <div class="sum-price">{{ $t('cart.sum') }} {{ state.totalPriceSelected }}</div>
         </div>
-        <!-- <div class="cart-sum">
-      <div class="sum-freight">{{ $t('cart.freight') }}</div>
-    </div> -->
 
         <div class="sum-submit" @click="onDelete" v-if="state.editMode">{{ $t('cart.delete') }}</div>
         <div class="sum-submit" @click="submitOrder" v-else>
@@ -101,14 +73,13 @@
 /** ***引入相关包start*****/
 import { onMounted, computed, reactive } from 'vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import MyImage from '@/components/MyImage'
-import Stepper from '@/components/Stepper'
 import { useCartStore } from '@/store/cart'
 import router from '@/router'
 import { customToast } from '@/utils'
 import i18n from '@/i18n/index'
 import useLocalCache from '@/hooks/storage/localStorage.js'
 import MyEmptyData from '@/components/MyEmptyData/index.vue'
+import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
 
 // const userInfo = useUserInfoStore()
 /** ***引入相关包end*****/
@@ -197,6 +168,8 @@ const onNumberChange = (e, cartItem) => {
 onMounted(() => {
   // 获取购物车数据
   getCacheToken() && cartStore.getList()
+
+  console.log(cartStore.list.length)
 })
 /** ***生命周期end*****/
 </script>
@@ -242,66 +215,10 @@ onMounted(() => {
     padding: 0px 15px;
 
     .cart-item {
-      padding: 16px 8px;
       display: flex;
       align-items: center;
       .left {
         margin-right: 8px;
-      }
-      .right {
-        flex: 1;
-        text-align: right;
-        position: relative;
-
-        .cart-info {
-          display: flex;
-          justify-content: flex-start;
-          align-content: flex-start;
-          .box-img {
-            width: 82px;
-            height: 82px;
-          }
-          .box-info {
-            text-align: left;
-            margin-left: 8px;
-            .title {
-              overflow: hidden;
-              color: #1f2c3c;
-              text-overflow: ellipsis;
-              font-size: 14px;
-              font-weight: 500;
-              line-height: 150%;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
-              -webkit-line-clamp: 2;
-              align-self: stretch;
-              margin-bottom: 4px;
-            }
-            .tag {
-              overflow: hidden;
-              color: #9d9ea2;
-              text-overflow: ellipsis;
-              font-size: 12px;
-              line-height: 150%;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;
-              -webkit-line-clamp: 1;
-              align-self: stretch;
-            }
-          }
-        }
-        .cart-stepper {
-          padding: 8px 0;
-          margin-top: -25px;
-          position: absolute;
-          right: 0;
-        }
-        .item-price {
-          color: var(--color-light);
-          font-size: 14px;
-          line-height: 150%; /* 21px */
-          margin-top: 10px;
-        }
       }
     }
   }

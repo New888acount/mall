@@ -4,7 +4,7 @@
       <template #title>
         <div class="search">
           <i class="iconfont icon-sousuo"></i>
-          <van-field v-model="keyword" placeholder="请输入关键字" clearable />
+          <van-field v-model="state.search" placeholder="请输入关键字" clearable @keyup.enter="onSearch"/>
         </div>
       </template>
     </MobileHeader>
@@ -62,7 +62,7 @@
       <MyPullRefreshList v-model:loading="state.loading" :finished="state.finished" @load="onLoad">
         <div :class="[switchListFlag ? 'list-data-vertical' : 'list-data-cube']">
           <template v-for="(item, i) in state.listData" :key="i">
-            <div class="item" @click="productHandle(item)">
+            <!-- <div class="item" @click="productHandle(item)">
               <div class="item-img">
                 <MyImage v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
               </div>
@@ -76,7 +76,9 @@
                   <div v-if="switchListFlag" class="buy">{{ $t('goodList.buy') }}</div>
                 </div>
               </div>
-            </div>
+            </div> -->
+            <GoodsVertical v-if="switchListFlag" :item="item" @click="productHandle" :buyButton="true" />
+            <GoodsCube v-else :item="item" @click="productHandle" />
           </template>
         </div>
 
@@ -100,6 +102,8 @@ import MyImage from '@/components/MyImage'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+// import ProductItem from '@/components/MyGoodsItem/index.vue'
+// import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const keyword = ref()
@@ -119,7 +123,7 @@ const state = reactive({
   search: '',
   pagination: {
     current: 1,
-    pageSize: 2,
+    pageSize: 10,
     total: 0,
   },
   // 类型
@@ -128,6 +132,11 @@ const state = reactive({
 
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
+const onSearch = () => {
+  initState()
+  prolist()
+}
+
 // 切换列表排列方式
 const switchList = () => {
   switchListFlag.value = !switchListFlag.value
@@ -162,7 +171,7 @@ const recommendHandle = (val) => {
 
 const initState = () => {
   state.pagination.current = 1
-  state.pagination.pageSize = 2
+  state.pagination.pageSize = 10
   state.listData = []
 }
 // 综合推荐弹窗选择
@@ -354,7 +363,7 @@ onMounted(() => {
     padding: 0 10px;
     .item {
       display: flex;
-      // width: 100%;
+      width: 100%;
       // margin-right: 8px;
       margin-bottom: 8px;
       border-radius: 8px;

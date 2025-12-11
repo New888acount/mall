@@ -3,7 +3,7 @@
     <MyPullRefreshList v-model:loading="state.loading" :finished="state.finished" @load="onLoad">
       <div class="list">
         <template v-for="(item, i) in state.listData" :key="i">
-          <div class="item" @click="productHandle(item)">
+          <!-- <div class="item" @click="productHandle(item)">
             <MyImage v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
 
             <div class="text padding">{{ item.name }}</div>
@@ -11,7 +11,10 @@
               <span class="unit">￥</span>
               {{ item.price }}
             </div>
-          </div>
+          </div> -->
+
+          <!-- <ProductItem :item="item" @click="productHandle" /> -->
+          <GoodCube :item="item" @click="productHandle" />
         </template>
       </div>
 
@@ -30,6 +33,7 @@ import router from '@/router'
 import { goodsListApi } from '@/api/goods'
 import MyImage from '@/components/MyImage'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
+import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -120,7 +124,10 @@ onMounted(() => {
         height: 174px;
         border-radius: 8px 8px 0 0;
       }
-
+      :deep(.van-skeleton-image) {
+        width: 100%;
+        height: 174px;
+      }
       .padding {
         margin: 10px 8px;
       }

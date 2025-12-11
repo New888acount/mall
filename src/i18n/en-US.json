@@ -3,6 +3,7 @@
   "profile.tab2": "Shipping Address",
   "profile.tab3": "Language Settings",
   "profile.tab4": "Logout",
+  "profile.username": "UserName",
   "order.tab1": "Pending Payment",
   "order.tab2": "Pending Shipment",
   "order.tab3": "Pending Receipt",

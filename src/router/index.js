@@ -1,7 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
-import ShowLogin from '@/componentsFun/login/index'
-
 /**
  * meta参数说明
  * @param title	页面标题
@@ -14,7 +12,6 @@ import ShowLogin from '@/componentsFun/login/index'
  *
  * @returns
  */
-import useUserInfoStore from '@/store/userInfo'
 
 const router = createRouter({
   // 4. 内部提供了 history 模式的实现。为了简单起见，我们在这里使用 hash 模式。
@@ -46,6 +43,10 @@ const router = createRouter({
               navigation: true,
               navbar: true,
             },
+            // bgColor: {
+            //   desktop: 'html-bg-default',
+            //   mobile: 'html-bg-mobile-home',
+            // },
           },
           component: async () => await import('@/views/home/index.vue'),
         },
@@ -181,34 +182,5 @@ const router = createRouter({
     },
   ],
 })
-
-// 全局路由守卫
-router.beforeEach(async (to, from, next) => {
-  const userStore = useUserInfoStore()
-  let isLogin = userStore.token
-
-  if (isLogin) {
-    if (!userStore.userInfo?.id) {
-      try {
-        await userStore.getCustomInfo()
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    next()
-  } else {
-    if (to.meta.requiresAuth) {
-      try {
-        await ShowLogin()
-        next()
-      } catch (error) {
-        next('/home')
-      }
-    } else {
-      next()
-    }
-  }
-})
-
 
 export default router

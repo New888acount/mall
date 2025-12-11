@@ -1,23 +1,19 @@
 <template>
-  <div class="page">
-    <Navbar :style="{ backgroundColor: navBg }" v-if="routeInfo.meta.navShow.navbar"></Navbar>
+  <Navbar :style="{ backgroundColor: navBg }" v-if="routeInfo.meta.navShow.navbar"></Navbar>
 
-
-    <div class="main-content" :style="{marginBottom: routeInfo.meta.navShow.navigation ? '50px' : '0px'}">
-
-      <router-view v-slot="{ Component }" :key="$route.fullPath">
-        <transition name="slide" mode="out-in">
-          <div class="router-view-container" :key="$route.fullPath">
-            <component :is="Component" />
-          </div>
-        </transition>
-      </router-view>
-    </div>
-
-    <!-- 底部导航 -->
-    <!-- 移动端底部导航栏 -->
-    <TabbarMobileComponent v-if="routeInfo.meta.navShow.navigation" />
+  <div class="main-content" :style="{ marginBottom: routeInfo.meta.navShow.navigation ? '50px' : '0px' }">
+    <router-view v-slot="{ Component }" :key="$route.fullPath">
+      <transition name="slide" mode="out-in">
+        <div class="router-view-container" :key="$route.fullPath">
+          <component :is="Component" />
+        </div>
+      </transition>
+    </router-view>
   </div>
+
+  <!-- 底部导航 -->
+  <!-- 移动端底部导航栏 -->
+  <TabbarMobileComponent v-if="routeInfo.meta.navShow.navigation" />
 </template>
 
 <script setup>

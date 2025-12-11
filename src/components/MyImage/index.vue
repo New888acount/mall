@@ -17,9 +17,11 @@
     <!-- loading 自定义加载中的提示内容 -->
     <template v-slot:loading>
       <slot name="loading">
-        <div class="my-image__loading-skeleton">
-          <i class="iconfont icon-jiazai" :style="{ fontSize: `${iconSize}px` }"></i>
-        </div>
+        <!-- <div class="my-image__loading-skeleton">
+        </div> -->
+        <van-skeleton-image />
+
+        <!-- <i class="iconfont icon-jiazai" :style="{ fontSize: `${iconSize}px` }"></i> -->
       </slot>
     </template>
     <!-- error 自定义加载失败时的提示内容 -->
@@ -70,6 +72,10 @@ const handleLoadingComplete = () => {
     padding: 8px;
     box-sizing: border-box;
   }
+  :deep(.van-skeleton-image) {
+    color: #fff;
+    background-color: #999; // 改成普通灰色
+  }
   :deep(.van-image__error) {
     background: none;
   }
@@ -80,10 +86,8 @@ const handleLoadingComplete = () => {
     position: relative;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    background-color: #1b1b1b;
+    background-image: linear-gradient(90deg, #1b1b1b, #000, #1b1b1b);
     background-repeat: no-repeat;
     background-size: 200% 100%;
     animation: my-image-skeleton-loading 1s infinite ease-in-out;
@@ -100,8 +104,8 @@ const handleLoadingComplete = () => {
       }
     }
     i {
-      font-size: 50px;
-      color: #fe771c;
+      font-size: 30px;
+      color: #fff;
     }
   }
 
@@ -112,7 +116,7 @@ const handleLoadingComplete = () => {
     align-items: center;
     width: 100%;
     height: 100%;
-    color: #fe771c;
+    color: #ffffff;
     background-color: #fff;
     span {
       width: 100%;
@@ -125,8 +129,8 @@ const handleLoadingComplete = () => {
       text-align: center;
     }
     i {
-      font-size: 50px;
-      color: #fe771c;
+      font-size: 30px;
+      color: #999;
     }
   }
 }

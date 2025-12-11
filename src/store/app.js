@@ -9,6 +9,7 @@ export const useAppStore = defineStore('app', {
   actions: {
     // 初始化屏幕
     initApp() {
+      this.screenCheck() // 初始化时先检测一次
       // 实时检测
       window.addEventListener('resize', () => {
         this.screenCheck()
