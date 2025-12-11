@@ -104,7 +104,7 @@
 /** ***引入相关包start*****/
 import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderDetailApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import { formatOrderColor, getOrderStatusName } from '@/hooks/storage/useGoods'
+import { formatOrderColor, getOrderStatusName } from '@/hooks/useDict/useGoods'
 import router from '@/router'
 import { copyText, customToast, formatDateTimer } from '@/utils/index'
 import { showConfirmDialog } from 'vant'

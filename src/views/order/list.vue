@@ -86,7 +86,7 @@
 /** ***引入相关包start*****/
 import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderListApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import { getOrderStatusName } from '@/hooks/storage/useGoods'
+import { getOrderStatusName } from '@/hooks/useDict/useGoods'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
 import { customToast } from '@/utils/index'
