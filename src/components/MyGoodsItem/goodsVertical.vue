@@ -40,8 +40,8 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits, ref, watch } from 'vue'
 import MyImage from '@/components/MyImage'
+import { defineEmits, defineProps, ref, watch } from 'vue'
 
 const props = defineProps({
   // 商品详情
@@ -101,8 +101,8 @@ watch(
     border-radius: 8px 0 0 8px;
     margin-right: 10px;
     img {
-        width: 140px;
-        height: 140px;
+      width: 140px;
+      height: 140px;
       flex: 1;
     }
   }

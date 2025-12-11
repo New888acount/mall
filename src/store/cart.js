@@ -1,12 +1,13 @@
 // stores/cart.js
-import { defineStore } from 'pinia'
 import { addCartApi, cartListApi, deleteCartApi, updateCartApi } from '@/api/cart'
+import { defineStore } from 'pinia'
 export const useCartStore = defineStore('cart', {
   state: () => ({
     list: [], // 购物车列表
     selectedIds: [], // 已选列表
     isAllSelected: false, //是否全选
     cartSelectedTotalPrice: '0.00', // 选中项总金额
+    loading: false,
   }),
   getters: {
     // 选择总价格
@@ -22,17 +23,24 @@ export const useCartStore = defineStore('cart', {
   actions: {
     // 获取购物车列表
     async getList() {
-      const { data: list } = await cartListApi()
+      try {
+        this.loading = true
+        const { data: list } = await cartListApi()
 
-      list.forEach((it) => {
-        let str = ''
-        const obj = JSON.parse(it.spData)
-        Object.keys(obj).forEach((key) => {
-          str += key + '：' + obj[key] + ' '
+        list.forEach((it) => {
+          let str = ''
+          const obj = JSON.parse(it.spData)
+          Object.keys(obj).forEach((key) => {
+            str += key + '：' + obj[key] + ' '
+          })
+          it.spDataValue = str
         })
-        it.spDataValue = str
-      })
-      this.list = list
+        this.list = list
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
+      }
     },
 
     // 添加购物车

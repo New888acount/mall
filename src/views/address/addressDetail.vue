@@ -1,5 +1,5 @@
 <template>
-  <div class="address-detail">
+  <div class="address-detail" v-loading="loading">
     <MobileHeader :title="$t('addressDetail.title')" class="cart-header" :backicon="false"></MobileHeader>
 
     <div class="address-form">
@@ -81,13 +81,13 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, defineProps, onMounted, reactive, watch } from 'vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import { defineProps, onMounted, reactive, ref, watch } from 'vue'
 // import { areaList } from '@vant/area-data'
-import { useRoute } from 'vue-router'
 import { addressDetailApi, areaApi, createAddressApi, updateAddressApi } from '@/api/address'
 import useLocalCache from '@/hooks/storage/localStorage.js'
 import router from '@/router'
+import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
@@ -119,6 +119,8 @@ const state = reactive({
   // },
   areaList: {},
 })
+
+const loading = ref(false)
 
 // 登录
 const validatePhone = (value) => {
@@ -281,24 +283,17 @@ onMounted(async () => {
   getAreaData()
 
   if (route.query.id) {
-    const { data } = await addressDetailApi(route.query.id)
+    try {
+      loading.value = true
+      const { data } = await addressDetailApi(route.query.id)
+      Object.assign(state.model, data)
 
-    // state.model = {
-    //   ...state.model,
-    //   ...data,
-    // }
-    Object.assign(state.model, data)
-
-    state.model.is_default = data.isDefault ? true : false
-  }
-
-  if (route.query.data) {
-    const data = JSON.parse(route.query.data)
-    console.log(data)
-    // state.model = {
-    //   ...state.model,
-    //   ...data
-    // }
+      state.model.is_default = data.isDefault ? true : false
+    } catch (error) {
+      console.log(error)
+    } finally {
+      loading.value = false
+    }
   }
 })
 /** ***生命周期end*****/

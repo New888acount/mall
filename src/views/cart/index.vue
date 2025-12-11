@@ -1,17 +1,13 @@
 <template>
-  <div class="cart">
+  <div class="cart" v-loading="cartStore.loading">
     <MobileHeader
       :title="
         $t('cart.title', { count: cartStore.list && cartStore.list.length > 0 ? `(${cartStore.list.length})` : '' })
       "
       class="cart-header"
-    >
-      <!-- <template #right>
-        <div class="cart-header-right" @click="manage">管理</div>
-      </template> -->
-    </MobileHeader>
+    ></MobileHeader>
 
-    <div v-if="state.list && state.list.length > 0">
+    <div v-if="state.list.length > 0">
       <div class="cart-edit">
         <p>
           {{ $t('cartHeader.title1') }}
@@ -63,7 +59,7 @@
       </div>
     </div>
 
-    <div v-else>
+    <div v-if="!cartStore.loading && !state.list.length">
       <MyEmptyData />
     </div>
   </div>
@@ -71,15 +67,15 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { onMounted, computed, reactive } from 'vue'
-import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import { useCartStore } from '@/store/cart'
-import router from '@/router'
-import { customToast } from '@/utils'
-import i18n from '@/i18n/index'
-import useLocalCache from '@/hooks/storage/localStorage.js'
 import MyEmptyData from '@/components/MyEmptyData/index.vue'
 import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
+import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import useLocalCache from '@/hooks/storage/localStorage.js'
+import i18n from '@/i18n/index'
+import router from '@/router'
+import { useCartStore } from '@/store/cart'
+import { customToast } from '@/utils'
+import { computed, onMounted, reactive } from 'vue'
 
 // const userInfo = useUserInfoStore()
 /** ***引入相关包end*****/
@@ -93,6 +89,7 @@ const state = reactive({
   editMode: false,
   list: computed(() => cartStore.list),
   selectedList: [],
+
   //  computed(() => cartStore.isAllSelected),
   totalPriceSelected: computed(() => cartStore.totalPriceSelected),
 })
@@ -176,7 +173,7 @@ onMounted(() => {
 
 <style scoped lang="less">
 .cart {
-  padding-bottom: 72px;
+  padding-bottom: 122px;
   .cart-header {
     display: flex;
 

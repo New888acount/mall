@@ -9,7 +9,7 @@
     :fit="fit"
     :lazy-load="lazyLoad"
     v-bind="$attrs"
-    :src="src || ''"
+    :src="computedSrc"
     @load="handleLoadingComplete"
     @error="handleLoadingComplete"
   >
@@ -36,8 +36,8 @@
   </van-image>
 </template>
 <script setup name="MyImage">
-import { defineProps, ref } from 'vue'
-defineProps({
+import { computed, defineProps, ref } from 'vue'
+const props = defineProps({
   fit: {
     type: String,
     default: 'cover',
@@ -57,6 +57,17 @@ defineProps({
   },
 })
 const loadingShow = ref(true)
+
+const computedSrc = computed(() => {
+  // 1. 如果 props.src 有值，则使用它
+  if (props.src) {
+    return props.src
+  }
+  // 2. 如果 props.src 为空，则返回一个本地的有效占位图
+  //    注意: require('@/assets/images/empty.png') 应该是一个真实存在的、不会加载失败的本地图片路径。
+  //    如果它不存在，依然会导致加载失败。
+  return require('@/assets/images/empty.png')
+})
 // 加载完成
 const handleLoadingComplete = () => {
   loadingShow.value = false
@@ -73,14 +84,8 @@ const handleLoadingComplete = () => {
     box-sizing: border-box;
   }
   :deep(.van-skeleton-image) {
-    color: #fff;
-    background-color: #999; // 改成普通灰色
-  }
-  :deep(.van-image__error) {
-    background: none;
-  }
-  :deep(.van-image__loading) {
-    background: none;
+    color: #fe771c;
+    background-color: #f7f8fa;
   }
   &__loading-skeleton {
     position: relative;
@@ -130,8 +135,22 @@ const handleLoadingComplete = () => {
     }
     i {
       font-size: 30px;
-      color: #999;
+      color: #fe771c;
     }
+  }
+
+  :deep(.van-image__loading),
+  :deep(.van-image__error) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-color: #f7f8fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 </style>
