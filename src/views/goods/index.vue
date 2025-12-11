@@ -18,86 +18,88 @@
     <!-- </Teleport> -->
     <div v-else>
       <SwiperPro :list="state.goodsSwiper"></SwiperPro>
-      <div class="pro-info">
-        <div class="price-info">
-          <div class="price">
-            {{ state.goodsInfo?.product?.price }}
+      <div class="details-wrap">
+        <div class="pro-info">
+          <div class="price-info">
+            <div class="price">
+              {{ state.goodsInfo?.product?.price }}
+            </div>
+          </div>
+          <div class="title">
+            {{ state.goodsInfo?.product?.name }}
           </div>
         </div>
-        <div class="title">
-          {{ state.goodsInfo?.product?.name }}
+
+        <!-- 发货信息 -->
+        <div class="shipping-info" v-if="false">
+          <van-steps direction="vertical" :active="active">
+            <van-step>
+              <!-- 已激活图标 -->
+              <template #active-icon>
+                <div class="custom-icon active">1</div>
+              </template>
+              <!-- 未激活图标 -->
+              <template #inactive-icon>
+                <div class="custom-icon">1</div>
+              </template>
+              <!-- 完成步骤图标 -->
+              <template #finish-icon>
+                <div class="custom-icon active">1</div>
+              </template>
+
+              <div class="step-info">
+                商家发货
+                <i class="iconfont icon-wenhao" @click="logisticsPop"></i>
+                <div class="triangle-right"></div>
+                <div class="text">
+                  Fishbuy认证仓库,运费
+                  <span class="freight">10.00</span>
+                  <span class="unit">CNY</span>
+                </div>
+              </div>
+            </van-step>
+
+            <van-step>
+              <!-- 已激活图标 -->
+              <template #active-icon>
+                <div class="custom-icon active">2</div>
+              </template>
+              <!-- 未激活图标 -->
+              <template #inactive-icon>
+                <div class="custom-icon">2</div>
+              </template>
+              <!-- 完成步骤图标 -->
+              <template #finish-icon>
+                <div class="custom-icon active">2</div>
+              </template>
+              <!-- <template #default> -->
+              <div class="step-info">
+                Fishbuy认证仓库
+                <div class="triangle-right"></div>
+                <div class="text">
+                  你的地址,
+                  <span class="freight-cost">国际运费估算</span>
+                </div>
+              </div>
+              <!-- </template> -->
+            </van-step>
+          </van-steps>
         </div>
-      </div>
 
-      <!-- 发货信息 -->
-      <div class="shipping-info" v-if="false">
-        <van-steps direction="vertical" :active="active">
-          <van-step>
-            <!-- 已激活图标 -->
-            <template #active-icon>
-              <div class="custom-icon active">1</div>
-            </template>
-            <!-- 未激活图标 -->
-            <template #inactive-icon>
-              <div class="custom-icon">1</div>
-            </template>
-            <!-- 完成步骤图标 -->
-            <template #finish-icon>
-              <div class="custom-icon active">1</div>
-            </template>
+        <!-- 选择规格 -->
+        <div class="pro-spec" @click="state.showSelectSku = true">
+          <p>{{ $t('goodSpec.title') }}</p>
+          <p class="select">
+            {{ selectSpecValue }}
+          </p>
+          <i class="iconfont icon-dayuhao"></i>
+        </div>
 
-            <div class="step-info">
-              商家发货
-              <i class="iconfont icon-wenhao" @click="logisticsPop"></i>
-              <div class="triangle-right"></div>
-              <div class="text">
-                Fishbuy认证仓库,运费
-                <span class="freight">10.00</span>
-                <span class="unit">CNY</span>
-              </div>
-            </div>
-          </van-step>
-
-          <van-step>
-            <!-- 已激活图标 -->
-            <template #active-icon>
-              <div class="custom-icon active">2</div>
-            </template>
-            <!-- 未激活图标 -->
-            <template #inactive-icon>
-              <div class="custom-icon">2</div>
-            </template>
-            <!-- 完成步骤图标 -->
-            <template #finish-icon>
-              <div class="custom-icon active">2</div>
-            </template>
-            <!-- <template #default> -->
-            <div class="step-info">
-              Fishbuy认证仓库
-              <div class="triangle-right"></div>
-              <div class="text">
-                你的地址,
-                <span class="freight-cost">国际运费估算</span>
-              </div>
-            </div>
-            <!-- </template> -->
-          </van-step>
-        </van-steps>
-      </div>
-
-      <!-- 选择规格 -->
-      <div class="pro-spec" @click="state.showSelectSku = true">
-        <p>{{ $t('goodSpec.title') }}</p>
-        <p class="select">
-          {{ selectSpecValue }}
-        </p>
-        <i class="iconfont icon-dayuhao"></i>
-      </div>
-
-      <!-- 商品详情 -->
-      <div class="pro-detail">
-        <div class="detail-title">{{ $t('goodHeader.tab2') }}</div>
-        <div class="detail-text" v-html="computedContent"></div>
+        <!-- 商品详情 -->
+        <div class="pro-detail">
+          <div class="detail-title">{{ $t('goodHeader.tab2') }}</div>
+          <div class="detail-text" v-html="computedContent"></div>
+        </div>
       </div>
 
       <!-- 购买。购物车 -->
@@ -120,18 +122,18 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, computed, onUnmounted, getCurrentInstance, reactive } from 'vue'
-import SwiperPro from './components/swiperPro.vue'
-import logisticsPop from '@/componentsFun/logisticsPop'
-import openSpecPopup from './components/selectSpec.vue'
+import { goodsDetailsApi } from '@/api/goods'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import logisticsPop from '@/componentsFun/logisticsPop'
+import i18n from '@/i18n/index'
 import router from '@/router'
 import { useCartStore } from '@/store/cart'
 import useUserInfoStore from '@/store/userInfo.js'
-import { useRoute } from 'vue-router'
-import { goodsDetailsApi } from '@/api/goods'
-import i18n from '@/i18n/index'
 import { customToast } from '@/utils/index'
+import { computed, getCurrentInstance, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import openSpecPopup from './components/selectSpec.vue'
+import SwiperPro from './components/swiperPro.vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -308,7 +310,7 @@ const computedContent = computed(() => {
 
 <style scoped lang="less">
 .product {
-  margin-bottom: 56px;
+  padding-bottom: 56px;
 
   .product-header {
     position: fixed;
@@ -368,208 +370,210 @@ const computedContent = computed(() => {
     z-index: 9999; /* 比弹窗更高 */
   }
 
-  .pro-info {
-    padding: 16px;
-    background: #fff;
-    margin: 7px 10px;
-    border-radius: 5px;
-    .title {
-      overflow: hidden;
-      color: #1f2c3c;
-      text-overflow: ellipsis;
-      font-size: 18px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 150%; /* 27px */
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 2;
-      align-self: stretch;
-    }
-    .price-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin: 8px 0;
-      .price {
-        color: var(--color-light);
-        font-size: 24px;
+  .details-wrap {
+    padding: 7px 10px;
+
+    .pro-info {
+      padding: 16px;
+      background: #fff;
+      border-radius: 5px;
+      .title {
+        overflow: hidden;
+        color: #1f2c3c;
+        text-overflow: ellipsis;
+        font-size: 18px;
         font-style: normal;
-        font-weight: 600;
-        line-height: normal;
+        font-weight: 500;
+        line-height: 150%; /* 27px */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        align-self: stretch;
+      }
+      .price-info {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 8px 0;
+        .price {
+          color: var(--color-light);
+          font-size: 24px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .price-tag {
+          border-radius: 3px;
+          border: 0.5px solid #f28f1b;
+          background: rgba(242, 143, 27, 0.1);
+          padding: 0 8px;
+          margin-left: 5px;
+        }
+      }
+
+      .pro-stats {
+        display: flex;
+        align-items: center;
+        height: 21px;
+        color: #1f2c3c;
+
+        .icon-yuanrunwujiaoxing {
+          color: #f2bc1b;
+        }
+        .rate {
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%; /* 21px */
+          margin-left: 6px;
+        }
+        .line {
+          width: 1px;
+          height: 12px;
+          border: 1px solid #c3d2cc;
+          margin: 0 12px;
+        }
+        .m-sales {
+          font-size: 14px;
+          span {
+            color: #9d9ea2;
+          }
+        }
+      }
+    }
+
+    .shipping-info {
+      background: #fff;
+      padding: 12px 5px;
+      margin-top: 7px;
+      border-radius: 5px;
+      .van-steps {
+        width: 100%;
+      }
+
+      .custom-icon {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%; /* 圆形 */
+        background-color: #ccc; /* 默认灰色底 */
+        color: #fff; /* 字体白色 */
         display: flex;
         align-items: center;
         justify-content: center;
+        font-size: 12px;
       }
-      .price-tag {
-        border-radius: 3px;
-        border: 0.5px solid #f28f1b;
-        background: rgba(242, 143, 27, 0.1);
-        padding: 0 8px;
-        margin-left: 5px;
+
+      .custom-icon.active {
+        background-color: var(--color-light); /* 激活时绿色底 */
+      }
+
+      :deep(.van-step__line) {
+        border-left: 1px dashed var(--color-light); /* 垂直方向虚线 */
+      }
+
+      :deep(.van-step:last-child .van-step__line) {
+        display: none; /* 隐藏最后一个步骤的线条 */
+      }
+
+      // 覆盖完成状态下的线条，让它保持虚线
+      :deep(.van-step--finish .van-step__line) {
+        border-left: 1px dashed var(--color-light) !important; /* 垂直方向虚线 */
+        background-color: #dbedf0; /* 去掉激活的底色 */
+      }
+
+      .step-info {
+        color: #1f2c3c; /* 默认灰色 */
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        .icon-wenhao {
+          color: #c8c9cb;
+          margin: 0 2px;
+        }
+
+        .triangle-right {
+          width: 0;
+          height: 0;
+          border-top: 5px solid transparent;
+          border-bottom: 5px solid transparent;
+          border-left: 7px solid var(--color-light);
+          // padding: 0 5px;
+          margin: 0 5px;
+        }
+        .text {
+          margin-left: 5px;
+
+          .freight-cost {
+            color: var(--color-light);
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 150%; /* 18px */
+            text-decoration-line: underline;
+          }
+          .freight {
+            border-radius: 6px;
+            border: 1px solid #f4f4f4;
+            background: #f9f9f9;
+            padding: 4px 8px;
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 14px;
+            margin: 0 4px;
+          }
+
+          .unit {
+            color: #717378;
+          }
+        }
       }
     }
 
-    .pro-stats {
+    .pro-spec {
+      padding: 5px 16px;
+      margin-top: 7px;
+      background: #fff;
       display: flex;
       align-items: center;
-      height: 21px;
-      color: #1f2c3c;
-
-      .icon-yuanrunwujiaoxing {
-        color: #f2bc1b;
-      }
-      .rate {
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 150%; /* 21px */
-        margin-left: 6px;
-      }
-      .line {
-        width: 1px;
-        height: 12px;
-        border: 1px solid #c3d2cc;
-        margin: 0 12px;
-      }
-      .m-sales {
-        font-size: 14px;
-        span {
-          color: #9d9ea2;
-        }
+      height: 35px;
+      font-size: 14px;
+      color: #999;
+      border-radius: 5px;
+      .select {
+        flex: 1;
+        margin: 0 5px 0 19px;
+        color: #666;
       }
     }
-  }
 
-  .shipping-info {
-    background: #fff;
-    padding: 12px 5px;
-    margin: 7px 10px;
-    border-radius: 5px;
-    .van-steps {
-      width: 100%;
-    }
-
-    .custom-icon {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%; /* 圆形 */
-      background-color: #ccc; /* 默认灰色底 */
-      color: #fff; /* 字体白色 */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    .custom-icon.active {
-      background-color: var(--color-light); /* 激活时绿色底 */
-    }
-
-    :deep(.van-step__line) {
-      border-left: 1px dashed var(--color-light); /* 垂直方向虚线 */
-    }
-
-    :deep(.van-step:last-child .van-step__line) {
-      display: none; /* 隐藏最后一个步骤的线条 */
-    }
-
-    // 覆盖完成状态下的线条，让它保持虚线
-    :deep(.van-step--finish .van-step__line) {
-      border-left: 1px dashed var(--color-light) !important; /* 垂直方向虚线 */
-      background-color: #dbedf0; /* 去掉激活的底色 */
-    }
-
-    .step-info {
-      color: #1f2c3c; /* 默认灰色 */
-      display: flex;
-      align-items: center;
-      font-size: 12px;
-      .icon-wenhao {
-        color: #c8c9cb;
-        margin: 0 2px;
+    .pro-detail {
+      background: #ffffff;
+      padding: 16px 0;
+      margin-top: 7px;
+      border-radius: 5px;
+      .detail-title {
+        font-size: 16px;
+        padding: 0 10px;
+        border-left: 3px solid var(--color-price);
+        margin-bottom: 15px;
+        margin-left: 10px;
       }
 
-      .triangle-right {
-        width: 0;
-        height: 0;
-        border-top: 5px solid transparent;
-        border-bottom: 5px solid transparent;
-        border-left: 7px solid var(--color-light);
-        // padding: 0 5px;
-        margin: 0 5px;
+      .detail-line {
+        width: 64px;
+        margin-left: 16px;
+        border-bottom: 2px solid #17af26;
+        margin-bottom: 16px;
       }
-      .text {
-        margin-left: 5px;
 
-        .freight-cost {
-          color: var(--color-light);
-          font-size: 12px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 150%; /* 18px */
-          text-decoration-line: underline;
-        }
-        .freight {
-          border-radius: 6px;
-          border: 1px solid #f4f4f4;
-          background: #f9f9f9;
-          padding: 4px 8px;
-          font-size: 14px;
-          font-weight: 600;
-          line-height: 14px;
-          margin: 0 4px;
-        }
-
-        .unit {
-          color: #717378;
-        }
-      }
-    }
-  }
-
-  .pro-spec {
-    padding: 5px 16px;
-    margin: 7px 0px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    height: 35px;
-    font-size: 14px;
-    color: #999;
-    margin: 7px 10px;
-    border-radius: 5px;
-    .select {
-      flex: 1;
-      margin: 0 5px 0 19px;
-      color: #666;
-    }
-  }
-
-  .pro-detail {
-    background: #ffffff;
-    padding: 16px 0;
-    margin: 7px 10px;
-    border-radius: 5px;
-    .detail-title {
-      font-size: 16px;
-      padding: 0 10px;
-      border-left: 3px solid var(--color-price);
-      margin-bottom: 15px;
-      margin-left: 10px;
-    }
-
-    .detail-line {
-      width: 64px;
-      margin-left: 16px;
-      border-bottom: 2px solid #17af26;
-      margin-bottom: 16px;
-    }
-
-    :deep(.detail-text) {
-      width: 100%;
-      img {
+      :deep(.detail-text) {
         width: 100%;
+        img {
+          width: 100%;
+        }
       }
     }
   }
