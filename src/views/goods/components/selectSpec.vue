@@ -89,17 +89,17 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, defineExpose, defineProps, onMounted, defineEmits, watch, reactive, computed } from 'vue'
 import MyPopup from '@/components/MyPopup/index.vue'
-import { getMaxZIndex, formatStock } from '@/utils/index'
 import { customToast } from '@/utils'
+import { formatStock, getMaxZIndex } from '@/utils/index'
 import { isEmpty } from 'lodash'
-import i18n from '@/i18n/index'
+import { computed, defineEmits, defineExpose, defineProps, onMounted, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
-const t = i18n.global.t
+const { t } = useI18n()
 
 const show = ref(false)
 

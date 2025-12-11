@@ -1,14 +1,12 @@
 import { defineStore } from 'pinia'
 // 加密
-import { getEncryptPwd } from '@/utils/encipher'
 // 指纹绑定
+import { loginApi, profileApi, registerApi } from '@/api/user'
 import useLocalCache from '@/hooks/storage/localStorage'
-import currency from 'currency.js'
-import { registerApi, loginApi, profileApi } from '@/api/user'
 
+import { homeVisitApi } from '@/api/home'
 import { orderCountApi } from '@/api/order'
 import i18n from '@/i18n/index'
-import { homeVisitApi } from '@/api/home'
 import resetFun from '@/store/reset.js'
 
 const { setCacheToken, removeCacheToken, getCacheToken, setIsRegister, getIsRegister } = useLocalCache()

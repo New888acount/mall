@@ -1,13 +1,14 @@
-import axios from 'axios'
-// import useAppStore from '@/store/modules/app'
 import ShowLogin from '@/componentsFun/login/index.js'
 import useLocalCache from '@/hooks/storage/localStorage'
 import router from '@/router/index.js'
+import useAppStore from '@/store/app'
 import useUserInfoStore from '@/store/userInfo'
+import axios from 'axios'
 import { debounce } from 'lodash-es'
 import { showLoadingToast } from 'vant'
 
 import messageToast from '@/componentsFun/messageToast'
+
 /**
  * 接口请求基类方法 data 说明
  * @param url 请求路径 必填
@@ -48,7 +49,7 @@ service.interceptors.request.use(
     const header = {
       'Content-Type': 'application/json',
       authorization: `Bearer ${useLocalCache().getCacheToken()}`,
-      // 'accept-language': useAppStore().language,
+      'accept-language': useAppStore().language,
       // Country: useLocalCache().getCurrentLanguage()?.split('-')[1],
       // Skin: 'afun', //皮肤区分
     }

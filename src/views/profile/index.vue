@@ -1,10 +1,16 @@
 <template>
   <div class="profile">
     <div class="profile-info" @click="gotoLogin">
-      <MyImage v-if="$imgBaseUrl + userInfoStore.userInfo?.avatar" :src="$imgBaseUrl + userInfoStore.userInfo?.avatar" alt="" fit="initial" class="profile-img" >
-      <template #error>
-        <i class="iconfont icon-morentouxiang"></i>
-      </template>
+      <MyImage
+        v-if="$imgBaseUrl + userInfoStore.userInfo?.avatar"
+        :src="$imgBaseUrl + userInfoStore.userInfo?.avatar"
+        alt=""
+        fit="initial"
+        class="profile-img"
+      >
+        <template #error>
+          <i class="iconfont icon-morentouxiang"></i>
+        </template>
       </MyImage>
       <p>{{ userInfoStore?.userInfo?.nickname || $t('profile.username') }}</p>
     </div>
@@ -45,17 +51,17 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, computed } from 'vue'
-import router from '@/router'
-import gotoLogin from '@/componentsFun/login/index'
 import MyPopup from '@/components/MyPopup/index.vue'
+import gotoLogin from '@/componentsFun/login/index'
 import useLocalCache from '@/hooks/storage/localStorage'
+import router from '@/router'
 import useUserInfoStore from '@/store/userInfo'
-import i18n from '@/i18n/index'
+import { computed, onMounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { setLanguage, getLanguage } = useLocalCache()
-const t = i18n.global.t
+const { t } = useI18n()
 const { getCacheToken } = useLocalCache()
 
 // 用户信息

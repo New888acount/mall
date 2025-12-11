@@ -123,5 +123,12 @@
   "login.page.getCode": "验证码",
   "login.page.submit": "提交",
   "other.finishedText": "没有更多数据了",
-  "other.loadingText": "加载中..."
+  "other.loadingText": "加载中...",
+  "order.status1": "待付款",
+  "order.status2": "待发货",
+  "order.status3": "待收货",
+  "order.status4": "已完成",
+  "order.status5": "已取消",
+  "order.status6": "无效订单",
+  "cart.Inventory": "库存"
 }

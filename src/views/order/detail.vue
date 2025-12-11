@@ -49,10 +49,9 @@
           <span>{{ $t('order.detail.ordertime') }}</span>
           {{ state.orderInfo.createTime }}
         </div>
-        <!-- v-if="state.orderInfo.paymentTime" -->
-        <div class="detail-time" v-if="state.orderInfo.paymentTime">
+        <div class="detail-time" v-if="state.orderInfo.createTime">
           <span>{{ $t('order.detail.paytime') }}</span>
-          {{ state.orderInfo.paymentTime }}
+          {{ formatDateTimer(state.orderInfo.createTime, 'YYYY-MM-DD hh:mm:ss') }}
         </div>
         <div class="detail-time" v-if="state.orderInfo.deliverySn">
           <span>{{ $t('order.detail.deliverySn') }}</span>
@@ -106,15 +105,15 @@
 import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderDetailApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { formatOrderColor, getOrderStatusName } from '@/hooks/storage/useGoods'
-import i18n from '@/i18n/index'
 import router from '@/router'
-import { copyText, customToast } from '@/utils/index'
+import { copyText, customToast, formatDateTimer } from '@/utils/index'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const t = i18n.global.t
+const { t } = useI18n()
 const minute = ref(0)
 const second = ref(0)
 function time(endTime) {
@@ -411,6 +410,13 @@ onMounted(() => {
       margin-bottom: 12px;
       span {
         color: #999;
+      }
+
+      .detail-orderid {
+        margin-right: 8px;
+        overflow: hidden; /* 超出隐藏 */
+        white-space: nowrap; /* 不换行 */
+        text-overflow: ellipsis; /* 超出部分显示省略号 */
       }
       .copy-button {
         width: 50px;

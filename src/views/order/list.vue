@@ -87,7 +87,7 @@
 import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderListApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { getOrderStatusName } from '@/hooks/storage/useGoods'
-import i18n from '@/i18n/index'
+import { useI18n } from 'vue-i18n'
 import router from '@/router'
 import { customToast } from '@/utils/index'
 import { showConfirmDialog } from 'vant'
@@ -96,7 +96,7 @@ import { useRoute } from 'vue-router'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const t = i18n.global.t
+const { t } = useI18n()
 const route = useRoute()
 const selectItem = ref({})
 const orderNav = [
@@ -451,8 +451,8 @@ watch(
         min-height: 50px;
         flex-wrap: wrap;
         div {
-          width: 80px;
-          height: 27.5px;
+          padding: 0 12px;
+          height: 28px;
           border-radius: 15px;
           font-size: 13px;
           border: 1px solid #dcdcdc;

@@ -40,15 +40,15 @@
 import { addressListApi, deteleAddressApi } from '@/api/address'
 import MyEmptyData from '@/components/MyEmptyData'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import i18n from '@/i18n/index'
 import router from '@/router'
 import { useAddressStore } from '@/store/address'
 import { customToast } from '@/utils'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive } from 'vue'
+import { useI18n } from 'vue-i18n'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const t = i18n.global.t
+const { t } = useI18n()
 const addressStore = useAddressStore()
 const state = reactive({
   list: [],
