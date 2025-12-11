@@ -1,17 +1,13 @@
 <template>
-  <div class="cart">
+  <div class="cart" v-loading="cartStore.loading">
     <MobileHeader
       :title="
         $t('cart.title', { count: cartStore.list && cartStore.list.length > 0 ? `(${cartStore.list.length})` : '' })
       "
       class="cart-header"
-    >
-      <!-- <template #right>
-        <div class="cart-header-right" @click="manage">管理</div>
-      </template> -->
-    </MobileHeader>
+    ></MobileHeader>
 
-    <div v-if="state.list && state.list.length > 0">
+    <div v-if="state.list.length > 0">
       <div class="cart-edit">
         <p>
           {{ $t('cartHeader.title1') }}
@@ -63,7 +59,7 @@
       </div>
     </div>
 
-    <div v-else>
+    <div v-if="!cartStore.loading && !state.list.length">
       <MyEmptyData />
     </div>
   </div>
@@ -93,6 +89,7 @@ const state = reactive({
   editMode: false,
   list: computed(() => cartStore.list),
   selectedList: [],
+
   //  computed(() => cartStore.isAllSelected),
   totalPriceSelected: computed(() => cartStore.totalPriceSelected),
 })
