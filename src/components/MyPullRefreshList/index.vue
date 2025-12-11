@@ -4,7 +4,7 @@
     :error="error"
     v-bind="$attrs"
     :loadingText="loadingText || $t('other.loadingText')"
-    :finishedText="finishedFlag ? $t('other.finishedText') : finishedText"
+    :finishedText="finishedFlag ? '' : finishedText"
     class="my-pull-refresh-list"
   >
     <slot></slot>

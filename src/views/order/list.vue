@@ -1,5 +1,5 @@
 <template>
-  <div class="order-list">
+  <div class="order-list" v-loading="state.tabLoading">
     <MobileHeader class="paysuccess-header" :title="$t('order.list.title')" :backicon="false"></MobileHeader>
 
     <van-tabs v-model:active="activeName" @change="onTabChange">
@@ -23,10 +23,6 @@
                       alt=""
                       fit="initial"
                     />
-                    <!-- <div class="good-id">
-                <p>商品ID:</p>
-                <p>DG80000348</p>
-              </div> -->
                   </div>
                   <div class="right">
                     <div class="good-title">
@@ -68,14 +64,13 @@
                 >
                   {{ $t('order.list.button5') }}
                 </div>
-                <!-- <div @click="onExpress(order.orderId)" class="continue-paying">查看物流</div> -->
                 <div @click="onDelete(item)" v-if="[0, 4, 5].includes(item.status)">{{ $t('order.list.button6') }}</div>
               </div>
             </div>
           </div>
 
           <!-- 数据为空 -->
-          <div v-if="state.list.length === 0 && state.finished">
+          <div v-if="!state.list.length && !state.loading && !state.tabLoading">
             <MyEmptyData />
           </div>
         </MyPullRefreshList>
@@ -86,15 +81,15 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, reactive, watch } from 'vue'
+import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderListApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import router from '@/router'
-import i18n from '@/i18n/index'
-import { useRoute } from 'vue-router'
-import { showConfirmDialog } from 'vant'
-import { orderListApi, orderCancelApi, orderConfirmApi, orderDeleteApi } from '@/api/order'
 import { getOrderStatusName } from '@/hooks/storage/useGoods'
+import i18n from '@/i18n/index'
+import router from '@/router'
 import { customToast } from '@/utils/index'
+import { showConfirmDialog } from 'vant'
+import { onMounted, reactive, ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -133,6 +128,7 @@ const activeName = ref(orderNav[0].name)
 const state = reactive({
   list: [],
   loading: false,
+  tabLoading: false,
   pagination: {
     current: 1,
     pageSize: 10,
@@ -143,18 +139,19 @@ const state = reactive({
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 // 切换事件
-const onTabChange = (name) => {
+const onTabChange = async (name) => {
   const tab = orderNav.find((item) => item.name === name)
 
   if (tab) {
     state.status = tab.value
     // 在这里可以根据 value 去请求对应订单列表
     state.list = []
-    state.loading = false
     state.pagination.current = 1
     state.pagination.pageSize = 10
     state.pagination.total = 0
-    getOrderList()
+    state.tabLoading = true
+    await getOrderList()
+    state.tabLoading = false
   }
 }
 
@@ -190,7 +187,7 @@ const canceltip = (item) => {
       const res = await orderCancelApi({ idList })
       if (res.code === 200) {
         customToast(res.msg)
-        getOrderList()
+        await getOrderList()
       }
     })
     .catch(() => {
@@ -211,10 +208,17 @@ const onConfirm = (item) => {
     cancelButtonText: t('order.cancel.button1'),
   })
     .then(async () => {
-      const res = await orderConfirmApi(item.orderId)
-      if (res.code === 200) {
-        customToast(res.msg)
-        getOrderList()
+      try {
+        state.loading = true
+        const res = await orderConfirmApi(item.orderId)
+        if (res.code === 200) {
+          customToast(res.msg)
+          await getOrderList()
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        state.loading = false
       }
     })
     .catch(() => {
@@ -241,10 +245,17 @@ const onDelete = (item) => {
     cancelButtonText: t('order.cancel.button1'),
   })
     .then(async () => {
-      const res = await orderDeleteApi(item.orderId)
-      if (res.code === 200) {
-        customToast(res.msg)
-        getOrderList()
+      try {
+        state.loading = true
+        const res = await orderDeleteApi(item.orderId)
+        if (res.code === 200) {
+          customToast(res.msg)
+          await getOrderList()
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        state.loading = false
       }
     })
     .catch(() => {
@@ -258,12 +269,13 @@ const onLoad = async () => {
   if (state.finished || loadingDiabled) return false
 
   state.pagination.current++
-  getOrderList()
+  await getOrderList()
 }
 
 const getOrderList = async () => {
   loadingDiabled = true
   state.loading = true
+  console.log(state.loading, 'state.loading')
 
   try {
     const data = await orderListApi({
@@ -272,10 +284,6 @@ const getOrderList = async () => {
       status: state.status,
     })
 
-    // const { rows, totalElements, total } = res
-    // rows = rows || []
-    // console.log(data)
-    // state.pagination.current++
     data.rows = data?.rows || []
 
     if (data.rows && data.rows.length > 0) {
@@ -317,9 +325,6 @@ watch(
   (newVal) => {
     if (newVal !== undefined) {
       activeName.value = Number(newVal)
-      // console.log('切换到 tab:', activeName.value)
-      // 如果需要调用切换事件
-      // onTabChange(activeName.value)
     }
   },
   { immediate: true } // 页面加载时立即执行一次

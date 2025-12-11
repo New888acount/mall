@@ -71,15 +71,15 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { onMounted, computed, reactive } from 'vue'
-import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import { useCartStore } from '@/store/cart'
-import router from '@/router'
-import { customToast } from '@/utils'
-import i18n from '@/i18n/index'
-import useLocalCache from '@/hooks/storage/localStorage.js'
 import MyEmptyData from '@/components/MyEmptyData/index.vue'
 import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
+import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import useLocalCache from '@/hooks/storage/localStorage.js'
+import i18n from '@/i18n/index'
+import router from '@/router'
+import { useCartStore } from '@/store/cart'
+import { customToast } from '@/utils'
+import { computed, onMounted, reactive } from 'vue'
 
 // const userInfo = useUserInfoStore()
 /** ***引入相关包end*****/
@@ -176,7 +176,7 @@ onMounted(() => {
 
 <style scoped lang="less">
 .cart {
-  padding-bottom: 72px;
+  padding-bottom: 122px;
   .cart-header {
     display: flex;
 

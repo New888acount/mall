@@ -2,7 +2,7 @@
   <div class="address">
     <MobileHeader :title="$t('addressList.title')" class="cart-header" :backicon="false"></MobileHeader>
 
-    <div class="address-list">
+    <div class="address-list" v-loading="state.loading">
       <div class="item" v-for="item in state.list" :key="item.id" @click="onSelect(item)">
         <div class="top">
           <div class="person-info">
@@ -28,6 +28,7 @@
         </div>
       </div>
     </div>
+    <MyEmptyData v-if="!state.list.length && !state.loading" />
     <div class="add-address" @click="addAddresshandle">
       <div class="add-button">{{ $t('addressList.button') }}</div>
     </div>
@@ -36,21 +37,22 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { onMounted, reactive } from 'vue'
-import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import router from '@/router'
-import { showConfirmDialog } from 'vant'
-import i18n from '@/i18n/index'
 import { addressListApi, deteleAddressApi } from '@/api/address'
-import { customToast } from '@/utils'
+import MyEmptyData from '@/components/MyEmptyData'
+import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import i18n from '@/i18n/index'
+import router from '@/router'
 import { useAddressStore } from '@/store/address'
+import { customToast } from '@/utils'
+import { showConfirmDialog } from 'vant'
+import { onMounted, reactive } from 'vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const t = i18n.global.t
 const addressStore = useAddressStore()
 const state = reactive({
   list: [],
-  loading: true,
+  loading: false,
 })
 
 /** ***ref、reactive、props，等……end*****/
@@ -63,9 +65,16 @@ const deleteAddredd = (item) => {
     cancelButtonText: t('addressDetail.delete.button1'),
   })
     .then(async () => {
-      const res = await deteleAddressApi(item.id)
-      getAddressList()
-      customToast(res.msg)
+      try {
+        state.loading = true
+        const res = await deteleAddressApi(item.id)
+        customToast(res.msg)
+        getAddressList()
+      } catch (error) {
+        console.log(error)
+      } finally {
+        state.loading = false
+      }
     })
     .catch(() => {
       // 用户取消
@@ -89,15 +98,17 @@ const onSelect = (addressInfo) => {
 }
 
 const getAddressList = async () => {
-  const { code, data } = await addressListApi()
-  if (code === 200) {
-    state.list = data || []
+  try {
+    state.loading = true
+    const { code, data } = await addressListApi()
+    if (code === 200) {
+      state.list = data || []
+    }
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.loading = false
   }
-  // else {
-
-  // }
-  // console.log('res:', res)
-  state.loading = false
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
