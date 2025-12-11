@@ -219,7 +219,6 @@ const onSubmit = async (values) => {
     res = await createAddressApi(params)
   }
 
-  // console.log(res.code == 200)
   if (res.code == 200) {
     router.back()
   }
@@ -232,17 +231,30 @@ const transformToAreaList = (data) => {
   }
 
   data.forEach((province) => {
-    areaList.province_list[province.id] = province.name
+    // 判断是否是直辖市
+    if (['11', '12', '31', '50'].includes(String(province.id))) {
+      const provinceCode = String(province.id).padEnd(6, '0') // 11 -> 110000
+      areaList.province_list[provinceCode] = province.name
 
-    if (province.children) {
-      province.children.forEach((city) => {
+      // 补一个市级节点
+      const cityCode = provinceCode.slice(0, 3) + '100' // 110100
+      areaList.city_list[cityCode] = province.name
+
+      // 区县直接挂在 province.children[0].children
+      const districts = province.children?.[0]?.children || []
+      districts.forEach((district) => {
+        areaList.county_list[district.id] = district.name
+      })
+    } else {
+      // 普通省份
+      const provinceCode = String(province.id).padEnd(6, '0')
+      areaList.province_list[provinceCode] = province.name
+
+      province.children?.forEach((city) => {
         areaList.city_list[city.id] = city.name
-
-        if (city.children) {
-          city.children.forEach((district) => {
-            areaList.county_list[district.id] = district.name
-          })
-        }
+        city.children?.forEach((district) => {
+          areaList.county_list[district.id] = district.name
+        })
       })
     }
   })
