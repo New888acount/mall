@@ -26,7 +26,7 @@ router.beforeEach(async (to, from, next) => {
   if (isLogin) {
     if (!userStore.userInfo?.id) {
       try {
-        await userStore.getCustomInfo()
+        // await userStore.getCustomInfo()
       } catch (error) {
         console.log(error)
       }

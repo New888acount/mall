@@ -428,7 +428,7 @@ watch(
       min-height: 50px;
       flex-wrap: wrap;
       div {
-        width: 80px;
+        padding: 0 8px;
         height: 27.5px;
         border-radius: 15px;
         font-size: 13px;

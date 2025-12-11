@@ -8,6 +8,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import useLocalCache from '@/hooks/storage/localStorage'
 import useAppStore from './store/app.js'
+
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const router = useRouter()
@@ -26,7 +27,6 @@ onMounted(() => {
   }
 
   appStore.initApp()
-
 })
 /** ***生命周期end*****/
 </script>

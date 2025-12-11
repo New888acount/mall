@@ -86,7 +86,7 @@ watch(
 
 <style scoped lang="less">
 .vertical-item {
-  padding: 10px;
+  padding: 10px 10px 10px 0;
   display: flex;
   width: 100%;
   // margin-right: 8px;
@@ -95,14 +95,14 @@ watch(
   background-color: #ffffff;
 
   .item-img {
-    width: 140px;
-    height: 140px;
+    width: 82px;
+    height: 82px;
 
     border-radius: 8px 0 0 8px;
     margin-right: 10px;
     img {
-      width: 140px;
-      height: 140px;
+      width: 82px;
+      height: 82px;
       flex: 1;
     }
   }

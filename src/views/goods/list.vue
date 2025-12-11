@@ -4,7 +4,7 @@
       <template #title>
         <div class="search">
           <i class="iconfont icon-sousuo"></i>
-          <van-field v-model="state.search" placeholder="请输入关键字" clearable @keyup.enter="onSearch"/>
+          <van-field v-model="state.search" placeholder="请输入关键字" clearable @keyup.enter="onSearch" />
         </div>
       </template>
     </MobileHeader>
