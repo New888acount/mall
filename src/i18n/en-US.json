@@ -123,5 +123,12 @@
   "login.page.getCode": "Verification code",
   "login.page.submit": "Submit",
   "other.finishedText": "No more data available.",
-  "other.loadingText": "loading..."
+  "other.loadingText": "loading...",
+  "stock": "stock",
+  "order.state0":"Pending Payment",
+  "order.state1":"Pending Shipment",
+  "order.state2":"Pending Receipt",
+  "order.state3":"Completed",
+  "order.state4":"Cancelled",
+  "order.state5":"Invalid Order"
 }

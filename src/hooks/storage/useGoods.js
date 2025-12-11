@@ -1,14 +1,17 @@
+import i18n from '@/i18n/index'
+
+const t = i18n.global.t
 // 格式化库存
 export function formatStock(type, num) {
   num = num + ''
   if (type === 'exact') {
-    return '库存' + num
+    return t('stock') + num
   } else {
     if (num < 10) {
-      return '库存≤10'
+      return `${t('stock')}≤10`
     } else {
       let a = Math.pow(10, num.length - 1)
-      return '库存 ' + parseInt(num / a) * a + '+'
+      return t('stock') + parseInt(num / a) * a + '+'
     }
   }
 }
@@ -16,17 +19,17 @@ export function formatStock(type, num) {
 export function getOrderStatusName(status) {
   switch (status) {
     case 0:
-      return '待付款'
+      return t('order.state0')
     case 1:
-      return '待发货'
+      return t('order.state1')
     case 2:
-      return '待收货'
+      return t('order.state2')
     case 3:
-      return '已完成'
+      return t('order.state3')
     case 4:
-      return '已取消'
+      return t('order.state4')
     case 5:
-      return '无效订单'
+      return t('order.state5')
   }
 }
 

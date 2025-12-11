@@ -21,7 +21,6 @@ import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import { onMounted, reactive } from 'vue'
 import useCacheData from '@/store/cacheData.js'
-import { watch } from 'less'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
