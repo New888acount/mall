@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="register-page">
     <van-form @submit="handleFinish" @failed="onFailed">
       <van-cell-group inset>
         <van-field
@@ -25,17 +25,23 @@
           :placeholder="$t('login.page.code.placeholder')"
         >
           <template #button>
-            <!-- 显示验证码图片 -->
-            <img
-              :src="captchaSrc"
-              :alt="$t('login.page.getCode')"
-              style="height: 32px; cursor: pointer"
-              @click="refreshCaptcha"
-            />
+            <div class="captcha-container">
+              <!-- 显示验证码图片 -->
+              <MyImage
+                :src="captchaSrc"
+                style="height: 32px; cursor: pointer"
+                :alt="$t('login.page.getCode')"
+                @click="refreshCaptcha"
+                v-if="!codeLoading"
+              ></MyImage>
+              <MyLoading v-else style="height: 32px"></MyLoading>
+            </div>
           </template>
         </van-field>
       </van-cell-group>
-      <van-button round block type="primary" native-type="submit" class="submit-button" :loading="isLoading">提交</van-button>
+      <van-button round block type="primary" native-type="submit" class="submit-button" :loading="isLoading">
+        提交
+      </van-button>
     </van-form>
   </div>
 </template>
@@ -69,8 +75,8 @@ const { t } = useI18n()
 const { getLocationSearch, getCurrentLanguage } = uselocalStorageCache()
 // 注册请求 加载
 const isLoading = ref(false)
-// 获取邀请码
-// const { getCacheInviteCode } = useSessionCache()
+const codeLoading = ref(false)
+
 // 用户信息
 const userInfoStore = useUserInfoStore()
 // const appStore = useAppStore()
@@ -103,15 +109,15 @@ const validateCustomName = (value) => {
     return '请输入您的电子邮件地址'
   } else if (value.indexOf('@') === -1) {
     return '* 输入您的电子邮件地址'
-  } 
+  }
   // else if (!prefix.length || !suffix.length) {
   //   return '输入您的电子邮件地址'
   // } else if (/[A-Z]/.test(value.slice(0, 1))) {
   //   return '小写首字母'
   // } else if (/[`~!#$%^&*()_+\-=\[\]{};':"\\|,<>\/?]/.test(value)) {
   //   return '包含特殊字符'
-  // } 
-  
+  // }
+
   // else if (!(/\d/.test(prefix) && /[a-zA-Z]/.test(prefix)) && !/^[A-Za-z]*$/.test(prefix)) {
   //   return '数字和字母 | 字母'
   // }
@@ -159,6 +165,7 @@ const rulesRegister = {
 /** ***函数 start*****/
 // 获取验证码图片
 const refreshCaptcha = async () => {
+  codeLoading.value = true
   try {
     const { data } = await getCodeApi()
     captchaSrc.value = `data:image/png;base64,${data.img}`
@@ -166,6 +173,8 @@ const refreshCaptcha = async () => {
     formState.uuid = data.uuid
   } catch (err) {
     console.error('获取验证码失败', err)
+  } finally {
+    codeLoading.value = false
   }
 }
 
@@ -216,4 +225,12 @@ onMounted(async () => {
 
 /** ***生命周期end*****/
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.register-page {
+  .captcha-container {
+    height: 32px;
+    width: 86px;
+    text-align: center;
+  }
+}
+</style>

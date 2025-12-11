@@ -1,5 +1,5 @@
 <template>
-  <div class="">
+  <div class="login-page">
     <van-form @submit="onSubmit" @failed="onFailed">
       <van-cell-group inset>
         <van-field
@@ -25,13 +25,17 @@
           :placeholder="$t('login.page.code.placeholder')"
         >
           <template #button>
-            <!-- 显示验证码图片 -->
-            <img
-              :src="captchaSrc"
-              :alt="$t('login.page.getCode')"
-              style="height: 32px; cursor: pointer"
-              @click="refreshCaptcha"
-            />
+            <div class="captcha-container">
+              <!-- 显示验证码图片 -->
+              <MyImage
+                :src="captchaSrc"
+                style="height: 32px; cursor: pointer"
+                :alt="$t('login.page.getCode')"
+                @click="refreshCaptcha"
+                v-if="!codeLoading"
+              ></MyImage>
+              <MyLoading v-else style="height: 32px"></MyLoading>
+            </div>
           </template>
         </van-field>
       </van-cell-group>
@@ -62,6 +66,7 @@ import { getCodeApi } from '@/api/user'
 const { t } = useI18n()
 // 请求 加载
 const isLoading = ref(false)
+const codeLoading = ref(false)
 
 // const tearmService = copyWriter.copyWriterMap?.['tearm-service']?.langData[`${appStore.language}`][0].text
 // const { getAccountInfo } = useLocalCache()
@@ -153,6 +158,7 @@ const rulesLogin = {
 
 /** ***函数 start*****/
 const refreshCaptcha = async () => {
+  codeLoading.value = true
   try {
     const { data } = await getCodeApi()
     // console.log(data)
@@ -162,6 +168,8 @@ const refreshCaptcha = async () => {
     formState.uuid = data.uuid
   } catch (err) {
     console.error('获取验证码失败', err)
+  } finally {
+    codeLoading.value = false
   }
 }
 
@@ -202,4 +210,12 @@ onMounted(async () => {
 })
 /** ***生命周期end*****/
 </script>
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.login-page {
+  .captcha-container {
+    height: 32px;
+    width: 86px;
+    text-align: center;
+  }
+}
+</style>
