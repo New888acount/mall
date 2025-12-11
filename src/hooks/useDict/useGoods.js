@@ -11,7 +11,7 @@ export function formatStock(type, num) {
       return `${t('cart.Inventory')}≤10`
     } else {
       let a = Math.pow(10, num.length - 1)
-      return t('cart.Inventory') + parseInt(num / a) * a + '+'
+      return t('cart.Inventory') + ' ' + parseInt(num / a) * a + '+'
     }
   }
 }
