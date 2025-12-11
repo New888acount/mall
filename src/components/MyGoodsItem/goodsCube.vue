@@ -22,8 +22,8 @@
 </template>
 
 <script setup>
-import { defineProps, defineEmits } from 'vue'
 import MyImage from '@/components/MyImage'
+import { defineEmits, defineProps } from 'vue'
 
 const props = defineProps({
   item: { type: Object, required: true },
@@ -38,10 +38,6 @@ function handleClick() {
 
 <style scoped lang="less">
 .cube-item {
-  width: calc(50% - 4px);
-  flex-wrap: wrap;
-  margin-right: 8px;
-  margin-bottom: 8px;
   border-radius: 8px;
   background-color: #ffffff;
   :deep(.van-image) {
