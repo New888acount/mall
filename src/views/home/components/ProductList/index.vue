@@ -1,22 +1,29 @@
 <template>
-  <div class="home-page">
-    <banner />
-    <Favorite />
-    <ProductList />
+  <div class="product-list">
+    <commenHeader :title="'热门推荐'" />
+    <MyPullRefreshList v-model:loading="cacheData.loading" :finished="cacheData.finished" @load="cacheData.onLoad">
+      <div class="list">
+        <template v-for="(item, i) in cacheData.goodsList" :key="i">
+          <GoodCube :item="item" @click="productHandle" />
+        </template>
+      </div>
+      <!-- 数据为空 -->
+      <div v-if="cacheData.goodsList.length === 0 && cacheData.finished">
+        <MyEmptyData />
+      </div>
+    </MyPullRefreshList>
   </div>
 </template>
 
 <script setup>
 /** ***引入相关包start*****/
+import commenHeader from '@/views/home/components/CommonHeader'
+
 import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, nextTick, ref } from 'vue'
 import useCacheData from '@/store/cacheData.js'
-
-import banner from './components/Banner'
-import Favorite from './components/FavoriteItem/index.vue'
-import ProductList from './components/ProductList'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -49,8 +56,20 @@ const productHandle = (n) => {
 
 /** ***函数 end*****/
 /** ***生命周期start*****/
+onMounted(() => {
+  cacheData.onLoad()
+})
 
 /** ***生命周期end*****/
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.product-list {
+  padding: 16px 12px 58px;
+  .list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 8px;
+  }
+}
+</style>

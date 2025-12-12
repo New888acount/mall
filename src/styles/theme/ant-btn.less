@@ -1,0 +1,109 @@
+// ant 默认按钮
+.default-btn {
+  background: var(--adm-color-primary);
+  color: var(--adm-color-white);
+  box-shadow: none;
+  border: none;
+  outline: none;
+  border-radius: 0;
+  text-shadow: none;
+  box-sizing: none !important;
+  > div {
+    //点击阴影
+    display: none !important;
+  }
+  span {
+    word-break: keep-all !important;
+    white-space: normal !important;
+    line-height: 14px;
+    font-weight: 500;
+    color: var(--adm-color-white);
+    text-align: center;
+  }
+  &:hover,
+  &:focus {
+    color: var(--adm-color-white) !important;
+    background: var(--adm-color-primary) !important;
+  }
+  &:disabled {
+    opacity: 0.4;
+    background: var(--adm-color-primary) !important;
+    &:hover {
+      opacity: 0.4;
+      background: var(--color-grey) !important;
+    }
+  }
+}
+// 按钮镂空
+.default-btn-ghost {
+  background-color: transparent;
+  color: var(--adm-color-light);
+  box-shadow: none;
+  border: 1px solid var(--adm-color-white);
+  outline: none;
+  border-radius: 10px;
+  text-shadow: none;
+  box-sizing: none !important;
+  &:hover {
+    color: var(--adm-color-light) !important;
+    background-color: transparent !important;
+  }
+
+  > div {
+    //点击阴影
+    display: none !important;
+  }
+  span {
+    word-break: keep-all !important;
+    white-space: normal !important;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  &:disabled {
+    opacity: 0.4;
+    background-color: transparent !important;
+    &:hover {
+      opacity: 0.4;
+      background-color: transparent !important;
+    }
+  }
+}
+
+//纯色按钮
+.default-btn-solid {
+  background: var(--adm-color-white);
+  color: var(--adm-color-white);
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  text-shadow: none;
+  box-sizing: none !important;
+  > div {
+    //点击阴影
+    display: none !important;
+  }
+  span {
+    word-break: keep-all !important;
+    white-space: normal !important;
+    line-height: 14px;
+    font-weight: 600;
+    color: var(--adm-color-white);
+    text-align: center;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  &:hover,
+  &:focus {
+    color: var(--adm-color-white) !important;
+    background: var(--adm-color-white) !important;
+  }
+  &:disabled {
+    opacity: 0.4;
+    background: var(--adm-color-white);
+    border-radius: 10px;
+
+    &:hover {
+      opacity: 0.4 !important;
+    }
+  }
+}

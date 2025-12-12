@@ -7,13 +7,13 @@
 
     <!-- 信息 -->
     <div class="item-info">
-      <div class="text padding">{{ item.name || item.productName }}</div>
+      <div class="text">{{ item.name || item.productName }}</div>
       <div class="tag" v-if="item.spDataValue">
         {{ item.spDataValue }}
       </div>
       <div class="item-price">
-        <div class="price padding">
-          <span class="unit">￥</span>
+        <div class="price">
+          <span class="unit">USDT</span>
           {{ item.price }}
         </div>
       </div>
@@ -38,33 +38,42 @@ function handleClick() {
 
 <style scoped lang="less">
 .cube-item {
-  border-radius: 8px;
-  background-color: #ffffff;
   :deep(.van-image) {
     width: 100%;
-    height: 174px;
-    border-radius: 8px 8px 0 0;
+    height: auto;
   }
   :deep(.van-skeleton-image) {
     width: 100%;
-    height: 174px;
+    height: 100%;
   }
-  .padding {
-    margin: 10px 8px;
+
+  .item-info {
+    padding: 8px 0;
   }
 
   .text {
-    font-size: 13px;
-    display: -webkit-box; /* 弹性伸缩盒子模型 */
-    -webkit-box-orient: vertical; /* 垂直排列子元素 */
-    -webkit-line-clamp: 2; /* 限制显示 2 行 */
-    overflow: hidden; /* 超出部分隐藏 */
-    text-overflow: ellipsis; /* 超出部分显示省略号 */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    align-self: stretch;
+    overflow: hidden;
+    color: var(--adm-color-textlv2);
+    text-overflow: ellipsis;
+    font-family: 'PingFang SC';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 21px */
   }
 
   .price {
-    color: var(--color-price);
-    font-size: 15px;
+    margin-top: 4px;
+    color: var(--color-textlv2);
+    font-family: Roboto;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 150%; /* 18px */
   }
 }
 
