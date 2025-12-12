@@ -1,0 +1,28 @@
+// ant-segmented
+.ant-segmented {
+    color: var(--adm-color-white);
+    background-color: var(--design-table-header) !important;
+    border-radius: 2px !important;
+    .ant-segmented-item-label {
+        font-size: 16px;
+        line-height: 36px;
+        min-height: 36px;
+        padding: 0 11px;
+    }
+    .ant-segmented-item {
+        min-width: 86px;
+        border-radius: 2px !important;
+    }
+    .ant-segmented-thumb {
+        background-color: #333 !important;
+    }
+
+    .ant-segmented-item-selected {
+        background-color: var(--adm-color-primary);
+        color: var(--adm-color-white) !important;
+    }
+
+    .ant-segmented-item:hover:not(.ant-segmented-item-selected):not(.ant-segmented-item-disabled) {
+        color: var(--adm-color-primary);
+    }
+}

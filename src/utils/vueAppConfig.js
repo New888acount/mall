@@ -1,17 +1,12 @@
-/*
-  vueapp实例挂载组件和全局方法的封装
-  不止main.js需要使用，创建函数式组件也需要
-**/
-
+import directive from '@/directive/index'
 import router from '@/router/index'
 import store from '@/store/index'
-import directive from '@/directive/index'
 // import vLoading from '@/directive/globalLoading'
 import vueI18n from '@/i18n/index'
 // 登录、注册
 import ShowLogin from '@/componentsFun/login/index.js'
 /*********ant-design-vue 组件引入star */
-import {} from 'ant-design-vue'
+import { Button as AButton } from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 /*********ant-design-vue 组件引入end */
 /*********vant 组件引入star */
@@ -19,7 +14,7 @@ import { Lazyload } from 'vant'
 /*********vant end */
 export default function setVueAppConfig(app) {
   /*********ant-design-vue 组件引入star */
-
+  app.use(AButton)
   /*********ant-design-vue 组件引入end */
 
   /*********vant 组件引入star */

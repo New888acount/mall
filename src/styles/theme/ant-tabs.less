@@ -1,0 +1,42 @@
+// ant tabs
+//tabs  more的样式
+.ant-tabs-dropdown.my-tabs--more {
+  background-color: var(--desgin-common-bg2);
+  border-radius: 16px;
+  .ant-tabs-dropdown-menu {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    background-color: transparent;
+
+    .ant-tabs-dropdown-menu-item {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+    }
+
+    .tab-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0;
+
+      .tab-img {
+        margin-right: 5px;
+        width: 20px;
+        height: auto;
+      }
+
+      .tab-title {
+        color: var(--adm-color-textLv1);
+        cursor: pointer;
+        display: inline-flex;
+        font-size: 14px;
+        font-weight: 700;
+        position: relative;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+    }
+  }
+}

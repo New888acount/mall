@@ -1,7 +1,7 @@
 <template>
   <Navbar :style="{ backgroundColor: navBg }" v-if="routeInfo.meta.navShow.navbar"></Navbar>
 
-  <div class="main-content" :style="{ marginBottom: routeInfo.meta.navShow.navigation ? '50px' : '0px' }">
+  <div class="main-content" :style="{ paddingBottom: routeInfo.meta.navShow.navigation ? '50px' : '0px' }">
     <router-view v-slot="{ Component }" :key="$route.fullPath">
       <transition name="slide" mode="out-in">
         <div class="router-view-container" :key="$route.fullPath">
@@ -55,7 +55,7 @@ const ele = document.querySelector('#app') //滚动发生在app上
 // 滚动事件
 const handleScroll = () => {
   const top = ele.scrollTop || document.documentElement.scrollTop
-  navBg.value = top > 50 ? '#eb3924' : 'transparent'
+  navBg.value = top > 270 ? 'var(--adm-color-primary)' : 'transparent'
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
