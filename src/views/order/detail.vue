@@ -47,11 +47,11 @@
         </div>
         <div class="detail-time">
           <span>{{ $t('order.detail.ordertime') }}</span>
-          {{ state.orderInfo.createTime }}
+          {{ formatDateTimer(state.orderInfo.createTime, 'YYYY-MM-DD hh:mm:ss') }}
         </div>
         <div class="detail-time" v-if="state.orderInfo.createTime">
           <span>{{ $t('order.detail.paytime') }}</span>
-          {{ formatDateTimer(state.orderInfo.createTime, 'YYYY-MM-DD hh:mm:ss') }}
+          {{ state.orderInfo.paymentTime ? formatDateTimer(state.orderInfo.paymentTime, 'YYYY-MM-DD hh:mm:ss') : '--' }}
         </div>
         <div class="detail-time" v-if="state.orderInfo.deliverySn">
           <span>{{ $t('order.detail.deliverySn') }}</span>
@@ -307,7 +307,7 @@ onMounted(() => {
   font-size: 15px;
 
   main {
-    padding: 8px 10px;
+    padding: 8px 10px 58px;
   }
 
   .detail-one {
