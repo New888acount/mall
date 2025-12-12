@@ -147,7 +147,7 @@ watch(
       }
 
       .buy {
-        width: 60px;
+        padding: 0 8px;
         height: 25px;
         border-radius: 12.5px;
         font-size: 12px;

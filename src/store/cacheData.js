@@ -33,8 +33,6 @@ export const useCacheData = defineStore('useCacheData', {
         })
         data.rows = data?.rows || []
 
-        console.log(data.rows)
-
         this.goodsList.push(...data.rows)
         this.pagination.current++
 

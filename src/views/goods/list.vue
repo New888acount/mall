@@ -106,7 +106,6 @@ import { useRoute } from 'vue-router'
 // import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const keyword = ref()
 
 const switchListFlag = ref(true)
 const listActive = ref('recommend') // 默认选中综合推荐
@@ -134,7 +133,6 @@ const state = reactive({
 /** ***函数 start*****/
 const onSearch = () => {
   initState()
-  prolist()
 }
 
 // 切换列表排列方式
@@ -159,8 +157,8 @@ const recommendHandle = (val) => {
     state.orderField = 'create_time'
     state.orderSort = 'desc'
     recommendshow.value = false
+    recommendActive.value = 'complex'
     initState()
-    prolist()
   } else if (val === 'recommend') {
     state.orderField = 'sort'
     state.orderSort = 'desc'
@@ -170,9 +168,11 @@ const recommendHandle = (val) => {
 }
 
 const initState = () => {
+  state.finished = false
   state.pagination.current = 1
   state.pagination.pageSize = 10
   state.listData = []
+  prolist()
 }
 // 综合推荐弹窗选择
 const recommendActivehandle = (val) => {
@@ -191,7 +191,6 @@ const recommendActivehandle = (val) => {
     state.orderSort = 'desc'
   }
   initState()
-  prolist()
   recommendshow.value = false
 }
 
@@ -230,7 +229,6 @@ const prolist = async () => {
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
-  console.log(route.query.search)
   if (route.query?.search) {
     state.search = route.query?.search
   }

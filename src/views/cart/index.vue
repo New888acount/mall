@@ -165,8 +165,6 @@ const onNumberChange = (e, cartItem) => {
 onMounted(() => {
   // 获取购物车数据
   getCacheToken() && cartStore.getList()
-
-  console.log(cartStore.list.length)
 })
 /** ***生命周期end*****/
 </script>

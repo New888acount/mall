@@ -29,7 +29,7 @@
   "goodList.tab1.pop2": "Price ascending",
   "goodList.tab1.pop3": "Price descending",
   "goodList.tab2": "New arrivals first",
-  "goodList.buy": "Go to purchase",
+  "goodList.buy": "Go to Buy",
   "goodIndex.selectTip": "Please select specifications",
   "cart.title": "Cart{count}",
   "cartHeader.title1": "Total",
@@ -66,7 +66,7 @@
   "order.index.address": "Please Select Shipping Address",
   "order.index.message.title": "Order Remarks",
   "order.index.message.placeholder": "Fill in Order Remarks",
-  "order.index.tag": "default",
+  "order.index.tag": "Default",
   "order.index.total": "Total Amount",
   "order.index.amount": "Total {count} Items",
   "order.index.sum": "Total:",
@@ -130,5 +130,7 @@
   "order.status4": "Completed",
   "order.status5": "Cancelled",
   "order.status6": "Invalid Order",
-  "cart.Inventory": "Inventory"
+  "cart.Inventory": "Inventory",
+  "spec.quantity": "Purchase quantity",
+  "other.copySuccessTip": "Copied successfully"
 }

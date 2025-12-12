@@ -135,6 +135,16 @@ onMounted(() => {})
             margin-bottom: 10px;
             box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
           }
+
+          .submit-loading {
+            height: 50px;
+            .loader {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+            }
+          }
         }
       }
     }
