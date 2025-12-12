@@ -196,10 +196,18 @@ const prolist = async () => {
       orderField: state.orderField,
       orderSort: state.orderSort,
       search: state.search,
+      // 商品上架状态
+      publishStatus: 1,
     })
     data.rows = data?.rows || []
 
-    state.listData.push(...data.rows)
+    if (state.pagination.current === 1) {
+      // 首次加载或刷新时，重置列表
+      state.listData = data.rows
+    } else {
+      // 加载更多时，追加
+      state.listData = [...state.listData, ...data.rows]
+    }
     state.pagination.current++
 
     state.pagination.total = data.total

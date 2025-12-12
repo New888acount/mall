@@ -40,14 +40,14 @@
                 </div>
                 <div class="good-tag">{{ obj.spDataValue }}</div>
                 <div class="good-info">
-                  <div class="good-price">{{ obj.salePrice }}</div>
+                  <div class="good-price">{{$unit}} {{ obj.salePrice }}</div>
                   <div class="good-qua">x {{ obj.quantity }}</div>
                 </div>
               </div>
             </div>
           </div>
           <div class="data-sum">
-            {{ $t('order.list.sum', { count: item.orderItemList.length }) }}{{ item.payAmount }}
+          {{$unit}}  {{ $t('order.list.sum', { count: item.orderItemList.length }) }} {{$unit}} {{ item.payAmount }}
           </div>
 
           <div class="data-operate">

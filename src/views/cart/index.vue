@@ -19,37 +19,25 @@
         </p>
       </div>
       <!-- 列表 -->
-      <div class="cart-box">
-        <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
-          <div class="left">
-            <van-checkbox-group v-model="selectedIds">
-              <van-checkbox
-                :model-value="selectedIds.includes(item.id)"
-                :name="item.id"
-                shape="square"
-                icon-size="16px"
-                checked-color="var(--ui-BG-Main)"
-                @change="(checked) => cartStore.selectSingle(item.id, checked)"
-              >
+      <van-checkbox-group v-model="selectedIds">
+        <div class="cart-box">
+          <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
+            <div class="left">
+              <van-checkbox :name="item.id" shape="square" icon-size="16px" checked-color="var(--ui-BG-Main)">
                 {{ item.name }}
               </van-checkbox>
-            </van-checkbox-group>
+            </div>
+            <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
           </div>
-          <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
         </div>
-      </div>
+      </van-checkbox-group>
 
       <div class="cart-bottom">
         <div class="cart-bottom-sum">
-          <van-checkbox
-            v-model="isAllSelected"
-            shape="square"
-            class="sum-checkbox"
-            @change="(checked) => cartStore.selectAll(checked)"
-          >
+          <van-checkbox v-model="isAllSelected" shape="square" class="sum-checkbox">
             {{ $t('cart.allSelect') }}
           </van-checkbox>
-          <div class="sum-price">{{ $t('cart.sum') }} {{ state.totalPriceSelected }}</div>
+          <div class="sum-price">{{ $t('cart.sum') }} {{$unit}} {{ state.totalPriceSelected }}</div>
         </div>
 
         <div class="sum-submit" @click="onDelete" v-if="state.editMode">{{ $t('cart.delete') }}</div>
@@ -60,7 +48,11 @@
     </div>
 
     <div v-if="!cartStore.loading && !state.list.length">
-      <MyEmptyData />
+      <MyEmptyData>
+        <template #text>
+          {{ $t('cart.emptyText') }}
+        </template>
+      </MyEmptyData>
     </div>
   </div>
 </template>
@@ -102,9 +94,13 @@ const selectedIds = computed({
 })
 
 const isAllSelected = computed({
-  get: () => cartStore.isAllSelected,
+  get: () => selectedIds.value.length === cartStore.list.length,
   set: (val) => {
-    cartStore.isAllSelected = val
+    if (val) {
+      cartStore.selectedIds = cartStore.list.map((item) => item.id)
+    } else {
+      cartStore.selectedIds = []
+    }
   },
 })
 

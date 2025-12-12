@@ -17,7 +17,7 @@
       </div>
       <div class="item-price">
         <div class="price padding">
-          <span class="unit">￥</span>
+          <span class="unit">{{$unit}}</span>
           {{ item.price }}
         </div>
         <div class="buy" v-if="buyButton">{{ $t('goodList.buy') }}</div>

@@ -131,7 +131,7 @@
   "order.status5": "Cancelled",
   "order.status6": "Invalid Order",
   "cart.Inventory": "Inventory",
-  "spec.quantity": "Purchase quantity",
   "other.copySuccessTip": "Copied successfully",
-  "cart.Quantity": "Quantity"
+  "cart.Quantity": "Quantity",
+  "cart.emptyText": "My shopping cart is empty, go check it out!"
 }

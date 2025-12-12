@@ -35,7 +35,8 @@ export default function setVueAppConfig(app) {
   directive(app)
   /** ****** 全局配置start全局的东西一定要加$符号  ********/
   // 图片基础路径
-  app.config.globalProperties.$imgBaseUrl = 'https://hellofun789.one/cmassets'
+  app.config.globalProperties.$imgBaseUrl = '/cmassets'
+  app.config.globalProperties.$unit = 'USDT'
 
   /** ****** 全局配置end  ********/
   /** ****** 函数组件start  ********/

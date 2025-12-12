@@ -28,7 +28,7 @@
 
           <div class="spec-info-box">
             <div class="spec-price">
-              {{ goodsPrice.price }}
+            {{ $unit }}  {{ goodsPrice.price }}
             </div>
 
             <div class="spec-stock">

@@ -30,7 +30,7 @@
             </div>
             <div class="good-tag">{{ item.spDataValue }}</div>
             <div class="good-info">
-              <div class="good-price">{{ item.salePrice }}</div>
+              <div class="good-price">{{ $unit }} {{ item.salePrice }}</div>
               <div class="good-qua">x {{ item.quantity }}</div>
             </div>
           </div>
@@ -49,7 +49,7 @@
           <span>{{ $t('order.detail.ordertime') }}</span>
           {{ formatDateTimer(state.orderInfo.createTime, 'YYYY/MM/DD hh:mm:ss') }}
         </div>
-        <div class="detail-time" v-if="state.orderInfo.createTime">
+        <div class="detail-time" v-if="state.orderInfo.paymentTime">
           <span>{{ $t('order.detail.paytime') }}</span>
           {{ state.orderInfo.paymentTime ? formatDateTimer(state.orderInfo.paymentTime, 'YYYY/MM/DD hh:mm:ss') : '--' }}
         </div>
@@ -62,11 +62,11 @@
       <div class="detail-sum">
         <div class="deatil-total">
           <span>{{ $t('order.detail.sum') }}</span>
-          <p>{{ state.orderInfo.totalAmount }}</p>
+          <p>{{ $unit }} {{ state.orderInfo.totalAmount }}</p>
         </div>
         <div class="detail-required">
           {{ [1, 2, 3].includes(state.status) ? $t('order.detail.paid') : $t('order.detail.required') }}
-          <span>{{ state.orderInfo.payAmount }}</span>
+          <span>{{ $unit }} {{ state.orderInfo.payAmount }}</span>
         </div>
       </div>
     </main>
