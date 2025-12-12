@@ -65,7 +65,7 @@ onMounted(() => {
 
 <style scoped lang="less">
 .product-list {
-  padding: 16px 12px 58px;
+  padding: 16px 12px 88px;
   .list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

@@ -29,29 +29,26 @@ const route = useRoute()
 const tabList = [
   {
     name: t('tabList.tab1'),
-    icon: 'icon-shouye1',
+    icon: 'icon-home1',
     to: '/home',
     bgClass: 'home',
     fn: () => {
       router.push('/home')
     },
   },
-  //   {
-  //     name: '分类',
-  //     to: '/activity',
-  //     icon: 'icon-Categories',
-  //     iconTransformClass: 'icon-rotate',
-  //     bgClass: 'activity',
-  //     fn: () => {
-  //       router.push('/activity')
-  //     },
-  //   },
+  {
+    name: '订单',
+    to: '/order',
+    icon: 'icon-Orders',
+    bgClass: 'order',
+    fn: () => {
+      router.push('/order/list?type=0')
+    },
+  },
   {
     name: t('tabList.tab2'),
-    // iconImg: require('@/assets/images/tabbar/wallet.gif'),
-    icon: 'icon-gouwudai',
+    icon: 'icon-cart',
     to: '/cart',
-    tabClass: 'tab-active',
     bgClass: 'cart',
     fn: () => {
       router.push({
@@ -61,7 +58,7 @@ const tabList = [
   },
   {
     name: t('tabList.tab3'),
-    icon: 'icon-wode3',
+    icon: 'icon-mine',
     to: '/profile',
     bgClass: 'profile',
     fn: () => {
@@ -100,14 +97,13 @@ export default {
 .tabbar {
   position: fixed;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%); /* 保证居中 */
+  right: 0;
   width: 100%;
+  height: 56px;
   z-index: 10;
   :deep(.van-tabbar) {
-    border-top: 1px solid #f4f4f4;
-    background: #fff;
-    box-shadow: 0 -1px 1px 0 rgba(130, 160, 149, 0.2);
+    border-top: 0.5px solid var(--, #ededed);
+    background: var(--adm-bg-white);
   }
 }
 .tabbar-item {
@@ -115,25 +111,22 @@ export default {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  color: #9d9ea2;
+  color: var(--color-textlv2);
   .iconfont {
-    font-size: 20px;
-  }
-
-  .icon-gouwudai,
-  .icon-wode3 {
     font-size: 24px;
   }
 
   span {
-    font-size: 11px;
+    margin-top: 4px;
+    font-family: Roboto;
+    font-size: 12px;
     font-style: normal;
-    font-weight: 600;
-    line-height: 150%; /* 16.5px */
+    font-weight: 400;
+    line-height: normal;
   }
 }
 
 .active {
-  color: #fe771c;
+  color: var(--adm-color-textLv1);
 }
 </style>
