@@ -171,11 +171,21 @@ const canceltip = (item) => {
     cancelButtonText: t('order.cancel.button1'),
   })
     .then(async () => {
-      // TODO: 调用删除接口
-      const idList = [item.payId]
-      const res = await orderCancelApi({ idList })
-
-      // showToast('已删除');
+      try {
+        state.isLoading = true
+        const idList = [item.orderId]
+        const res = await orderCancelApi({ idList })
+        if (res.code === 200) {
+          customToast(res.msg)
+          await getOrderDetail(item.orderId)
+        } else {
+          console.log(res.msg)
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        state.isLoading = false
+      }
     })
     .catch(() => {
       // 用户取消
@@ -194,13 +204,22 @@ const onConfirm = (item) => {
     cancelButtonText: t('order.cancel.button1'),
   })
     .then(async () => {
-      // TODO: 调用删除接口
-      const res = await orderConfirmApi(item.orderId)
-      if (res.code === 200) {
-        customToast(res.msg)
-        getOrderDetail(item.orderId)
+      try {
+        state.isLoading = true
+        const res = await orderConfirmApi(item.orderId)
+        if (res.code === 200) {
+          customToast(res.msg)
+          await getOrderDetail(item.orderId)
+        } else {
+          console.log(res.msg)
+          // 可以加 Toast 提示
+          // showToast('操作失败，请稍后再试')
+        }
+      } catch (error) {
+        console.error(error)
+      } finally {
+        state.isLoading = false
       }
-      // showToast('已删除');
     })
     .catch(() => {
       // 用户取消
@@ -226,11 +245,22 @@ const onDelete = (item) => {
     cancelButtonText: t('order.cancel.button1'),
   })
     .then(async () => {
-      // TODO: 调用删除接口
-      console.log('3333')
-      const res = await orderDeleteApi(item.orderId)
+      try {
+        state.isLoading = true
+        // TODO: 调用删除接口
+        const res = await orderDeleteApi(item.orderId)
 
-      // showToast('已删除');
+        if (res.code === 200) {
+          customToast(res.msg)
+          await getOrderDetail(item.orderId)
+        } else {
+          console.log(res.msg)
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        state.isLoading = false
+      }
     })
     .catch(() => {
       // 用户取消

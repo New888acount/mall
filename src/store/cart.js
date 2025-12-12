@@ -45,23 +45,37 @@ export const useCartStore = defineStore('cart', {
 
     // 添加购物车
     async add(goodsInfo) {
-      const res = await addCartApi({
-        productId: goodsInfo.productId,
-        skuId: goodsInfo.id,
-        productName: goodsInfo.productName,
-        pic: goodsInfo.pic,
-        quantity: goodsInfo.buyNum,
-        spData: goodsInfo.spData,
-      })
-      if (res > 0) {
-        this.getList()
+      try {
+        this.loading = true
+        const res = await addCartApi({
+          productId: goodsInfo.productId,
+          skuId: goodsInfo.id,
+          productName: goodsInfo.productName,
+          pic: goodsInfo.pic,
+          quantity: goodsInfo.buyNum,
+          spData: goodsInfo.spData,
+        })
+        if (res.code === 200) {
+          this.getList()
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
       }
     },
     // 更新购物车
     async update(goodsInfo) {
-      const res = await updateCartApi(goodsInfo)
-      if (res > 0) {
-        this.getList()
+      try {
+        this.loading = true
+        const res = await updateCartApi(goodsInfo)
+        if (res.code === 200) {
+          this.getList()
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
       }
     },
     // 移除购物车
@@ -69,10 +83,17 @@ export const useCartStore = defineStore('cart', {
       if (Array.isArray(ids)) {
         ids = ids.join(',')
       }
-      const res = await deleteCartApi(ids)
-      if (res.code === 200) {
-        this.selectAll(false)
-        this.getList()
+      try {
+        this.loading = true
+        const res = await deleteCartApi(ids)
+        if (res.code === 200) {
+          this.selectAll(false)
+          this.getList()
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
       }
     },
     selectSingle(goodsId, checked) {

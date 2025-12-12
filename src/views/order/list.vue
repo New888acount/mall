@@ -186,11 +186,18 @@ const canceltip = (item) => {
     cancelButtonText: t('order.cancel.button1'),
   })
     .then(async () => {
-      const idList = [item.orderId]
-      const res = await orderCancelApi({ idList })
-      if (res.code === 200) {
-        customToast(res.msg)
-        await getOrderList()
+      try {
+        state.loading = true
+        const idList = [item.orderId]
+        const res = await orderCancelApi({ idList })
+        if (res.code === 200) {
+          customToast(res.msg)
+          await getOrderList()
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        state.loading = false
       }
     })
     .catch(() => {
