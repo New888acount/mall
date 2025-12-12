@@ -99,9 +99,9 @@ export default {
   bottom: 0;
   right: 0;
   width: 100%;
-  height: 56px;
   z-index: 10;
   :deep(.van-tabbar) {
+    height: 56px;
     border-top: 0.5px solid var(--, #ededed);
     background: var(--adm-bg-white);
   }

@@ -86,24 +86,31 @@ watch(
 
 <style scoped lang="less">
 .vertical-item {
-  padding: 10px 10px 10px 0;
+  position: relative;
+  padding-bottom: 12px;
+  margin-bottom: 8px;
   display: flex;
   width: 100%;
-  // margin-right: 8px;
-  margin-bottom: 8px;
-  border-radius: 8px;
-  background-color: #ffffff;
-
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    transform: scaleY(0.5);
+    background: #ededed;
+  }
+  &:last-child {
+    margin-bottom: 0;
+  }
   .item-img {
-    width: 82px;
-    height: 82px;
-
-    border-radius: 8px 0 0 8px;
-    margin-right: 10px;
+    width: 72px;
+    height: 72px;
+    margin-right: 8px;
     img {
-      width: 82px;
-      height: 82px;
-      flex: 1;
+      width: 100%;
+      height: 100%;
     }
   }
 
@@ -114,41 +121,44 @@ watch(
     flex: 1;
     .text {
       .item-name {
-        font-size: 14px;
-        display: -webkit-box; /* 弹性伸缩盒子模型 */
-        -webkit-box-orient: vertical; /* 垂直排列子元素 */
-        -webkit-line-clamp: 2; /* 限制显示 2 行 */
-        overflow: hidden; /* 超出部分隐藏 */
-        text-overflow: ellipsis; /* 超出部分显示省略号 */
-        // line-height: 13px;
-      }
-      .tag {
         overflow: hidden;
-        color: #9d9ea2;
+        color: var(--adm-color-textlv2);
         text-overflow: ellipsis;
-        font-size: 12px;
-        line-height: 150%;
+        font-family: 'PingFang SC';
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 21px */
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 2;
         align-self: stretch;
-        margin-top: 10px;
+      }
+      .tag {
+        padding: 8px 0;
+        color: var(--color-textlv2);
+        font-family: Roboto;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
       }
     }
     .item-price {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 25px;
 
       .price {
-        color: var(--color-price);
-        font-size: 15px;
+        color: var(--color-red);
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
       }
 
       .buy {
-        width: 60px;
-        height: 25px;
         border-radius: 12.5px;
         font-size: 12px;
         color: #ffffff;
@@ -159,25 +169,28 @@ watch(
 
       .right {
         :deep(.my-stepper) {
-          --van-stepper-input-width: auto;
+          padding: 0 2px;
+          border-radius: 1px;
+          background: rgba(237, 237, 237, 0.4);
           .van-stepper__input {
-            font-size: 14px;
-            min-width: 32px;
-            max-width: 64px;
-            background: transparent;
+            min-width: 8px;
             margin: 0 8px;
-            text-align: center; /* 保证数字居中 */
+            height: 14px;
+            color: var(--adm-color-textLv1);
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 100%; /* 14px */
+            background: transparent;
           }
 
           .van-stepper__minus,
           .van-stepper__plus {
-            border-radius: 6px;
-            border: 1px solid var(--color-light);
-            background: var(--color-light);
-            color: #fff;
-            border-radius: 50%;
             width: 16px;
             height: 16px;
+            color: var(--adm-color-textLv1);
+            background: transparent;
             -webkit-tap-highlight-color: transparent;
           }
 
@@ -193,33 +206,28 @@ watch(
           /* 点击高亮（按下时） */
           .van-stepper__plus:active,
           .van-stepper__minus:active {
-            border-radius: 6px;
-            border: 1px solid var(--color-light) !important;
-            background: var(--color-light) !important;
-            border-radius: 50%;
+            background: transparent !important;
             box-shadow: none; /* 去掉点击态阴影 */
           }
           .van-stepper__plus:active:before,
           .van-stepper__minus:active:before {
-            color: #fff; /* 符号变绿色 */
+            color: var(--adm-color-primary);
           }
           .van-stepper__plus:active:after,
           .van-stepper__minus:active:after {
-            color: #fff; /* 符号变绿色 */
-            //   width: 30%;
+            color: var(--adm-color-primary);
           }
 
           /* 禁用状态：不高亮 */
           .van-stepper__plus--disabled,
           .van-stepper__minus--disabled {
-            background: #c0c0c0;
-            border-color: #ddd;
-            color: #fff;
+            background: transparent;
+            color: var(--color-textlv2);
             pointer-events: none;
           }
           .van-stepper__plus--disabled .van-icon,
           .van-stepper__minus--disabled .van-icon {
-            color: #999; /* 禁用时符号灰色 */
+            color: var(--color-textlv2); /* 禁用时符号灰色 */
           }
         }
       }

@@ -1,60 +1,64 @@
 <template>
-  <div class="cart" v-loading="cartStore.loading">
+  <div class="cart-page" v-loading="cartStore.loading">
     <MobileHeader
-      :title="
+      :leftIcon="false"
+      :leftText="
         $t('cart.title', { count: cartStore.list && cartStore.list.length > 0 ? `(${cartStore.list.length})` : '' })
       "
       class="cart-header"
-    ></MobileHeader>
+    >
+      <template #right>
+        <div class="cart-header-right">
+          <p :class="[state.editMode ? 'edit' : 'cancle']" @click="edithandle">
+            {{ state.editMode ? $t('cartHeader.cancel') : $t('cartHeader.edit') }}
+          </p>
+        </div>
+      </template>
+    </MobileHeader>
 
-    <div v-if="state.list.length > 0">
-      <div class="cart-edit">
-        <p>
-          {{ $t('cartHeader.title1') }}
-          <span class="qua">{{ cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : 0 }}</span>
-          {{ $t('cartHeader.title2') }}
-        </p>
-        <p :class="[state.editMode ? 'edit' : 'cancle']" @click="edithandle">
-          {{ state.editMode ? $t('cartHeader.cancel') : $t('cartHeader.edit') }}
-        </p>
-      </div>
+    <div class="line"></div>
+
+    <div class="cart-wrap" v-if="state.list.length > 0">
       <!-- 列表 -->
       <div class="cart-box">
         <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
-          <div class="left">
-            <van-checkbox-group v-model="selectedIds">
-              <van-checkbox
-                :model-value="selectedIds.includes(item.id)"
-                :name="item.id"
-                shape="square"
-                icon-size="16px"
-                checked-color="var(--ui-BG-Main)"
-                @change="(checked) => cartStore.selectSingle(item.id, checked)"
-              >
-                {{ item.name }}
-              </van-checkbox>
-            </van-checkbox-group>
-          </div>
-          <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
+          <van-checkbox-group v-model="selectedIds">
+            <van-checkbox
+              :model-value="selectedIds.includes(item.id)"
+              :name="item.id"
+              icon-size="14px"
+              checked-color="var(--adm-color-primary)"
+              @change="(checked) => cartStore.selectSingle(item.id, checked)"
+            >
+              <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
+            </van-checkbox>
+          </van-checkbox-group>
         </div>
       </div>
 
       <div class="cart-bottom">
         <div class="cart-bottom-sum">
           <van-checkbox
+            icon-size="14px"
             v-model="isAllSelected"
-            shape="square"
             class="sum-checkbox"
+            checked-color="var(--adm-color-primary)"
             @change="(checked) => cartStore.selectAll(checked)"
           >
-            {{ $t('cart.allSelect') }}
+            {{ $t('cart.allSelect') }}({{ selectedIds?.length }})
           </van-checkbox>
-          <div class="sum-price">{{ $t('cart.sum') }} {{ state.totalPriceSelected }}</div>
+          <!--  -->
         </div>
 
-        <div class="sum-submit" @click="onDelete" v-if="state.editMode">{{ $t('cart.delete') }}</div>
-        <div class="sum-submit" @click="submitOrder" v-else>
-          {{ $t('cart.submit') }}{{ selectedIds?.length ? `(${selectedIds.length})` : '' }}
+        <div class="right">
+          <div class="sum-price">USDT {{ state.totalPriceSelected }}</div>
+          <a-button class="default-btn-solid sum-submit" @click="onDelete" v-if="state.editMode">
+            {{ $t('cart.delete') }}
+          </a-button>
+
+          <a-button class="default-btn-solid sum-submit" @click="submitOrder" v-else>
+            {{ $t('cart.submit') }}{{ selectedIds?.length ? `(${selectedIds.length})` : '' }}
+          </a-button>
         </div>
       </div>
     </div>
@@ -172,104 +176,105 @@ onMounted(() => {
 </script>
 
 <style scoped lang="less">
-.cart {
+.cart-page {
   padding-bottom: 122px;
+  height: 100%;
+
   .cart-header {
     display: flex;
 
     .cart-header-right {
-      font-size: 14px;
-      margin-right: 8px;
+      color: var(--color-textlv2);
+      font-family: 'PingFang SC';
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 100%; /* 12px */
+      cursor: pointer;
     }
   }
 
-  .cart-edit {
-    position: sticky;
-    top: 45px;
+  .line {
     width: 100%;
-    // max-width: 375px; /* 跟 app 一样宽 */
-    z-index: 99;
-
-    display: flex;
-    justify-content: space-between;
-    height: 35px;
-    align-items: center;
-    padding: 0 15px;
-    font-size: 13px;
-    background: #f6f6f6;
-    .qua,
-    .edit {
-      color: var(--color-light);
-    }
-
-    .cancle {
-      color: rgb(48, 48, 48);
-    }
+    height: 12px;
+    background: #fbfbfb;
   }
 
-  .cart-box {
-    background: #fff;
-    padding: 0px 15px;
+  .cart-wrap {
+    padding: 16px 0;
+    .cart-box {
+      padding: 0px 12px;
 
-    .cart-item {
-      display: flex;
-      align-items: center;
-      .left {
-        margin-right: 8px;
+      .cart-item {
+        display: flex;
+        align-items: center;
+        :deep(.van-checkbox-group) {
+          width: 100%;
+          .van-checkbox__label {
+            flex: 1;
+          }
+        }
       }
     }
   }
 
   .cart-bottom {
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%); /* 保证居中 */
-    bottom: 50px;
+    right: 0;
+    bottom: 56px;
     width: 100%;
-    // max-width: 375px; /* 跟 app 一样宽 */
-    background: #fff;
-    box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
+    border-top: 0.5px solid var(--, #ededed);
+    background: #fbfbfb;
 
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 16px;
+    padding: 8px 12px;
     align-items: center;
     align-content: center;
 
     .cart-bottom-sum {
       display: flex;
       align-items: center;
-      .sum-price {
-        margin-left: 15px;
-        font-size: 14px;
-      }
     }
     .sum-checkbox {
       flex: 1;
     }
-    .cart-sum {
-      text-align: right;
-      margin-right: 8px;
+
+    .right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
       .sum-price {
-        color: #eb2606;
-        font-size: 16px;
+        color: var(--color-red);
+        text-align: right;
+        font-family: Roboto;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
       }
-      .sum-freight {
-        color: #717378;
-        font-size: 12px;
+
+      .sum-submit {
+        margin-left: 6px;
+        height: 32px;
       }
     }
-    .sum-submit {
-      border-radius: 24px;
-      background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
-      width: 90px;
-      text-align: center;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 40px;
-      box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+  }
+
+  :deep(.van-checkbox) {
+    .van-checkbox__icon {
+      .van-icon {
+        border-radius: 1px;
+      }
+    }
+
+    .van-checkbox__icon--checked .van-icon {
+      border-radius: 1px;
+      border: 1px solid var(--adm-color-primary);
+      background: transparent;
+      color: var(--adm-color-white);
     }
   }
 }
