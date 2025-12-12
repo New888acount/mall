@@ -451,6 +451,10 @@ watch(
     margin: 7px 0;
     background: #fff;
     height: 40px;
+    :deep(.van-field) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
     :deep(.van-field__control) {
       text-align: right;
     }
