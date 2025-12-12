@@ -143,6 +143,7 @@ const state = reactive({
 /** ***函数 start*****/
 const submitOrder = async () => {
   try {
+    state.isLoading = true
     const params = {
       addressId: state.orderPayload.address_id,
       note: state.orderPayload.remark,
@@ -151,7 +152,6 @@ const submitOrder = async () => {
       skuList: state.orderInfo.skuList,
       memberCouponId: state.orderPayload.memberCouponId,
     }
-    console.log('订单params：', params)
 
     const { data } = await orderCreateApi(params)
     // 初始化当前的地址
@@ -178,17 +178,10 @@ const submitOrder = async () => {
         orderType: 'memberConsumer',
       },
     })
-    // if (exchangeNow.value) {
-    //   sheep.$router.redirect('/pages/pay/result', {
-    //     orderSN: data.order_sn,
-    //   });
-    // } else {
-    //   sheep.$router.redirect('/pages/pay/index', {
-    //     orderSN: data.order_sn,
-    //   });
-    // }
   } catch (error) {
     console.log(error)
+  } finally {
+    state.isLoading = false
   }
 }
 // 选择地址
@@ -455,6 +448,10 @@ watch(
     margin: 7px 0;
     background: #fff;
     height: 40px;
+    :deep(.van-field) {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
     :deep(.van-field__control) {
       text-align: right;
     }

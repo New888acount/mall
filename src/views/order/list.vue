@@ -187,17 +187,17 @@ const canceltip = (item) => {
   })
     .then(async () => {
       try {
-        state.loading = true
+        state.tabLoading = true
         const idList = [item.orderId]
         const res = await orderCancelApi({ idList })
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderList()
+          await getOrderList(true)
         }
       } catch (error) {
         console.log(error)
       } finally {
-        state.loading = false
+        state.tabLoading = false
       }
     })
     .catch(() => {
@@ -219,16 +219,16 @@ const onConfirm = (item) => {
   })
     .then(async () => {
       try {
-        state.loading = true
+        state.tabLoading = true
         const res = await orderConfirmApi(item.orderId)
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderList()
+          await getOrderList(true)
         }
       } catch (error) {
         console.log(error)
       } finally {
-        state.loading = false
+        state.tabLoading = false
       }
     })
     .catch(() => {
@@ -256,16 +256,16 @@ const onDelete = (item) => {
   })
     .then(async () => {
       try {
-        state.loading = true
+        state.tabLoading = true
         const res = await orderDeleteApi(item.orderId)
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderList()
+          await getOrderList(true)
         }
       } catch (error) {
         console.log(error)
       } finally {
-        state.loading = false
+        state.tabLoading = false
       }
     })
     .catch(() => {
@@ -282,10 +282,9 @@ const onLoad = async () => {
   await getOrderList()
 }
 
-const getOrderList = async () => {
+const getOrderList = async (flag) => {
   loadingDiabled = true
   state.loading = true
-  console.log(state.loading, 'state.loading')
 
   try {
     const data = await orderListApi({
@@ -309,7 +308,11 @@ const getOrderList = async () => {
       })
     }
 
-    state.list.push(...data.rows)
+    if (flag) {
+      state.list = data.rows
+    } else {
+      state.list.push(...data.rows)
+    }
 
     state.pagination.total = data.total
   } finally {

@@ -113,6 +113,7 @@
       v-model="state.showSelectSku"
       :goodsInfo="state.goodsInfo"
       :selectedSku="state.currentSkuMap"
+      :isLoading="state.isLoading"
       @handleFun="handleFunEvent"
       @change="onSkuChange"
       @close="close"
@@ -152,6 +153,7 @@ const state = reactive({
   goodsInfo: {},
   showSelectSku: false,
   currentSkuMap: {},
+  isLoading: false,
 })
 
 const selectSpecValue = computed(() => {
@@ -195,16 +197,17 @@ const handleFunEvent = async (data, val) => {
 
   if (val === 'cart') {
     try {
+      state.isLoading = true
       // 加入购物车
-      const res = await cartStore.add(data)
-      // 成功逻辑
+      const { msg, code } = await cartStore.add(data)
+      console.log(msg, 'msg')
+      customToast(msg)
       state.showSelectSku = false
-      customToast('加入购物车成功')
     } catch (err) {
-      console.error('加入购物车失败:', err)
-      customToast('加入购物车失败，请稍后再试')
+      customToast(err.msg)
+      console.error(err)
     } finally {
-      console.log('finally')
+      state.isLoading = false
     }
   } else if (val === 'buy') {
     // 进入订单

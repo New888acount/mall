@@ -132,5 +132,6 @@
   "order.status6": "无效订单",
   "cart.Inventory": "库存",
   "spec.quantity": "购买数量",
-  "other.copySuccessTip": "复制成功"
+  "other.copySuccessTip": "复制成功",
+  "cart.Quantity": "购买数量"
 }

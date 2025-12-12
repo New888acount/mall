@@ -234,7 +234,7 @@ onMounted(() => {
       text-align: center;
       display: flex;
       align-items: center;
-      justify-content: space-around;
+      justify-content: flex-start;
       flex-direction: column;
       padding: 10px 0;
     }
@@ -246,7 +246,7 @@ onMounted(() => {
         position: absolute;
         width: 15px;
         height: 15px;
-        font-size: 13px;
+        font-size: 10px;
         padding: 0;
       }
     }

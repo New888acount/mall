@@ -1,5 +1,5 @@
 <template>
-  <div class="pro-list">
+  <div class="pro-list" v-loading="state.loading">
     <MobileHeader class="cart-header" :backicon="false">
       <template #title>
         <div class="search">
@@ -62,28 +62,13 @@
       <MyPullRefreshList v-model:loading="state.loading" :finished="state.finished" @load="onLoad">
         <div :class="[switchListFlag ? 'list-data-vertical' : 'list-data-cube']">
           <template v-for="(item, i) in state.listData" :key="i">
-            <!-- <div class="item" @click="productHandle(item)">
-              <div class="item-img">
-                <MyImage v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
-              </div>
-              <div class="item-info">
-                <div class="text padding">{{ item.name }}</div>
-                <div class="item-price">
-                  <div class="price padding">
-                    <span class="unit">￥</span>
-                    {{ item.price }}
-                  </div>
-                  <div v-if="switchListFlag" class="buy">{{ $t('goodList.buy') }}</div>
-                </div>
-              </div>
-            </div> -->
             <GoodsVertical v-if="switchListFlag" :item="item" @click="productHandle" :buyButton="true" />
             <GoodsCube v-else :item="item" @click="productHandle" />
           </template>
         </div>
 
         <!-- 数据为空 -->
-        <div v-if="state.listData.length === 0 && state.finished">
+        <div v-if="!state.listData.length && state.finished && !state.loading">
           <MyEmptyData />
         </div>
       </MyPullRefreshList>

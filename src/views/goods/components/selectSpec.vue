@@ -9,7 +9,7 @@
     class="my__spec"
     :close-on-click-overlay="true"
   >
-    <div class="content">
+    <div class="content" v-loading="loading">
       <!-- 规格产品信息 -->
       <div class="spec-info">
         <div class="spec-pro-img">
@@ -68,7 +68,7 @@
       <!-- 规格数量 -->
       <div class="spec-qua">
         <div class="left">
-          <p>{{ $t('spec.quantity') }}</p>
+          <p>{{ $t('cart.Quantity') }}</p>
         </div>
         <Stepper
           v-model="state.selectedSkuPrice.buyNum"
@@ -122,12 +122,18 @@ const props = defineProps({
     type: Object,
     default() {},
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 defineExpose({
   show,
 })
 const emit = defineEmits(['change', 'handleFun', 'close'])
+
+const loading = computed(() => props.isLoading)
 
 const state = reactive({
   selectedSkuPrice: { buyNum: 1 },
