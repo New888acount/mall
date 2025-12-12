@@ -45,16 +45,21 @@ export const useCartStore = defineStore('cart', {
 
     // 添加购物车
     async add(goodsInfo) {
-      const res = await addCartApi({
-        productId: goodsInfo.productId,
-        skuId: goodsInfo.id,
-        productName: goodsInfo.productName,
-        pic: goodsInfo.pic,
-        quantity: goodsInfo.buyNum,
-        spData: goodsInfo.spData,
-      })
-      if (res > 0) {
-        this.getList()
+      try {
+        const res = await addCartApi({
+          productId: goodsInfo.productId,
+          skuId: goodsInfo.id,
+          productName: goodsInfo.productName,
+          pic: goodsInfo.pic,
+          quantity: goodsInfo.buyNum,
+          spData: goodsInfo.spData,
+        })
+        if (res.data > 0) {
+          this.getList()
+        }
+        return res
+      } catch (error) {
+        throw error
       }
     },
     // 更新购物车

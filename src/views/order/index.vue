@@ -142,50 +142,47 @@ const state = reactive({
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const submitOrder = async () => {
-  const params = {
-    addressId: state.orderPayload.address_id,
-    note: state.orderPayload.remark,
-    from: state.orderPayload.from,
-    payType: 2,
-    skuList: state.orderInfo.skuList,
-    memberCouponId: state.orderPayload.memberCouponId,
-  }
-  console.log('订单params：', params)
+  try {
+    state.isLoading = true
+    const params = {
+      addressId: state.orderPayload.address_id,
+      note: state.orderPayload.remark,
+      from: state.orderPayload.from,
+      payType: 2,
+      skuList: state.orderInfo.skuList,
+      memberCouponId: state.orderPayload.memberCouponId,
+    }
 
-  const { data } = await orderCreateApi(params)
-  // 初始化当前的地址
-  addressStore.selectedAddress = null
-  // 更新购物车列表
-  if (state.orderPayload.from === 'cart') {
-    cartStore.getList()
-  }
-  if (state.orderPayload.payAmount == 0) {
-    // 支付金额为 0，直接跳转到支付结果页
+    const { data } = await orderCreateApi(params)
+    // 初始化当前的地址
+    addressStore.selectedAddress = null
+    // 更新购物车列表
+    if (state.orderPayload.from === 'cart') {
+      cartStore.getList()
+    }
+    if (state.orderPayload.payAmount == 0) {
+      // 支付金额为 0，直接跳转到支付结果页
+      router.replace({
+        path: '/pages/pay/result',
+        query: {
+          orderSN: data,
+        },
+      })
+    }
+    // 跳转到支付页面
     router.replace({
-      path: '/pages/pay/result',
+      path: '/pay',
       query: {
         orderSN: data,
+        totalAmount: state.orderPayload.payAmount,
+        orderType: 'memberConsumer',
       },
     })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.isLoading = false
   }
-  // 跳转到支付页面
-  router.replace({
-    path: '/pay',
-    query: {
-      orderSN: data,
-      totalAmount: state.orderPayload.payAmount,
-      orderType: 'memberConsumer',
-    },
-  })
-  // if (exchangeNow.value) {
-  //   sheep.$router.redirect('/pages/pay/result', {
-  //     orderSN: data.order_sn,
-  //   });
-  // } else {
-  //   sheep.$router.redirect('/pages/pay/index', {
-  //     orderSN: data.order_sn,
-  //   });
-  // }
 }
 // 选择地址
 const onSelectAddress = () => {

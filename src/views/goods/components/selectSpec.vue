@@ -9,7 +9,7 @@
     class="my__spec"
     :close-on-click-overlay="true"
   >
-    <div class="content">
+    <div class="content" v-loading="loading">
       <!-- 规格产品信息 -->
       <div class="spec-info">
         <div class="spec-pro-img">
@@ -122,12 +122,18 @@ const props = defineProps({
     type: Object,
     default() {},
   },
+  isLoading: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 defineExpose({
   show,
 })
 const emit = defineEmits(['change', 'handleFun', 'close'])
+
+const loading = computed(() => props.isLoading)
 
 const state = reactive({
   selectedSkuPrice: { buyNum: 1 },
