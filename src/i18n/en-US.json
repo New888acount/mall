@@ -130,5 +130,6 @@
   "order.status4": "Completed",
   "order.status5": "Cancelled",
   "order.status6": "Invalid Order",
-  "cart.Inventory": "Inventory"
+  "cart.Inventory": "Inventory",
+  "cart.Quantity": "Quantity"
 }

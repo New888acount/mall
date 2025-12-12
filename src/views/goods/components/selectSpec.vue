@@ -68,7 +68,7 @@
       <!-- 规格数量 -->
       <div class="spec-qua">
         <div class="left">
-          <p>购买数量</p>
+          <p>{{ $t('cart.Quantity') }}</p>
         </div>
         <Stepper
           v-model="state.selectedSkuPrice.buyNum"

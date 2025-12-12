@@ -130,5 +130,6 @@
   "order.status4": "已完成",
   "order.status5": "已取消",
   "order.status6": "无效订单",
-  "cart.Inventory": "库存"
+  "cart.Inventory": "库存",
+  "cart.Quantity": "购买数量"
 }
