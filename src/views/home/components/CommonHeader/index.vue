@@ -4,7 +4,7 @@
       <h1>{{ title }}</h1>
     </div>
 
-    <a-button type="primary" class="all">
+    <a-button type="primary" class="all-btn">
       全部
       <i class="iconfont icon-arrow_b"></i>
     </a-button>
@@ -21,7 +21,7 @@ defineProps({
   },
 })
 </script>
-<style>
+<style lang="less" scoped>
 .title-module {
   width: 100%;
   display: flex;
@@ -45,14 +45,7 @@ defineProps({
     }
   }
 
-  .iconfont {
-    display: flex;
-    transform: rotate(-90deg);
-    margin-top: 3px;
-    margin-left: 4px;
-  }
-
-  .all {
+  .all-btn {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,6 +63,13 @@ defineProps({
     border-radius: 1px;
     background: rgba(237, 237, 237, 0.4);
     cursor: pointer;
+
+    .iconfont {
+      display: flex;
+      transform: rotate(-90deg);
+      margin-left: 4px;
+      vertical-align: middle;
+    }
   }
 }
 </style>
