@@ -35,12 +35,12 @@ export function getOrderStatusName(status) {
 
 export function formatOrderColor(type) {
   if (type === 2 || type === 1) {
-    return 'color: yellow'
+    return 'color: var(--color-yellow)'
   } else if (type === 4 || type === 5) {
-    return 'color: red'
+    return 'color: var(--color-red)'
   } else if (type === 3) {
     return 'color: var(--color-light)'
   } else if (type === 0) {
-    return 'color: green'
+    return 'color: var(--adm-color-primary)'
   }
 }

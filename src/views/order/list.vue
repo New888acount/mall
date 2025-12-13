@@ -1,6 +1,6 @@
 <template>
   <div class="order" v-loading="state.isLoading">
-    <MobileHeader :title="$t('order.index.title')" class="cart-header" :backicon="false"></MobileHeader>
+    <MobileHeader :leftText="$t('order.index.title')" class="cart-header" :backicon="true"></MobileHeader>
 
     <!-- 收货地址   -->
     <div class="shipping-address" @click="onSelectAddress">

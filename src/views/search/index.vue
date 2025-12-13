@@ -1,6 +1,6 @@
 <template>
   <div class="search-page">
-    <MobileHeader :title="$t('search.title')" class="cart-header" :backicon="false"></MobileHeader>
+    <MobileHeader :leftText="$t('search.title')" class="cart-header" :backicon="true"></MobileHeader>
 
     <div class="search">
       <i class="iconfont icon-searcch"></i>

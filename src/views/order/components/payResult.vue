@@ -10,9 +10,9 @@
   >
     <MobileHeader
       class="paysuccess-header"
-      :title="$t('order.result.title')"
+      :leftText="$t('order.result.title')"
       :callback="close"
-      :backicon="false"
+      :backicon="true"
     ></MobileHeader>
     <div class="content">
       <div class="success-icon">

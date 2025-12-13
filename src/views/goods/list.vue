@@ -1,6 +1,6 @@
 <template>
   <div class="pro-list" v-loading="state.loading">
-    <MobileHeader class="cart-header" :backicon="false">
+    <MobileHeader class="cart-header" :backicon="true">
       <template #title>
         <div class="search">
           <i class="iconfont icon-searcch"></i>

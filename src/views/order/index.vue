@@ -180,8 +180,8 @@ const onTabChange = async (name) => {
 
     // ✅ 路由同步：把当前 tab 写到 query 或 params
     router.push({
-      path: '/order',          // 你的订单页路径
-      query: { type: tab.name } // 或者用 tab.name，看你需求
+      path: '/order', // 你的订单页路径
+      query: { type: tab.name }, // 或者用 tab.name，看你需求
     })
   }
   activeName.value = tab?.name

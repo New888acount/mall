@@ -1,13 +1,15 @@
 <template>
   <div class="address">
-    <MobileHeader :title="$t('addressList.title')" class="cart-header" :backicon="false"></MobileHeader>
+    <MobileHeader :leftText="$t('addressList.title')" class="cart-header" :backicon="true"></MobileHeader>
 
     <div class="address-list" v-loading="state.loading">
       <div class="item" v-for="item in state.list" :key="item.id" @click="onSelect(item)">
         <div class="top">
           <div class="person-info">
             <div class="person-text">
-              <van-tag color="var(--color-light)" v-if="item.isDefault">{{ item.isDefault ? $t('order.index.tag') : '' }}</van-tag>
+              <van-tag color="var(--color-light)" v-if="item.isDefault">
+                {{ item.isDefault ? $t('order.index.tag') : '' }}
+              </van-tag>
               <div class="name">{{ item.name }}</div>
               <div class="phone">{{ item.phone }}</div>
             </div>

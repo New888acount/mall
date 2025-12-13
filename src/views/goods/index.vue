@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <MobileHeader class="product-header" :backicon="false" :style="{ backgroundColor: navShow ? 'transparent' : '' }">
+    <MobileHeader class="product-header" :backicon="true" :style="{ backgroundColor: navShow ? 'transparent' : '' }">
       <template #title>
         <div class="pro-header" v-if="!navShow" @click="scrollTop">
           <div>{{ $t('goodHeader.tab1') }}</div>
