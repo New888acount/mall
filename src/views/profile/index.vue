@@ -149,7 +149,7 @@ const profileList = [
     icon: 'icon-FAQ',
     loginShow: true,
     fn: () => {
-      console.log('常见问题')
+      router.push('/faq')
     },
   },
   {

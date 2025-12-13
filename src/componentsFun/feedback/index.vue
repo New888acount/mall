@@ -7,7 +7,6 @@
     :zIndex="getMaxZIndex() + 1000"
     overlayClass="my__feedback--overlay"
     class="my__feedback"
-    :close-on-click-overlay="false"
   >
     <div class="content">
       <div class="title">{{ $t('feedback.title') }}</div>
