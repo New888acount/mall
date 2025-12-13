@@ -253,7 +253,7 @@ onMounted(() => {
         color: var(--color-red);
         text-align: right;
         font-family: Roboto;
-        font-size: 18px;
+        font-size: 12px;
         font-style: normal;
         font-weight: 500;
         line-height: normal;
