@@ -178,6 +178,17 @@ const router = createRouter({
           },
           component: async () => await import('@/views/search/index.vue'),
         },
+        {
+          path: 'faq',
+          name: 'faq',
+          meta: {
+            navShow: {
+              navbar: false,
+              navigation: false,
+            },
+          },
+          component: async () => await import('@/views/faq/index.vue'),
+        },
       ],
     },
   ],

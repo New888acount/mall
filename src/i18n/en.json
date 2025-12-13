@@ -144,5 +144,9 @@
   "feedback.title":"Feedback",
   "feedback.placeholder":"Please enter your valuable feedback...",
   "feedback.submit":"Submit",
-  "feedback.success":"Thank you for your feedback!"
+  "feedback.success":"Thank you for your feedback!",
+  "faq":"FAQ",
+  "home.hot":"HOT",
+  "home.recommend":"RECOMMEND",
+  "home.all":"All"
 }

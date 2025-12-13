@@ -4,14 +4,15 @@
       <h1>{{ title }}</h1>
     </div>
 
-    <a-button type="primary" class="all">
-      全部
+    <a-button type="primary" class="all" @click="router.push('/goods/list')">
+      {{$t('home.all')}}
       <i class="iconfont icon-arrow_b"></i>
     </a-button>
   </div>
 </template>
 
 <script setup>
+import router from '@/router'
 import { defineProps } from 'vue'
 
 defineProps({

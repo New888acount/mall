@@ -144,5 +144,9 @@
   "feedback.title":"意见反馈",
   "feedback.placeholder":"请输入您的宝贵意见...",
   "feedback.submit":"提交",
-  "feedback.success":"感谢您的反馈！"
+  "feedback.success":"感谢您的反馈！",
+  "faq":"常见问题",
+  "home.hot":"畅销商品",
+  "home.recommend":"热门推荐",
+  "home.all":"全部"
 }

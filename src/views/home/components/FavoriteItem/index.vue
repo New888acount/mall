@@ -1,13 +1,18 @@
 <template>
   <div class="game-list-module">
     <div class="game-list-all">
-      <commenHeader :title="'畅销商品'" />
+      <commenHeader :title="$t('home.hot')" />
       <div class="home-game-swiper">
         <swiper v-bind="swiperOption" :modules="modules" @swiper="onSwiper" class="my-swipe">
-          <swiper-slide v-for="item in swiperList" :key="item.id" @click="handleActDetail(item)">
+          <swiper-slide v-for="item in cacheData.hotList" :key="item.id" @click="handleActDetail(item)">
             <baseModule :item="item" />
           </swiper-slide>
         </swiper>
+
+        <!-- 数据为空 -->
+        <div v-if="cacheData.hotList.length === 0">
+          <MyEmptyData />
+        </div>
       </div>
     </div>
   </div>
@@ -22,9 +27,10 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
+import useCacheData from '@/store/modules/cacheData.js'
 
 const swiperInstance = ref(null)
-
+const cacheData = useCacheData()
 // 轮播图配置
 const modules = [Navigation, EffectCoverflow, Autoplay]
 // 轮播图
@@ -119,6 +125,9 @@ watch(
       .van-swipe-item {
         padding-right: 8px;
       }
+    }
+    :deep(.my-empty-data) {
+      margin-top: 0;
     }
   }
 }

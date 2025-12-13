@@ -20,6 +20,7 @@ export const useCartStore = defineStore('cart', {
       })
       return price.toFixed(2)
     },
+    cartCount: (state) => state.list.length
   },
   actions: {
     // 获取购物车列表

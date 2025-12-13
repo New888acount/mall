@@ -1,6 +1,6 @@
 <template>
   <div class="product-list">
-    <commenHeader :title="'热门推荐'" />
+    <commenHeader :title="$t('home.recommend')" />
     <MyPullRefreshList v-model:loading="cacheData.loading" :finished="cacheData.finished" @load="cacheData.onLoad">
       <div class="list">
         <template v-for="(item, i) in cacheData.goodsList" :key="i">

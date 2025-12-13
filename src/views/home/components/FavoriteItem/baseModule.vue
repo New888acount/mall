@@ -2,11 +2,11 @@
   <div class="base-module" @click="startGame(item)">
     <i class="iconfont icon-caijin icon-adorn"></i>
 
-    <component class="img-cover" :is="MyImage" fit="cover" :src="item.imgDefault" />
+    <component class="img-cover" :is="MyImage" fit="cover" :src="$imgBaseUrl + item.pic" />
 
-    <h1 class="header">畅销商品1</h1>
+    <h1 class="header">{{item.name}}</h1>
 
-    <div class="text">{{ $unit }} 4.6/5</div>
+    <div class="text">{{ $unit }} {{item.price}}</div>
   </div>
 </template>
 <script setup>
