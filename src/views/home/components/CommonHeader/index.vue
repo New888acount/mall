@@ -4,7 +4,7 @@
       <h1>{{ title }}</h1>
     </div>
 
-    <a-button type="primary" class="all" @click="router.push('/goods/list')">
+    <a-button type="primary" class="all-btn default-btn-solidgrey" @click="router.push('/goods/list')">
       {{$t('home.all')}}
       <i class="iconfont icon-arrow_b"></i>
     </a-button>

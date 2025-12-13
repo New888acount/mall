@@ -266,6 +266,7 @@ onMounted(() => {
       position: sticky;
       top: 45px;
       z-index: 99;
+
       .title-box {
         flex: 1;
         display: flex;
@@ -310,6 +311,13 @@ onMounted(() => {
     flex-wrap: wrap;
     margin-top: 10px;
     padding: 0 10px;
+    :deep(.van-image) {
+      width: 120px;
+      height: auto;
+    }
+    .van-image__img {
+      width: 120px;
+    }
     .item {
       width: 48%;
       margin-right: 8px;

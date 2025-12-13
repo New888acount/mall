@@ -17,10 +17,12 @@
       </div>
       <div class="item-price">
         <div class="price padding">
-          <span class="unit">{{$unit}}</span>
+          <span class="unit">{{ $unit }}</span>
           {{ item.price }}
         </div>
-        <div class="buy" v-if="buyButton">{{ $t('goodList.buy') }}</div>
+        <a-button v-if="buyButton" class="default-btn operate-item">
+          {{ $t('goodList.buy') }}
+        </a-button>
 
         <div class="right" v-if="quantityButton" @click.stop>
           <van-stepper
