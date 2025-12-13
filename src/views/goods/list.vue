@@ -3,7 +3,7 @@
     <MobileHeader class="cart-header" :backicon="false">
       <template #title>
         <div class="search">
-          <i class="iconfont icon-sousuo"></i>
+          <i class="iconfont icon-searcch"></i>
           <van-field v-model="state.search" placeholder="请输入关键字" clearable @keyup.enter="onSearch" />
         </div>
       </template>
@@ -242,7 +242,7 @@ onMounted(() => {
     border-radius: 23px;
     height: 36px;
     // flex: 1;
-    .icon-sousuo {
+    .icon-searcch {
       font-size: 19px;
       margin: 0 10px;
       color: rgb(192, 196, 204);

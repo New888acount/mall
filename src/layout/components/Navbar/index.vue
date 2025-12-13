@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-module">
     <div class="search" @click="goSearch">
-      <i class="iconfont icon-sousuo"></i>
+      <i class="iconfont icon-searcch"></i>
       <van-field v-model="value1" :placeholder="$t('searchInput.placeholder')" clearable readonly />
     </div>
 
@@ -12,7 +12,9 @@
 
       <div class="icon-common">
         <i class="iconfont icon-cart"></i>
-        <div class="dot" v-if="cartStore.list && cartStore.list.length > 0">{{cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : ''}}</div>
+        <div class="dot" v-if="cartStore.list && cartStore.list.length > 0">
+          {{ cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : '' }}
+        </div>
       </div>
     </div>
   </div>
@@ -62,7 +64,7 @@ onMounted(() => {})
     background: var(--adm-bg-white);
     border-radius: 23px;
     height: 32px;
-    .icon-sousuo {
+    .icon-searcch {
       font-size: 19px;
       margin: 0 10px;
     }

@@ -196,7 +196,7 @@ const profileList = [
   },
   {
     text: t('profile.tab9'),
-    icon: 'icon-tuichudenglu',
+    icon: 'icon-logout',
     loginShow: true,
     fn: () => {
       userInfoStore.removeToken()

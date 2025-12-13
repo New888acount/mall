@@ -20,7 +20,7 @@
         </div>
         <!-- <div class="quick-item" @click="gotosearch" >
           <div class="icon">
-            <i class="iconfont icon-sousuo"></i>
+            <i class="iconfont icon-searcch"></i>
           </div>
 
           <p>搜索</p> -->
@@ -60,7 +60,7 @@ const quickList = [
     text: t('quick.tab2'),
     name: 'sousuo',
     value: 'sousuo',
-    icon: 'icon-sousuo',
+    icon: 'icon-searcch',
     fn: () => {
       router.push('/search')
       close()

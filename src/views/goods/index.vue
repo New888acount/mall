@@ -21,9 +21,7 @@
       <div class="details-wrap">
         <div class="pro-info">
           <div class="price-info">
-            <div class="price">
-              {{$unit}} {{ state.goodsInfo?.product?.price }}
-            </div>
+            <div class="price">{{ $unit }} {{ state.goodsInfo?.product?.price }}</div>
           </div>
           <div class="title">
             {{ state.goodsInfo?.product?.name }}
