@@ -1,6 +1,6 @@
 <!--
     使用方法和vant的popup组件一样
-    文档:https://vant-contrib.gitee.io/vant/#/zh-CN/popup
+    文档:https://vant-contrib.gitee.io/vant/#/zh/popup
 -->
 <template>
   <van-popup
@@ -268,7 +268,7 @@ const handleConfirm = () => {
     flex: 1;
     display: flex;
     flex-direction: column;
-    color: #1F2C3C;
+    color: #1f2c3c;
     box-sizing: border-box;
     overflow: hidden;
     &__content {

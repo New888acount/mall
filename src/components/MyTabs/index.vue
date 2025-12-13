@@ -1,6 +1,6 @@
 <!--
   使用方法和vant的tab标签页组件一样
-  文档:https://vant-ui.github.io/vant/#/zh-CN/tab
+  文档:https://vant-ui.github.io/vant/#/zh/tab
 -->
 <template>
   <div

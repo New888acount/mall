@@ -1,6 +1,6 @@
 <!--
     使用方法和vant的image组件一样
-    文档:https://vant-contrib.gitee.io/vant/#/zh-CN/image#slots
+    文档:https://vant-contrib.gitee.io/vant/#/zh/image#slots
 -->
 <template>
   <!-- 当src为''会一直显示加载 -->

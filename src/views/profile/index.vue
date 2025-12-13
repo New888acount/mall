@@ -27,21 +27,32 @@
       </div>
     </div>
     <div class="profile-order">
-      <div class="order-item" v-for="item in orderNav" :key="item.name" @click="orderTabSwitch(item)">
+      <div class="order-item" v-for="(item, index) in orderNav" :key="item.name" @click="orderTabSwitch(item)">
         <i :class="['iconfont', item.icon]">
           <van-badge :content="numData[item.name]" v-if="numData[item.name]"></van-badge>
+          <svg
+            v-if="!index && numData[item.name]"
+            class="icon-cicle"
+            xmlns="http://www.w3.org/2000/svg"
+            width="11"
+            height="6"
+            viewBox="0 0 11 6"
+            fill="none"
+          >
+            <path d="M0 0H11L0 6V0Z" fill="#459675" />
+          </svg>
         </i>
         <p>{{ item.text }}</p>
       </div>
     </div>
 
     <div class="profile-list">
-      <div v-for="item in profileList" :key="item.name" @click="item.fn" class="list-item">
-        <div class="left">
+      <div v-for="item in profileList" :key="item.text" @click="item.fn" class="list-item">
+        <div class="left" v-if="item.loginShow">
           <i :class="['iconfont', item.icon]"></i>
           <p>{{ item.text }}</p>
         </div>
-        <div class="right">
+        <div class="right" v-if="item.loginShow">
           <p v-if="item.rightText">{{ item.rightText }}</p>
           <i class="iconfont icon-arrow_s"></i>
         </div>
@@ -116,36 +127,32 @@ const orderNav = [
 const profileList = [
   {
     text: t('profile.tab1'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-collect',
+    loginShow: true,
     fn: () => {
       console.log('我的收藏')
     },
   },
   {
     text: t('profile.tab2'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-Feedback',
+    loginShow: true,
     fn: () => {
       console.log('意见反馈')
     },
   },
   {
     text: t('profile.tab3'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-FAQ',
+    loginShow: true,
     fn: () => {
       console.log('常见问题')
     },
   },
   {
     text: t('profile.tab4'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-Address',
+    loginShow: true,
     fn: () => {
       router.push({
         path: '/address/list',
@@ -154,39 +161,46 @@ const profileList = [
   },
   {
     text: t('profile.tab5'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-support',
+    loginShow: true,
     fn: () => {
       console.log('联系客服')
     },
   },
   {
     text: t('profile.tab6'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-About',
+    loginShow: true,
     fn: () => {
       console.log('关于我们')
     },
   },
   {
     text: t('profile.tab7'),
-    name: 'Clear cache',
-    value: 'Clear cache',
     icon: 'icon-Policy',
+    loginShow: true,
     fn: () => {
       console.log('隐私协议')
     },
   },
   {
     text: t('profile.tab8'),
-    name: 'Language settings',
-    value: 'Language settings',
     icon: 'icon-Language',
-    rightText: 'EN',
+    rightText: getLanguage()?.toUpperCase(),
+    loginShow: true,
     fn: async () => {
       await getLanguagesList()
+    },
+  },
+  {
+    text: t('profile.tab9'),
+    icon: 'icon-tuichudenglu',
+    loginShow: true,
+    fn: () => {
+      userInfoStore.removeToken()
+    },
+    get loginShow() {
+      return !!userInfoStore.token
     },
   },
 
@@ -237,12 +251,9 @@ const profileList = [
   // },
 ]
 // 语言选项
-const columns = [
-  { text: '中文（简体）', value: 'zh-CN' },
-  { text: 'English', value: 'en-US' },
-]
+const columns = ref([])
 const showPicker = ref(false)
-const currentLang = ref([getLanguage() || 'zh-CN'])
+const currentLang = ref([getLanguage() || 'zh'])
 const numData = computed(() => userInfoStore.numData)
 
 // console.log(numData, 'numData')
@@ -250,9 +261,8 @@ const numData = computed(() => userInfoStore.numData)
 /** ***函数 start*****/
 // tab 切换事件
 const orderTabSwitch = (item) => {
-  // 跳转到 /order/list，并带上当前 tab 参数
   router.push({
-    path: '/order/list',
+    path: '/order',
     query: { type: item.value },
   })
 }
@@ -280,6 +290,11 @@ const onChange = ({ selectedOptions }) => {
 const getLanguagesList = async () => {
   try {
     const { data } = await getLanguagesListApi()
+    columns.value = data.map((item) => {
+      item.text = item.name
+      item.value = item.code
+      return item
+    })
     console.log(data)
   } catch (error) {
     console.log(error)
@@ -389,10 +404,21 @@ onMounted(() => {
       position: relative;
       .van-badge {
         position: absolute;
-        width: 15px;
-        height: 15px;
-        font-size: 10px;
-        padding: 0;
+        padding: 2px 4px;
+        height: 20px;
+        color: var(--adm-color-white);
+        font-family: Roboto;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 14px;
+        background: var(--adm-color-primary);
+        border-radius: 0;
+      }
+
+      .icon-cicle {
+        position: absolute;
+        top: 9px;
+        left: 69%;
       }
     }
   }
