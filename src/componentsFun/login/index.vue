@@ -9,13 +9,13 @@
     class="my__login-register"
   >
     <div class="content">
-      <van-tabs v-model:active="active" color="var(--color-light)">
+      <van-tabs v-model:active="active" color="var(--color-light)" destroy-on-hide>
         <van-tab :title="item.title" v-for="item in tabsList" :key="item.name">
           <component
             class="login-register-container"
             :is="item.com"
             :callback="handleLoginSuccess"
-            :key="active + '-' + item.name"
+            :key="Date.now()"
           />
         </van-tab>
       </van-tabs>
@@ -31,7 +31,7 @@ import { defineExpose, defineProps, onMounted, reactive, ref, shallowRef } from 
 import { useI18n } from 'vue-i18n'
 import Login from './components/Login/index.vue'
 import Register from './components/Register/index.vue'
-import msgTaost from './index.js'
+import LoginBox from './index.js'
 
 /** ***引入相关包end*****/
 
@@ -74,7 +74,7 @@ const close = () => {
 }
 // 销毁组件
 const unMountComponent = () => {
-  msgTaost({ type: 'unmount' })
+  LoginBox({ type: 'unmount' })
 }
 const handleLoginSuccess = (res) => {
   // 登录成功逻辑

@@ -26,6 +26,7 @@ export default function ShowLogin(options = {}) {
         }
       },
     }
-    new AppMountComponent(finalParams)
+    // ✅ 保存实例引用
+    finalParams.appInstance = new AppMountComponent(finalParams)
   })
 }

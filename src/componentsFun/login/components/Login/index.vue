@@ -52,7 +52,7 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { h, ref, defineProps, reactive, onMounted, defineEmits } from 'vue'
+import { h, ref, defineProps, reactive, onMounted, defineEmits,onUnmounted } from 'vue'
 import useUserInfoStore from '@/store/modules/userInfo'
 // import useLocalCache from '@/hooks/storage/localStorage'
 import { useI18n } from 'vue-i18n'
@@ -178,6 +178,11 @@ const onFailed = (errorInfo) => {
 onMounted(async () => {
   // 初始化时加载一次
   refreshCaptcha()
+})
+
+onUnmounted(() => {
+  formState.username = ''
+  formState.password = ''
 })
 /** ***生命周期end*****/
 </script>
