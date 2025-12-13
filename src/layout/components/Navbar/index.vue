@@ -12,7 +12,7 @@
 
       <div class="icon-common">
         <i class="iconfont icon-cart"></i>
-        <div class="dot">10</div>
+        <div class="dot" v-if="cartStore.list && cartStore.list.length > 0">{{cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : ''}}</div>
       </div>
     </div>
   </div>
@@ -22,9 +22,12 @@
 /** ***引入相关包start*****/
 import { ref, onMounted, onUnmounted } from 'vue'
 import router from '@/router'
+import { useCartStore } from '@/store/modules/cart'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const value1 = ref()
+// 购物车数据
+const cartStore = useCartStore()
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const goSearch = () => {

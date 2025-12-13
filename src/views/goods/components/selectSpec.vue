@@ -142,10 +142,11 @@ const state = reactive({
 })
 const skuList = ref()
 
-// 默认单规格
-if (props.goodsInfo.skus.length < 2) {
+// 默认单规格 todo
+if (props.goodsInfo.skus.length < 2 && props.goodsInfo.skus.length > 0) {
   state.selectedSkuPrice = { ...props.goodsInfo.skus[0], buyNum: 1, productName: props.goodsInfo.product.name }
-  state.currentSkuMap = JSON.parse(state.selectedSkuPrice.spData)
+  console.log(state.selectedSkuPrice)
+  state.currentSkuMap = JSON.parse(state.selectedSkuPrice?.spData)
 }
 
 watch(
@@ -202,7 +203,8 @@ const changeStepper = (val) => {
 const buttonhandle = (val) => {
   if (state.selectedSkuPrice.id) {
     if (state.selectedSkuPrice.stock < 1) {
-      customToast(t('goodIndex.selectTip'))
+      // 没有库存
+      customToast(t('goodIndex.noStock'))
     } else {
       emit('handleFun', state.selectedSkuPrice, val)
     }

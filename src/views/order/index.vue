@@ -177,7 +177,14 @@ const onTabChange = async (name) => {
     state.tabLoading = true
     await getOrderList()
     state.tabLoading = false
+
+    // ✅ 路由同步：把当前 tab 写到 query 或 params
+    router.push({
+      path: '/order',          // 你的订单页路径
+      query: { type: tab.name } // 或者用 tab.name，看你需求
+    })
   }
+  activeName.value = tab?.name
 }
 
 const detailHandle = (item) => {
@@ -360,6 +367,8 @@ watch(
   (newVal) => {
     if (newVal !== undefined) {
       activeName.value = Number(newVal)
+    } else {
+      activeName.value = Number(orderNav[0].name)
     }
   },
   { immediate: true } // 页面加载时立即执行一次

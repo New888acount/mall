@@ -154,20 +154,29 @@ const submitOrder = () => {
 
 // 删除购物车
 const onDelete = async () => {
-  cartStore.delete(selectedIds.value)
+  try {
+    const res = await cartStore.delete(selectedIds.value)
+    customToast(res.msg)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 // 闪频数量加减
-const onNumberChange = (e, cartItem) => {
+const onNumberChange = async (e, cartItem) => {
   // if (e === 0) {
   //   cartStore.delete(cartItem.id);
   //     return;
   //   }
-
-  cartStore.update({
-    id: cartItem.id,
-    quantity: e,
-  })
+  try {
+    const res = await cartStore.update({
+      id: cartItem.id,
+      quantity: e,
+    })
+    customToast(res.msg)
+  } catch (error) {
+    console.log(error)
+  }
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/

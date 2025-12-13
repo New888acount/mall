@@ -37,6 +37,7 @@
   "goodList.tab2": "新品优先",
   "goodList.buy": "去购买",
   "goodIndex.selectTip": "请选择规格",
+  "goodIndex.noStock": "没有库存",
   "cart.title": "购物车{count}",
   "cartHeader.title1": "共",
   "cartHeader.title2": "件商品",

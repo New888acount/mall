@@ -247,7 +247,6 @@ const getOrderInfo = async () => {
 /** ***生命周期start*****/
 onMounted(() => {
   // 初始化当前的地址
-  addressStore.selectedAddress = null
   if (route.query.data) {
     state.orderPayload = JSON.parse(route.query.data)
     // 如果用户没有选择地址 → 用默认地址
@@ -265,9 +264,8 @@ watch(
   () => addressStore.selectedAddress,
   (newVal, oldVal) => {
     if (newVal) {
-      console.log('地址更新了:', newVal)
+      // console.log('地址更新了:', newVal)
       state.addressInfo = newVal
-      // 在这里更新订单页的展示逻辑
     }
   },
   { immediate: true } // 页面加载时也执行一次

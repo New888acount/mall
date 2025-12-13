@@ -1,6 +1,8 @@
 // stores/cart.js
 import { addCartApi, cartListApi, deleteCartApi, updateCartApi } from '@/api/cart'
 import { defineStore } from 'pinia'
+import { customToast } from '@/utils/index'
+
 export const useCartStore = defineStore('cart', {
   state: () => ({
     list: [], // 购物车列表
@@ -14,9 +16,7 @@ export const useCartStore = defineStore('cart', {
       let price = 0
       if (!state.selectedIds.length) return price.toFixed(2)
       state.list.forEach((item) => {
-    console.log(item)
         price += state.selectedIds.includes(item.id) ? Number(item.price) * item.quantity : 0
-        console.log(price)
       })
       return price.toFixed(2)
     },
@@ -59,6 +59,7 @@ export const useCartStore = defineStore('cart', {
         if (res.code === 200) {
           this.getList()
         }
+        return res
       } catch (error) {
         console.log(error)
       } finally {
@@ -73,6 +74,7 @@ export const useCartStore = defineStore('cart', {
         if (res.code === 200) {
           this.getList()
         }
+        return res
       } catch (error) {
         console.log(error)
       } finally {
@@ -91,6 +93,7 @@ export const useCartStore = defineStore('cart', {
           this.selectedIds = [] // ✅ 删除后清空选择
           this.getList()
         }
+        return res
       } catch (error) {
         console.log(error)
       } finally {
