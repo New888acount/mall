@@ -1,6 +1,6 @@
 <template>
   <MyPopup
-    v-model="pageShow"
+    v-model="show"
     :closeShow="false"
     @close="unMountComponent"
     position="bottom"
@@ -27,7 +27,7 @@
 /** ***引入相关包start*****/
 import MyPopup from '@/components/MyPopup/index.vue'
 import { getMaxZIndex } from '@/utils/index'
-import { defineExpose, defineProps, onMounted, reactive, ref, shallowRef, watch } from 'vue'
+import { defineExpose, defineProps, onMounted, reactive, ref, shallowRef } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Login from './components/Login/index.vue'
 import Register from './components/Register/index.vue'
@@ -49,9 +49,9 @@ const props = defineProps({
   },
   callback: Function,
 })
-
-// 弹出框是否显示
-const pageShow = ref(props.show)
+defineExpose({
+  show,
+})
 
 const tabsList = reactive([
   {
@@ -68,8 +68,8 @@ const tabsList = reactive([
 
 //关闭
 const close = () => {
-  pageShow.value = false
-  active.value = 'login' // 关闭时重置到登录页
+  show.value = false
+  // active.value = 'login' // 关闭时重置到登录页
   unMountComponent()
 }
 // 销毁组件
@@ -87,12 +87,6 @@ const handleLoginSuccess = (res) => {
 onMounted(() => {})
 
 // 监听显示的消失，需要移除dom
-watch(
-  () => pageShow.value,
-  (val) => {
-    !val && props.callback()
-  }
-)
 
 /** ***生命周期end*****/
 </script>
