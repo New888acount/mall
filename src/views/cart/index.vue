@@ -43,12 +43,12 @@
             checked-color="var(--adm-color-primary)"
           >
             {{ $t('cart.allSelect') }}
+            <span v-if="selectedIds?.length">( {{ $t('order.index.amount', [selectedIds?.length]) }})</span>
           </van-checkbox>
-          <div class="sum-price">{{ $t('cart.sum') }} {{ $unit }} {{ state.totalPriceSelected }}</div>
         </div>
 
         <div class="right">
-          <div class="sum-price">USDT {{ state.totalPriceSelected }}</div>
+          <div class="sum-price">{{ $unit }} {{ state.totalPriceSelected }}</div>
           <a-button class="default-btn-solid sum-submit" @click="onDelete" v-if="state.editMode">
             {{ $t('cart.delete') }}
           </a-button>
@@ -262,7 +262,7 @@ onMounted(() => {
         color: var(--color-red);
         text-align: right;
         font-family: Roboto;
-        font-size: 18px;
+        font-size: 12px;
         font-style: normal;
         font-weight: 500;
         line-height: normal;

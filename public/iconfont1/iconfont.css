@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 5069046 */
-  src: url('iconfont.woff2?t=1765520062751') format('woff2'),
-       url('iconfont.woff?t=1765520062751') format('woff'),
-       url('iconfont.ttf?t=1765520062751') format('truetype');
+  src: url('iconfont.woff2?t=1765612576627') format('woff2'),
+       url('iconfont.woff?t=1765612576627') format('woff'),
+       url('iconfont.ttf?t=1765612576627') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-logout:before {
+  content: "\e67c";
+}
+
+.icon-About:before {
+  content: "\e673";
 }
 
 .icon-collected:before {
@@ -53,10 +61,6 @@
   content: "\e672";
 }
 
-.icon-cpllected:before {
-  content: "\e673";
-}
-
 .icon-FAQ:before {
   content: "\e674";
 }
@@ -83,10 +87,6 @@
 
 .icon-collect:before {
   content: "\e67a";
-}
-
-.icon-About:before {
-  content: "\e65d";
 }
 
 .icon-unpaid:before {
