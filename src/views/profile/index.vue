@@ -27,11 +27,11 @@
       </div>
     </div>
     <div class="profile-order">
-      <div class="order-item" v-for="(item, index) in orderNav" :key="item.name" @click="orderTabSwitch(item)">
+      <div class="order-item" v-for="item in orderNav" :key="item.name" @click="orderTabSwitch(item)">
         <i :class="['iconfont', item.icon]">
           <van-badge :content="numData[item.name]" v-if="numData[item.name]"></van-badge>
           <svg
-            v-if="!index && numData[item.name]"
+            v-if="numData[item.name]"
             class="icon-cicle"
             xmlns="http://www.w3.org/2000/svg"
             width="11"

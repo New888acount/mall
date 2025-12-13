@@ -21,59 +21,78 @@
       <div class="data-list">
         <div class="data-item" v-for="item in state.list" :key="item.orderId">
           <div class="data-top">
-            <div class="data-id">{{ $t('order.list.id') }}{{ item.orderId }}</div>
+            <!-- <div class="data-id">{{ $t('order.list.id') }}{{ item.orderId }}</div> -->
 
-            <div class="data-status">{{ getOrderStatusName(item.status) }}</div>
+            <div
+              class="data-status"
+              :class="{
+                active: item.status === 0,
+              }"
+            >
+              {{ getOrderStatusName(item.status) }}
+            </div>
+            <div class="data-timer">{{ formatDateTimer(item.createTime, 'YYYY-MM-DD hh:mm:ss') }}</div>
           </div>
           <div class="data-center">
-            <div class="order-item" v-for="obj in item.orderItemList" :key="obj.id">
+            <div class="order-item">
               <div class="left">
                 <MyImage
                   class="box-img"
-                  v-if="$imgBaseUrl + obj.pic"
+                  v-for="obj in item.orderItemList.slice(0, 4)"
+                  :key="obj.id"
                   :src="$imgBaseUrl + obj.pic"
                   alt=""
                   fit="initial"
                 />
               </div>
               <div class="right">
-                <div class="good-title">
-                  {{ obj.productName }}
-                </div>
-                <div class="good-tag">{{ obj.spDataValue }}</div>
-                <div class="good-info">
-                  <div class="good-price">{{ $unit }} {{ obj.salePrice }}</div>
-                  <div class="good-qua">x {{ obj.quantity }}</div>
+                <div class="data-sum">
+                  <p class="amount">{{ $unit }} {{ item.payAmount }}</p>
+                  <p class="text">{{ $t('order.list.sum', { count: item.orderItemList.length }) }}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="data-sum">
-            {{ $unit }} {{ $t('order.list.sum', { count: item.orderItemList.length }) }} {{ $unit }}
-            {{ item.payAmount }}
-          </div>
 
           <div class="data-operate">
-            <div @click="detailHandle(item)" v-if="item.aftersaleStatus === 1">{{ $t('order.list.button1') }}</div>
-            <div
+            <a-button
+              class="default-btn-ghost operate-item"
+              @click="detailHandle(item)"
+              v-if="item.aftersaleStatus === 1"
+            >
+              {{ $t('order.list.button1') }}
+            </a-button>
+            <a-button
               v-if="item.status === 2 && item.aftersaleStatus === 1"
               @click="onConfirm(item)"
-              class="continue-paying"
+              class="default-btn-solidgrey operate-item"
             >
               {{ $t('order.list.button4') }}
-            </div>
-            <div @click="canceltip(item)" v-if="item.status === 0">{{ $t('order.list.button2') }}</div>
-            <div
+            </a-button>
+            <a-button class="default-btn-solidgrey operate-item" @click="canceltip(item)" v-if="item.status === 0">
+              {{ $t('order.list.button2') }}
+            </a-button>
+            <a-button
               @click="onPay({ orderSn: item.payId, totalAmount: item.totalAmount })"
-              class="continue-paying"
+              class="default-btn operate-item"
               v-if="item.status === 0"
             >
               {{ $t('order.list.button3') }}
-            </div>
-            <div @click="buyAgain(item)" v-if="item.status === 3 && item.aftersaleStatus === 1" class="continue-paying">
+            </a-button>
+            <a-button
+              @click="buyAgain(item)"
+              v-if="item.status === 3 && item.aftersaleStatus === 1"
+              class="default-btn operate-item"
+            >
               {{ $t('order.list.button5') }}
-            </div>
-            <div @click="onDelete(item)" v-if="[0, 4, 5].includes(item.status)">{{ $t('order.list.button6') }}</div>
+            </a-button>
+            <a-button
+              class="default-btn-solidgrey operate-item"
+              @click="onDelete(item)"
+              v-if="[0, 4, 5].includes(item.status)"
+            >
+              {{ $t('order.list.button6') }}
+            </a-button>
           </div>
         </div>
       </div>
@@ -92,7 +111,7 @@ import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { getOrderStatusName } from '@/hooks/useDict/useGoods'
 import { useI18n } from 'vue-i18n'
 import router from '@/router'
-import { customToast } from '@/utils/index'
+import { customToast, formatDateTimer } from '@/utils/index'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
@@ -354,6 +373,7 @@ watch(
   align-items: flex-start;
   justify-content: flex-end;
   height: 100dvh;
+  background: #fbfbfb;
   header {
     width: 100%;
   }
@@ -385,13 +405,13 @@ watch(
     width: 100%;
   }
   .data-list {
-    padding: 10px;
+    padding-bottom: 64px;
     width: 100%;
+
     .data-item {
-      margin-bottom: 10px;
+      padding: 12px 12px 0;
+      margin-bottom: 12px;
       background: #fff;
-      padding: 0 10px;
-      border-radius: 5px;
       &:last-child {
         margin-bottom: 0;
       }
@@ -400,81 +420,70 @@ watch(
         display: flex;
         justify-content: space-between;
         align-items: center;
-        height: 40px;
-        line-height: 40px;
-        font-size: 13px;
         .data-status {
-          color: #999;
+          flex: 1;
+          overflow: hidden;
+          color: var(--adm-color-textLv1);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          font-family: 'PingFang SC';
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 150%; /* 21px */
+          &.active {
+            color: var(--adm-color-primary);
+          }
+        }
+
+        .data-timer {
+          color: var(--color-textlv2);
+          font-family: Roboto;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
         }
       }
 
       .order-item {
         display: flex;
+        align-items: center;
         justify-content: center;
         padding: 10px 0;
         border-bottom: 1px solid #f2f2f2;
         .left {
-          margin-right: 8px;
-          .box-img {
-            width: 82px;
-            height: 82px;
-            margin-bottom: 8px;
-          }
-          .good-id {
-            color: #717378;
-            font-size: 12px;
-          }
-        }
-
-        .right {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
           flex: 1;
-          .good-title {
-            overflow: hidden;
-            color: #1f2c3c;
-            text-overflow: ellipsis;
-            font-size: 14px;
-            font-weight: 500;
-            line-height: 150%;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            align-self: stretch;
-            margin-bottom: 4px;
-          }
-
-          .good-tag {
-            color: #9d9ea2;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 150%;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 1;
-            align-self: stretch;
-            margin-bottom: 4px;
-          }
-
-          .good-info {
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-
-            .good-qua {
-              color: #999;
-              font-size: 12px;
-              margin-left: 4px;
-            }
+          .box-img {
+            margin-right: 4px;
+            width: 56px;
+            height: 56px;
           }
         }
       }
 
       .data-sum {
         text-align: right;
-        margin-top: 15px;
-        font-size: 12px;
-        margin-bottom: 5px;
+        .amount {
+          color: var(--color-red);
+          font-family: Roboto;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+        }
+        .text {
+          margin-top: 4px;
+          color: var(--adm-color-dark);
+          font-family: Roboto;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
       }
 
       .data-operate {
@@ -482,23 +491,20 @@ watch(
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        min-height: 50px;
         flex-wrap: wrap;
-        div {
+        padding: 12px 0;
+
+        .operate-item {
+          height: 26px;
           padding: 0 12px;
-          height: 28px;
-          border-radius: 15px;
-          font-size: 13px;
-          border: 1px solid #dcdcdc;
-          line-height: normal;
-          margin-left: 5px;
-          margin-bottom: 5px;
-          line-height: 27.5px;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 12px;
         }
 
-        .continue-paying {
-          background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
-          color: #fff;
+        .operate-item + .operate-item {
+          margin-left: 8px;
         }
       }
     }

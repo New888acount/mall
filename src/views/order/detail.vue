@@ -1,6 +1,6 @@
 <template>
   <div class="order-detail" v-loading="state.isLoading">
-    <MobileHeader class="paysuccess-header" :title="$t('order.detail.title')" :backicon="false"></MobileHeader>
+    <MobileHeader class="paysuccess-header" :leftText="$t('order.detail.title')" :backicon="true"></MobileHeader>
 
     <main>
       <div class="detail-one">
@@ -73,28 +73,34 @@
 
     <!-- 根据状态展示这部分的结构  取消状态不展示 -->
     <div class="detail-operate">
-      <div
+      <a-button
         v-if="state.orderInfo.status === 2 && state.orderInfo.aftersaleStatus === 1"
         @click="onConfirm(state.orderInfo)"
-        class="continue-paying"
+        class="default-btn-solidgrey operate-item"
       >
         {{ $t('order.list.button4') }}
-      </div>
-      <div @click="canceltip(state.orderId)" v-if="state.orderInfo.status === 0">{{ $t('order.list.button2') }}</div>
-      <div
+      </a-button>
+      <a-button
+        class="default-btn-solidgrey operate-item"
+        @click="canceltip(state.orderId)"
+        v-if="state.orderInfo.status === 0"
+      >
+        {{ $t('order.list.button2') }}
+      </a-button>
+      <a-button
+        class="default-btn operate-item"
         @click="onPay({ orderSn: state.orderInfo.payId, totalAmount: state.orderInfo.totalAmount })"
-        class="continue-paying"
         v-if="state.orderInfo.status === 0"
       >
         {{ $t('order.list.button3') }}
-      </div>
-      <div
+      </a-button>
+      <a-button
         @click="buyAgain(state.orderInfo)"
         v-if="state.orderInfo.status === 3 && state.orderInfo.aftersaleStatus === 1"
-        class="continue-paying"
+        class="default-btn operate-item"
       >
         {{ $t('order.list.button5') }}
-      </div>
+      </a-button>
       <!-- <div @click="onDelete(state.orderInfo)" v-if="[0, 4, 5].includes(state.orderInfo.status)">删除订单</div> -->
     </div>
   </div>
@@ -507,20 +513,17 @@ onMounted(() => {
     align-items: center;
     height: 50px;
     padding: 10px;
-    div {
-      width: 80px;
-      height: 27.5px;
-      border-radius: 15px;
-      font-size: 13px;
-      border: 1px solid #dcdcdc;
-      line-height: normal;
-      margin-left: 5px;
-      line-height: 27.5px;
+    .operate-item {
+      height: 26px;
+      padding: 0 12px;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 12px;
     }
 
-    .continue-paying {
-      background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
-      color: #fff;
+    .operate-item + .operate-item {
+      margin-left: 8px;
     }
   }
 }

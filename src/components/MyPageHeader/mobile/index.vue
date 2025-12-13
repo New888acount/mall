@@ -8,7 +8,7 @@
     <slot name="left">
       <div class="left">
         <div v-if="leftText" @click.stop="handleLeft">
-          <i class="iconfont icon-dayuhao" v-if="backicon"></i>
+          <i class="iconfont icon-arrow_s" v-if="backicon"></i>
           <span v-if="leftText">{{ leftText }}</span>
         </div>
       </div>
@@ -85,7 +85,8 @@ const handleHome = () => {
     font-weight: 700;
     line-height: 150%; /* 27px */
     cursor: pointer;
-    .icon-dayuhao {
+    .iconfont {
+      display: inline-flex;
       transform: rotate(180deg);
       font-weight: 800;
     }

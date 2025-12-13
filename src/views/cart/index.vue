@@ -48,7 +48,7 @@
         </div>
 
         <div class="right">
-          <div class="sum-price">USDT {{ state.totalPriceSelected }}</div>
+          <div class="sum-price">{{ $unit }} {{ state.totalPriceSelected }}</div>
           <a-button class="default-btn-solid sum-submit" @click="onDelete" v-if="state.editMode">
             {{ $t('cart.delete') }}
           </a-button>

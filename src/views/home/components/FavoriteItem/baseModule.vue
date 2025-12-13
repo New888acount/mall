@@ -6,7 +6,7 @@
 
     <h1 class="header">畅销商品1</h1>
 
-    <div class="text">USDT 4.6/5</div>
+    <div class="text">{{ $unit }} 4.6/5</div>
   </div>
 </template>
 <script setup>
