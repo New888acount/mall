@@ -66,7 +66,7 @@ function handleClick() {
   emit('click', props.item)
 }
 // 计数值
-const innerValue = ref(props.modelValue)
+const innerValue = ref(props.item.quantity)
 
 // 事件处理
 const onChange = (val) => {

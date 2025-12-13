@@ -147,13 +147,11 @@ const refreshCaptcha = async () => {
 const onSubmit = async (values) => {
   isLoading.value = true
 
-  console.log(getEncryptPwd(formState.password))
   try {
     const res = await userInfoStore.loginApiFun({
       code: Number(values.code), // 转成数字
       uuid: formState.uuid,
       username: values.username,
-      // password: values.password,
       password: getEncryptPwd(formState.password),
 
     })

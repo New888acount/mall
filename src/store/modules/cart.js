@@ -14,7 +14,9 @@ export const useCartStore = defineStore('cart', {
       let price = 0
       if (!state.selectedIds.length) return price.toFixed(2)
       state.list.forEach((item) => {
+    console.log(item)
         price += state.selectedIds.includes(item.id) ? Number(item.price) * item.quantity : 0
+        console.log(price)
       })
       return price.toFixed(2)
     },
