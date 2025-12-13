@@ -55,7 +55,7 @@ import MyPopup from '@/components/MyPopup/index.vue'
 import gotoLogin from '@/componentsFun/login/index'
 import useLocalCache from '@/hooks/storage/localStorage'
 import router from '@/router'
-import useUserInfoStore from '@/store/userInfo'
+import useUserInfoStore from '@/store/modules/userInfo'
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 /** ***引入相关包end*****/

@@ -47,7 +47,7 @@
 </template>
 <script setup lang="jsx">
 /** ***引入相关包start*****/
-import useUserInfoStore from '@/store/userInfo'
+import useUserInfoStore from '@/store/modules/userInfo'
 import { h, ref, defineProps, reactive, defineEmits, onMounted } from 'vue'
 // 加密、
 import { getEncryptPwd } from '@/utils/encipher'

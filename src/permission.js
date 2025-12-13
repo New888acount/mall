@@ -2,7 +2,7 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import router from './router'
 // 用户信息
-import useUserInfoStore from '@/store/userInfo'
+import useUserInfoStore from '@/store/modules/userInfo'
 // 登录框
 import ShowLogin from '@/componentsFun/login/index.js'
 

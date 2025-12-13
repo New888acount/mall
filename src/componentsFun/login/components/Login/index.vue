@@ -50,7 +50,7 @@
 <script setup>
 /** ***引入相关包start*****/
 import { h, ref, defineProps, reactive, onMounted, defineEmits } from 'vue'
-import useUserInfoStore from '@/store/userInfo'
+import useUserInfoStore from '@/store/modules/userInfo'
 // import useLocalCache from '@/hooks/storage/localStorage'
 import { useI18n } from 'vue-i18n'
 // import { getCodeApi } from '@/api/loginRegister/index'

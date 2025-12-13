@@ -23,7 +23,7 @@ import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import { onMounted, reactive, nextTick, ref } from 'vue'
-import useCacheData from '@/store/cacheData.js'
+import useCacheData from '@/store/modules/cacheData.js'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/

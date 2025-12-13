@@ -1,4 +1,4 @@
-import userInfo from './userInfo'
+import userInfo from './modules/userInfo'
 
 export default function () {
   userInfo().$reset()

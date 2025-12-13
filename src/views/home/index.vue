@@ -12,7 +12,7 @@ import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import { onMounted, reactive } from 'vue'
-import useCacheData from '@/store/cacheData.js'
+import useCacheData from '@/store/modules/cacheData.js'
 
 import banner from './components/Banner'
 import Favorite from './components/FavoriteItem/index.vue'

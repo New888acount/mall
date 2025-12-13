@@ -9,7 +9,7 @@
     class="my__message"
     :close-on-click-overlay="false"
   >
-  <!-- :closeShow="false" -->
+    <!-- :closeShow="false" -->
     <div class="content">
       <p class="left" @click="close"><i class="iconfont icon-dengluzhuceguanbi"></i></p>
       <p class="msg">{{ msg }}</p>
@@ -59,14 +59,21 @@ const unMountComponent = () => {
 }
 
 const myInterval = (func, delay) => {
+  let timerId = null
+  let stopped = false
+
   const interval = () => {
+    if (stopped) return
     func()
-    timer.value = setTimeout(interval, delay)
+    timerId = setTimeout(interval, delay)
   }
-  setTimeout(interval, delay)
+
+  timerId = setTimeout(interval, delay)
+
   return {
     cancel: () => {
-      clearTimeout(timer.value)
+      stopped = true
+      clearTimeout(timerId)
     },
   }
 }
@@ -74,12 +81,14 @@ const myInterval = (func, delay) => {
 
 /** ***生命周期start*****/
 onMounted(() => {
-  const { cancel } = myInterval(() => second.value--, 1000)
-  cancelFn.value = cancel
+  const { cancel } = myInterval(() => {
+    second.value--
+    if (second.value <= 0) {
+      close()
+    }
+  }, 1000)
 
-  setTimeout(() => {
-    close()
-  }, 3000)
+  cancelFn.value = cancel
 })
 /** ***生命周期end*****/
 </script>
@@ -95,14 +104,13 @@ onMounted(() => {
       background: transparent;
       border-radius: 0;
       box-shadow: none;
-
     }
     .content {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px;
-      background: #393732;
+      background: var(--adm-color-textLv1);
       box-shadow: 0px 4px 4px 0px rgba(20, 20, 20, 0.5);
       .left {
         display: flex;
@@ -110,18 +118,18 @@ onMounted(() => {
         justify-content: center;
         width: 18px;
         height: 18px;
-        background: #e5564d;
+        background: var(--color-red);
         border-radius: 50%;
         cursor: pointer;
         .iconfont {
           font-size: 12px;
-          color: #393732;
+          color: var(--adm-color-textLv1);
         }
       }
       .msg {
         padding: 0 8px;
         flex: 1;
-        color: #fffdf9;
+        color: var(--adm-color-white);
         font-size: 12px;
         font-style: normal;
         font-weight: 400;
@@ -131,7 +139,7 @@ onMounted(() => {
       }
 
       .right {
-        color: #d5b169;
+        color: var(--adm-color-primary);
 
         font-size: 12px;
         font-style: normal;
