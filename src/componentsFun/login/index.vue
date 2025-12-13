@@ -1,6 +1,6 @@
 <template>
   <MyPopup
-    v-model="show"
+    v-model="pageShow"
     :closeShow="false"
     @close="unMountComponent"
     position="bottom"
@@ -27,7 +27,7 @@
 /** ***引入相关包start*****/
 import MyPopup from '@/components/MyPopup/index.vue'
 import { getMaxZIndex } from '@/utils/index'
-import { defineExpose, defineProps, onMounted, reactive, ref, shallowRef } from 'vue'
+import { defineExpose, defineProps, onMounted, reactive, ref, shallowRef, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import Login from './components/Login/index.vue'
 import Register from './components/Register/index.vue'
@@ -43,13 +43,15 @@ const { t } = useI18n()
 const props = defineProps({
   resolve: Function,
   reject: Function,
-  show: Boolean,
+  show: {
+    type: Boolean,
+    default: false,
+  },
   callback: Function,
 })
 
-defineExpose({
-  show,
-})
+// 弹出框是否显示
+const pageShow = ref(props.show)
 
 const tabsList = reactive([
   {
@@ -66,7 +68,8 @@ const tabsList = reactive([
 
 //关闭
 const close = () => {
-  show.value = false
+  pageShow.value = false
+  active.value = 'login' // 关闭时重置到登录页
   unMountComponent()
 }
 // 销毁组件
@@ -74,9 +77,6 @@ const unMountComponent = () => {
   msgTaost({ type: 'unmount' })
 }
 const handleLoginSuccess = (res) => {
-  // if (freeWithdraw.attendStatus === '1' || !freeWithdraw.attendStatus) {
-  //   freeWithdraw.freeWithdrawActivityExecute(true)
-  // }
   // 登录成功逻辑
   close()
   props.resolve && props.resolve(res) // ✅ 通知路由守卫登录成功
@@ -85,6 +85,15 @@ const handleLoginSuccess = (res) => {
 
 /** ***生命周期start*****/
 onMounted(() => {})
+
+// 监听显示的消失，需要移除dom
+watch(
+  () => pageShow.value,
+  (val) => {
+    !val && props.callback()
+  }
+)
+
 /** ***生命周期end*****/
 </script>
 
@@ -134,6 +143,16 @@ onMounted(() => {})
             background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
             margin-bottom: 10px;
             box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+          }
+
+          .submit-loading {
+            height: 50px;
+            .loader {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              height: 100%;
+            }
           }
         }
       }

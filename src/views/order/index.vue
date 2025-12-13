@@ -55,7 +55,7 @@
           </div>
           <div class="good-tag">{{ item.spDataValue }}</div>
           <div class="good-info">
-            <div class="good-price">{{ item.price }}</div>
+            <div class="good-price">{{$unit}} {{ item.price }}</div>
             <div class="good-qua">x {{ item.quantity }}</div>
           </div>
         </div>
@@ -86,20 +86,20 @@
       <!-- <div> -->
       <div class="sum-total">
         <span>{{ $t('order.index.total') }}</span>
-        <p>{{ state.orderInfo.productTotalAmount }}</p>
+        <p>{{$unit}} {{ state.orderInfo.productTotalAmount }}</p>
       </div>
       <div class="sum-amount">
         <span>{{ $t('order.index.amount', { count: state.totalNumber }) }}</span>
         <p>
           {{ $t('order.index.sum') }}
-          <span>{{ state.orderPayload.payAmount }}</span>
+          <span>{{$unit}} {{ state.orderPayload.payAmount }}</span>
         </p>
       </div>
       <!-- </div> -->
     </div>
 
     <div class="order-sum">
-      <div class="sum-price">{{ state.orderPayload.payAmount }}</div>
+      <div class="sum-price">{{$unit}} {{ state.orderPayload.payAmount }}</div>
       <div class="sum-submit" @click="submitOrder">{{ $t('order.index.submit') }}</div>
     </div>
   </div>
@@ -120,6 +120,7 @@ import { useCartStore } from '@/store/modules/cart'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PaySuccess from './components/payResult.vue'
+import { customToast } from '@/utils'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const paysuccessShow = ref(false)

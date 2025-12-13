@@ -20,34 +20,26 @@
 
     <div class="cart-wrap" v-if="state.list.length > 0">
       <!-- 列表 -->
-      <div class="cart-box">
-        <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
-          <van-checkbox-group v-model="selectedIds">
-            <van-checkbox
-              :model-value="selectedIds.includes(item.id)"
-              :name="item.id"
-              icon-size="14px"
-              checked-color="var(--adm-color-primary)"
-              @change="(checked) => cartStore.selectSingle(item.id, checked)"
-            >
-              <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
-            </van-checkbox>
-          </van-checkbox-group>
+      <van-checkbox-group v-model="selectedIds">
+        <div class="cart-box">
+          <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
+            <div class="left">
+              <van-checkbox :name="item.id" shape="square" icon-size="14px"
+              checked-color="var(--adm-color-primary)">
+                {{ item.name }}
+              </van-checkbox>
+            </div>
+            <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
+          </div>
         </div>
-      </div>
+      </van-checkbox-group>
 
       <div class="cart-bottom">
         <div class="cart-bottom-sum">
-          <van-checkbox
-            icon-size="14px"
-            v-model="isAllSelected"
-            class="sum-checkbox"
-            checked-color="var(--adm-color-primary)"
-            @change="(checked) => cartStore.selectAll(checked)"
-          >
-            {{ $t('cart.allSelect') }}({{ selectedIds?.length }})
+          <van-checkbox v-model="isAllSelected" shape="square" class="sum-checkbox" icon-size="14px">
+            {{ $t('cart.allSelect') }}
           </van-checkbox>
-          <!--  -->
+          <div class="sum-price">{{ $t('cart.sum') }} {{$unit}} {{ state.totalPriceSelected }}</div>
         </div>
 
         <div class="right">
@@ -64,7 +56,11 @@
     </div>
 
     <div v-if="!cartStore.loading && !state.list.length">
-      <MyEmptyData />
+      <MyEmptyData>
+        <template #text>
+          {{ $t('cart.emptyText') }}
+        </template>
+      </MyEmptyData>
     </div>
   </div>
 </template>
@@ -106,9 +102,13 @@ const selectedIds = computed({
 })
 
 const isAllSelected = computed({
-  get: () => cartStore.isAllSelected,
+  get: () => selectedIds.value.length === cartStore.list.length,
   set: (val) => {
-    cartStore.isAllSelected = val
+    if (val) {
+      cartStore.selectedIds = cartStore.list.map((item) => item.id)
+    } else {
+      cartStore.selectedIds = []
+    }
   },
 })
 
@@ -169,8 +169,6 @@ const onNumberChange = (e, cartItem) => {
 onMounted(() => {
   // 获取购物车数据
   getCacheToken() && cartStore.getList()
-
-  console.log(cartStore.list.length)
 })
 /** ***生命周期end*****/
 </script>

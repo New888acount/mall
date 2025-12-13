@@ -88,6 +88,7 @@ import { addressDetailApi, areaApi, createAddressApi, updateAddressApi } from '@
 import useLocalCache from '@/hooks/storage/localStorage.js'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import { customToast } from '@/utils'
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
@@ -212,17 +213,24 @@ const onConfirm = ({ selectedOptions }) => {
 }
 
 const onSubmit = async (values) => {
-  let res = null
-  const params = { ...state.model }
-  params.isDefault = params.is_default ? 1 : 0
-  if (state.model.id) {
-    res = await updateAddressApi(params)
-  } else {
-    res = await createAddressApi(params)
-  }
+  try {
+    let res = null
+    const params = { ...state.model }
+    params.isDefault = params.is_default ? 1 : 0
+    if (state.model.id) {
+      res = await updateAddressApi(params)
+    } else {
+      res = await createAddressApi(params)
+    }
 
-  if (res.code == 200) {
-    router.back()
+    if (res.code == 200) {
+      router.back()
+    } else {
+      customToast(res.msg)
+    }
+  } catch (error) {
+    // 捕获异常
+    console.error(error)
   }
 }
 const transformToAreaList = (data) => {
@@ -264,14 +272,19 @@ const transformToAreaList = (data) => {
   return areaList
 }
 const getAreaData = async () => {
-  if (!getAreaHistory('areaData')) {
-    const { data } = await areaApi()
-    if (data && data.length > 0) {
-      state.areaList = transformToAreaList(data)
-      setAreaHistory(state.areaList)
+  try {
+    if (!getAreaHistory('areaData')) {
+      const { data } = await areaApi()
+      if (data && data.length > 0) {
+        state.areaList = transformToAreaList(data)
+        setAreaHistory(state.areaList)
+      }
+    } else {
+      state.areaList = getAreaHistory('areaData')
     }
-  } else {
-    state.areaList = getAreaHistory('areaData')
+  } catch (error) {
+    // 捕获异常
+    console.error(error)
   }
 }
 /** ***函数 start*****/

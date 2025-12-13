@@ -62,7 +62,7 @@ import { useI18n } from 'vue-i18n'
 /** ***ref、reactive、props，等……start*****/
 const { setLanguage, getLanguage } = useLocalCache()
 const { t } = useI18n()
-const { getCacheToken } = useLocalCache()
+const { getCacheToken,clearCache } = useLocalCache()
 
 // 用户信息
 const userInfoStore = useUserInfoStore()
@@ -108,6 +108,10 @@ const profileList = [
     icon: 'icon-shezhi',
     iconColor: '#5da4f6',
     loginShow: true,
+    fn: () => {
+      clearCache()
+      window.location.reload()
+    },
   },
   {
     text: t('profile.tab2'),

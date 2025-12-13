@@ -19,7 +19,7 @@ export const useCacheData = defineStore('useCacheData', {
   actions: {
     // 商品列表请求
     async prolist() {
-        // if (this.loading || loadingDisabled) return // 防止并发
+      if (this.loading || loadingDisabled) return // 防止并发
       loadingDisabled = true
       this.loading = true
 
@@ -30,10 +30,10 @@ export const useCacheData = defineStore('useCacheData', {
           orderField: this.orderField,
           orderSort: this.orderSort,
           search: this.search,
+          // 商品上架状态
+          publishStatus: 1,
         })
         data.rows = data?.rows || []
-
-        console.log(data.rows)
 
         this.goodsList.push(...data.rows)
         this.pagination.current++

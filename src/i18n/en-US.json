@@ -29,7 +29,7 @@
   "goodList.tab1.pop2": "Price ascending",
   "goodList.tab1.pop3": "Price descending",
   "goodList.tab2": "New arrivals first",
-  "goodList.buy": "Go to purchase",
+  "goodList.buy": "Go to Buy",
   "goodIndex.selectTip": "Please select specifications",
   "cart.title": "Cart {count}",
   "cartHeader.title1": "Total",
@@ -64,9 +64,9 @@
   "addressDetail.delete.button2": "Confirm",
   "order.index.title": "Confirm Order",
   "order.index.address": "Please Select Shipping Address",
+  "order.index.tag": "Default",
   "order.index.message.title": "Remarks",
   "order.index.message.placeholder": "Fill in Remarks",
-  "order.index.tag": "default",
   "order.index.total": "Total Amount",
   "order.index.amount": "Total {count} Items",
   "order.index.sum": "Total:",
@@ -131,5 +131,7 @@
   "order.status5": "Cancelled",
   "order.status6": "Invalid Order",
   "cart.Inventory": "Inventory",
-  "cart.Quantity": "Quantity"
+  "other.copySuccessTip": "Copied successfully",
+  "cart.Quantity": "Quantity",
+  "cart.emptyText": "My shopping cart is empty, go check it out!"
 }

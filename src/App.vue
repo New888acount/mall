@@ -15,6 +15,7 @@ const router = useRouter()
 const { setCacheToken, getCacheToken } = useLocalCache()
 // 获取store
 const appStore = useAppStore()
+const cacheData = useCacheData()
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 
@@ -27,6 +28,7 @@ onMounted(() => {
   }
 
   appStore.initApp()
+  cacheData.prolist()
 })
 /** ***生命周期end*****/
 </script>

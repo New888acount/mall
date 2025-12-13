@@ -131,5 +131,7 @@
   "order.status5": "已取消",
   "order.status6": "无效订单",
   "cart.Inventory": "库存",
-  "cart.Quantity": "购买数量"
+  "other.copySuccessTip": "复制成功",
+  "cart.Quantity": "购买数量",
+  "cart.emptyText": "购物车空空如也,快去逛逛吧~"
 }

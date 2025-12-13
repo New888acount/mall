@@ -11,21 +11,6 @@ export const getMaxZIndex = () => {
   return arr.length ? Math.max(...arr) + 1 : 0
 }
 
-// 格式化库存
-export const formatStock =(type, num) => {
-  num = num + '';
-  if (type === 'exact') {
-    return '库存' + num;
-  } else {
-    if (num < 10) {
-      return '库存≤10';
-    } else {
-      let a = Math.pow(10, num.length - 1);
-      return '库存 ' + parseInt(num / a) * a + '+';
-    }
-  }
-}
-
 // 生成n位随机数
 export const random = (n) => {
   if (n > 21) return null
@@ -125,8 +110,7 @@ export function myFixed(num, decimal = 2) {
 export const copyText = (text) => {
   // 复制
   copy(text)
-  // customToast(t('other.copySuccessTip'))
-  customToast('复制成功')
+  customToast(t('other.copySuccessTip'))
 }
 
 export const customToast = (text) => {
@@ -134,7 +118,7 @@ export const customToast = (text) => {
     message: text,
     duration: 2000,
     zIndex: getMaxZIndex() + 1000,
-    className: 'my-toast'
+    className: 'my-toast',
   })
 }
 
@@ -178,7 +162,7 @@ export const percentFormat = (num) => {
   // if (useLocalCache().getCurrentCurrencyFormat() === 'comma') {
   //   return formatter.format(num / 100)
   // } else {
-    return num + '%'
+  return num + '%'
   // }
 }
 

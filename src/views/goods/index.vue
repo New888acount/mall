@@ -12,7 +12,7 @@
       </template>
     </MobileHeader>
     <!-- 产品信息 -->
-    <div class="load" v-if="state.loading">
+    <div class="load" v-if="state.isLoading">
       <MyLoading />
     </div>
     <!-- </Teleport> -->
@@ -22,7 +22,7 @@
         <div class="pro-info">
           <div class="price-info">
             <div class="price">
-              {{ state.goodsInfo?.product?.price }}
+              {{$unit}} {{ state.goodsInfo?.product?.price }}
             </div>
           </div>
           <div class="title">
@@ -258,7 +258,7 @@ const getDetails = async (val) => {
     router.push('/')
     return
   }
-  state.loading = true
+  state.isLoading = true
   try {
     const data = await goodsDetailsApi(val)
 
@@ -280,7 +280,7 @@ const getDetails = async (val) => {
     console.error('请求失败：', err)
   } finally {
     // 无论成功失败都关闭 loading
-    state.loading = false
+    state.isLoading = false
   }
 }
 

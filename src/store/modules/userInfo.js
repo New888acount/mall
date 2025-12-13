@@ -106,8 +106,14 @@ const useUserInfoStore = defineStore('userInfo', {
 
     // 获取订单、优惠券等其他资产信息
     async getNumData() {
-      const { data } = await orderCountApi()
-      this.numData = data || {}
+      try {
+        const res = await orderCountApi()
+        if (res.code === 200) {
+          this.numData = res.data || {}
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 })

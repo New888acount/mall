@@ -7,7 +7,7 @@
         <div class="top">
           <div class="person-info">
             <div class="person-text">
-              <van-tag color="var(--color-light)" v-if="item.isDefault">{{ item.isDefault ? '默认' : '' }}</van-tag>
+              <van-tag color="var(--color-light)" v-if="item.isDefault">{{ item.isDefault ? $t('order.index.tag') : '' }}</van-tag>
               <div class="name">{{ item.name }}</div>
               <div class="phone">{{ item.phone }}</div>
             </div>

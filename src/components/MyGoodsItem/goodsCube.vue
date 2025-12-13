@@ -12,8 +12,8 @@
         {{ item.spDataValue }}
       </div>
       <div class="item-price">
-        <div class="price">
-          <span class="unit">USDT</span>
+        <div class="price padding">
+          <span class="unit">{{$unit}}</span>
           {{ item.price }}
         </div>
       </div>
