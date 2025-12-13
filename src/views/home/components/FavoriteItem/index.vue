@@ -79,7 +79,6 @@ const onSwiper = (swiper) => {
 
 onMounted(async () => {
   await nextTick()
-  swiperInstance.value?.swipeTo(0)
 })
 
 watch(

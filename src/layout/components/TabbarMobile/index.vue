@@ -37,16 +37,16 @@ const tabList = [
     },
   },
   {
-    name: '订单',
+    name: t('tabList.tab2'),
     to: '/order',
     icon: 'icon-Orders',
     bgClass: 'order',
     fn: () => {
-      router.push('/order/list?type=0')
+      router.push('/order')
     },
   },
   {
-    name: t('tabList.tab2'),
+    name: t('tabList.tab3'),
     icon: 'icon-cart',
     to: '/cart',
     bgClass: 'cart',
@@ -57,7 +57,7 @@ const tabList = [
     },
   },
   {
-    name: t('tabList.tab3'),
+    name: t('tabList.tab4'),
     icon: 'icon-mine',
     to: '/profile',
     bgClass: 'profile',

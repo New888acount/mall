@@ -48,22 +48,22 @@ import { defineProps, onBeforeUnmount, onMounted, ref } from 'vue'
 const props = defineProps({
   color: {
     type: String,
-    default: '#fe771c',
+    default: 'var(--adm-color-primary)',
   },
   // 标题颜色
   titleInactiveColor: {
     type: String,
-    default: '#646566',
+    default: 'var(--color-textlv2)',
   },
   // 选中时候标题颜色
   titleActiveColor: {
     type: String,
-    default: '#323233',
+    default: 'var(--adm-color-textLv1)',
   },
   // 选中时候线的宽度
   lineWidth: {
     type: String,
-    default: '30px',
+    default: '20px',
   },
   // 选中时候线的高度
   lineHeight: {
@@ -241,8 +241,7 @@ html[data-device='mobile'] {
     padding: 0 24px;
   }
   :deep(.van-tab--active) {
-    font-weight: 700;
-    background: var(--desgin-gradient-common-bg2);
+    font-weight: 400;
   }
 
   :deep(.van-tabs__nav--line) {

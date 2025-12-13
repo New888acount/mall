@@ -1,5 +1,5 @@
-import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '@/layout/index.vue'
+import { createRouter, createWebHistory } from 'vue-router'
 /**
  * meta参数说明
  * @param title	页面标题
@@ -102,7 +102,7 @@ const router = createRouter({
             requiresAuth: true,
             navShow: {
               navbar: false,
-              navigation: false,
+              navigation: true,
             },
           },
           component: async () => await import('@/views/order/index.vue'),

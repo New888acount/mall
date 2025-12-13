@@ -88,7 +88,6 @@ const onSwiper = (swiper) => {
 /** ***生命周期start*****/
 onMounted(async () => {
   await nextTick()
-  swiperInstance.value?.swipeTo(0)
 })
 watch(
   () => bannerList,
