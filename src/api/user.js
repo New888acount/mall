@@ -52,4 +52,8 @@ export const imgApi = (url) =>
     method: 'GET',
   })
 
-  
+export const getLanguagesListApi = () =>
+  request({
+    url: '/mall/api/common/languages',
+    method: 'GET',
+  })

@@ -71,6 +71,7 @@ import router from '@/router'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { getLanguagesListApi } from '@/api/user'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { setLanguage, getLanguage } = useLocalCache()
@@ -184,8 +185,8 @@ const profileList = [
     value: 'Language settings',
     icon: 'icon-Language',
     rightText: 'EN',
-    fn: () => {
-      showPicker.value = true
+    fn: async () => {
+      await getLanguagesList()
     },
   },
 
@@ -274,6 +275,17 @@ const onCancel = () => {
 // 实时预览选中的语言
 const onChange = ({ selectedOptions }) => {
   console.log('当前选择:', selectedOptions[0].text)
+}
+
+const getLanguagesList = async () => {
+  try {
+    const { data } = await getLanguagesListApi()
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  } finally {
+    showPicker.value = true
+  }
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
