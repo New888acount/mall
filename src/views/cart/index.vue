@@ -35,10 +35,16 @@
 
       <div class="cart-bottom">
         <div class="cart-bottom-sum">
-          <van-checkbox v-model="isAllSelected" shape="square" class="sum-checkbox" icon-size="14px" checked-color="var(--adm-color-primary)">
+          <van-checkbox
+            v-model="isAllSelected"
+            shape="square"
+            class="sum-checkbox"
+            icon-size="14px"
+            checked-color="var(--adm-color-primary)"
+          >
             {{ $t('cart.allSelect') }}
+            <span v-if="selectedIds?.length">( {{ $t('order.index.amount', [selectedIds?.length]) }})</span>
           </van-checkbox>
-          <div class="sum-price">{{ $t('cart.sum') }} {{ $unit }} {{ state.totalPriceSelected }}</div>
         </div>
 
         <div class="right">

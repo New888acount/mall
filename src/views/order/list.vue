@@ -89,7 +89,7 @@
         <p>{{ $unit }} {{ state.orderInfo.productTotalAmount }}</p>
       </div>
       <div class="sum-amount">
-        <span>{{ $t('order.index.amount', { count: state.totalNumber }) }}</span>
+        <span>{{ $t('order.index.amount', [state.totalNumber]) }}</span>
         <p>
           {{ $t('order.index.sum') }}
           <span>{{ $unit }} {{ state.orderPayload.payAmount }}</span>

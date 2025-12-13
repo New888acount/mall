@@ -74,7 +74,7 @@
   "order.index.message.placeholder": "填写订单备注信息",
   "order.index.tag": "默认",
   "order.index.total": "商品总金额",
-  "order.index.amount": "共{count}件",
+  "order.index.amount": "共{0}件",
   "order.index.sum": "合计：",
   "order.index.submit": "提交订单",
   "order.list.title": "我的订单",

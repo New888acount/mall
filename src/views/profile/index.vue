@@ -1,5 +1,5 @@
 <template>
-  <div class="profile-page">
+  <div class="profile-page" v-loading="isLoading">
     <div class="profile-info" @click="gotoLogin">
       <MyImage
         :src="
@@ -123,6 +123,8 @@ const orderNav = [
     icon: 'icon-Orders',
   },
 ]
+
+const isLoading = ref(false)
 
 const profileList = [
   {
@@ -289,6 +291,7 @@ const onChange = ({ selectedOptions }) => {
 
 const getLanguagesList = async () => {
   try {
+    isLoading.value = true
     const { data } = await getLanguagesListApi()
     columns.value = data.map((item) => {
       item.text = item.name
@@ -299,6 +302,7 @@ const getLanguagesList = async () => {
   } catch (error) {
     console.log(error)
   } finally {
+    isLoading.value = false
     showPicker.value = true
   }
 }
