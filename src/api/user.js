@@ -46,10 +46,16 @@ export const profileApi = () =>
     method: 'GET',
   })
 
-export const imgApi = (url) =>
+/**
+ * 获取公钥
+ * @param
+ * @returns
+ */
+export const getPublicKey = () =>
   request({
-    url: url,
+    url: '/api/common/getPublicKey',
     method: 'GET',
   })
+
 
   

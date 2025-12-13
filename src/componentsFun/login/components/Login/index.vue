@@ -57,6 +57,8 @@ import useUserInfoStore from '@/store/modules/userInfo'
 // import useLocalCache from '@/hooks/storage/localStorage'
 import { useI18n } from 'vue-i18n'
 import { getCodeApi } from '@/api/user'
+import { getEncryptPwd } from '@/utils/encipher'
+
 /** ***引入相关包end*****/
 
 /** ***ref、reactive，等……start*****/
@@ -144,12 +146,16 @@ const refreshCaptcha = async () => {
 
 const onSubmit = async (values) => {
   isLoading.value = true
+
+  console.log(getEncryptPwd(formState.password))
   try {
     const res = await userInfoStore.loginApiFun({
       code: Number(values.code), // 转成数字
       uuid: formState.uuid,
       username: values.username,
-      password: values.password,
+      // password: values.password,
+      password: getEncryptPwd(formState.password),
+
     })
     isLoading.value = false
 
