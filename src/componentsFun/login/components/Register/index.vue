@@ -147,6 +147,7 @@ const handleFinish = async () => {
       ...formState,
       // phoneCode: formState.phone ? phoneCode.value : '',
       // encryptPwd: getEncryptPwd(formState.password),
+      password: getEncryptPwd(formState.password),
       // encryptPwd: formState.password,
     }
     // 密码加密，不需要原来的password字段

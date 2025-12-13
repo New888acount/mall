@@ -15,6 +15,10 @@ export default function ShowLogin(options = {}) {
       component,
       ...options,
       callback(res) {
+        // ✅ 销毁组件
+        if (finalParams.appInstance) {
+          finalParams.appInstance.unmount()
+        }
         if (res) {
           resolve(res) // 登录成功
         } else {
