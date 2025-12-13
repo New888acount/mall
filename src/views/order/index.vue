@@ -159,32 +159,26 @@ const state = reactive({
     pageSize: 10,
     total: 0,
   },
-  status: 0,
+  status: -1,
 })
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 // 切换事件
-const onTabChange = async (name) => {
-  const tab = orderNav.find((item) => item.name === name)
+let isManualChange = false
 
+const onTabChange = async (name) => {
+  isManualChange = true
+  const tab = orderNav.find((item) => item.name === name)
   if (tab) {
+    router.push({ path: '/order', query: { type: tab.name } })
     state.status = tab.value
-    // 在这里可以根据 value 去请求对应订单列表
-    state.list = []
-    state.pagination.current = 1
-    state.pagination.pageSize = 10
-    state.pagination.total = 0
+    resetState()
     state.tabLoading = true
     await getOrderList()
     state.tabLoading = false
-
-    // ✅ 路由同步：把当前 tab 写到 query 或 params
-    router.push({
-      path: '/order', // 你的订单页路径
-      query: { type: tab.name }, // 或者用 tab.name，看你需求
-    })
   }
   activeName.value = tab?.name
+  isManualChange = false
 }
 
 const detailHandle = (item) => {
@@ -311,9 +305,10 @@ const onLoad = async () => {
 }
 
 const getOrderList = async (flag) => {
+  if (state.loading || loadingDiabled) return
   loadingDiabled = true
   state.loading = true
-
+  state.status = route.query?.type - 1
   try {
     const data = await orderListApi({
       pageNum: state.pagination.current,
@@ -361,14 +356,17 @@ onMounted(() => {
   }
 })
 /** ***生命周期end*****/
-// 监听路由参数 type 的变化
 watch(
   () => route.query.type,
-  (newVal) => {
+  async (newVal) => {
     if (newVal !== undefined) {
       activeName.value = Number(newVal)
     } else {
       activeName.value = Number(orderNav[0].name)
+    }
+
+    if (!isManualChange) {
+      await getOrderList()
     }
   },
   { immediate: true } // 页面加载时立即执行一次
