@@ -175,11 +175,10 @@ const onTabChange = async (name) => {
     state.pagination.pageSize = 10
     state.pagination.total = 0
     state.tabLoading = true
-    await getOrderList()
     state.tabLoading = false
 
     // ✅ 路由同步：把当前 tab 写到 query 或 params
-    router.push({
+    router.replace({
       path: '/order',          // 你的订单页路径
       query: { type: tab.name } // 或者用 tab.name，看你需求
     })
@@ -357,7 +356,6 @@ const getOrderList = async (flag) => {
 onMounted(() => {
   if (route.query.type) {
     activeName.value = Number(route.query.type)
-    onTabChange(activeName.value)
   }
 })
 /** ***生命周期end*****/
@@ -367,9 +365,12 @@ watch(
   (newVal) => {
     if (newVal !== undefined) {
       activeName.value = Number(newVal)
-    } else {
-      activeName.value = Number(orderNav[0].name)
+    onTabChange(activeName.value)
+
     }
+    //  else {
+    //   activeName.value = Number(orderNav[0].name)
+    // }
   },
   { immediate: true } // 页面加载时立即执行一次
 )

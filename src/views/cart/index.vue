@@ -3,7 +3,7 @@
     <MobileHeader
       :backicon="false"
       :leftText="
-        $t('cart.title', { count: cartStore.list && cartStore.list.length > 0 ? `(${cartStore.list.length})` : '' })
+        $t('cart.title', { count: cartStore.cartCount ? `(${cartStore.cartCount})` : '' })
       "
       class="cart-header"
     >
@@ -182,7 +182,7 @@ const onNumberChange = async (e, cartItem) => {
 /** ***生命周期start*****/
 onMounted(() => {
   // 获取购物车数据
-  getCacheToken() && cartStore.getList()
+  // getCacheToken() && cartStore.getList()
 })
 /** ***生命周期end*****/
 </script>

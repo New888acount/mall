@@ -12,7 +12,7 @@
 
       <div class="icon-common">
         <i class="iconfont icon-cart"></i>
-        <div class="dot" v-if="cartStore.list && cartStore.list.length > 0">{{cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : ''}}</div>
+        <div class="dot" v-if="cartStore.cartCount">{{ cartStore.cartCount }}</div>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted,  } from 'vue'
 import router from '@/router'
 import { useCartStore } from '@/store/modules/cart'
 /** ***引入相关包end*****/
@@ -37,7 +37,7 @@ const goSearch = () => {
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {})
-
+// watch()
 /** ***生命周期end*****/
 </script>
 
