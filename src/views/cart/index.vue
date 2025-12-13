@@ -35,7 +35,7 @@
 
       <div class="cart-bottom">
         <div class="cart-bottom-sum">
-          <van-checkbox v-model="isAllSelected" shape="square" class="sum-checkbox" icon-size="14px">
+          <van-checkbox v-model="isAllSelected" shape="square" class="sum-checkbox" icon-size="14px" checked-color="var(--adm-color-primary)">
             {{ $t('cart.allSelect') }}
           </van-checkbox>
           <div class="sum-price">{{ $t('cart.sum') }} {{ $unit }} {{ state.totalPriceSelected }}</div>
