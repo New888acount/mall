@@ -140,5 +140,9 @@
   "cart.Inventory": "Inventory",
   "other.copySuccessTip": "Copied successfully",
   "cart.Quantity": "Quantity",
-  "cart.emptyText": "My shopping cart is empty, go check it out!"
+  "cart.emptyText": "My shopping cart is empty, go check it out!",
+  "feedback.title":"Feedback",
+  "feedback.placeholder":"Please enter your valuable feedback...",
+  "feedback.submit":"Submit",
+  "feedback.success":"Thank you for your feedback!"
 }

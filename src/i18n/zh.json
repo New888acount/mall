@@ -140,5 +140,9 @@
   "cart.Inventory": "库存",
   "other.copySuccessTip": "复制成功",
   "cart.Quantity": "购买数量",
-  "cart.emptyText": "购物车空空如也,快去逛逛吧~"
+  "cart.emptyText": "购物车空空如也,快去逛逛吧~",
+  "feedback.title":"意见反馈",
+  "feedback.placeholder":"请输入您的宝贵意见...",
+  "feedback.submit":"提交",
+  "feedback.success":"感谢您的反馈！"
 }

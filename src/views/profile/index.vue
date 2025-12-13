@@ -83,6 +83,7 @@ import useUserInfoStore from '@/store/modules/userInfo'
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getLanguagesListApi } from '@/api/user'
+import Feedback from '@/componentsFun/feedback/index.js'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { setLanguage, getLanguage } = useLocalCache()
@@ -140,7 +141,7 @@ const profileList = [
     icon: 'icon-Feedback',
     loginShow: true,
     fn: () => {
-      console.log('意见反馈')
+      Feedback()
     },
   },
   {
