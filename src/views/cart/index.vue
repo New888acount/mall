@@ -1,7 +1,7 @@
 <template>
   <div class="cart-page" v-loading="cartStore.loading">
     <MobileHeader
-      :leftIcon="false"
+      :backicon="false"
       :leftText="
         $t('cart.title', { count: cartStore.list && cartStore.list.length > 0 ? `(${cartStore.list.length})` : '' })
       "
@@ -24,8 +24,7 @@
         <div class="cart-box">
           <div class="cart-item" v-for="(item, i) in state.list" :key="item.id">
             <div class="left">
-              <van-checkbox :name="item.id" shape="square" icon-size="14px"
-              checked-color="var(--adm-color-primary)">
+              <van-checkbox :name="item.id" shape="square" icon-size="14px" checked-color="var(--adm-color-primary)">
                 {{ item.name }}
               </van-checkbox>
             </div>
@@ -39,7 +38,7 @@
           <van-checkbox v-model="isAllSelected" shape="square" class="sum-checkbox" icon-size="14px" checked-color="var(--adm-color-primary)">
             {{ $t('cart.allSelect') }}
           </van-checkbox>
-          <div class="sum-price">{{ $t('cart.sum') }} {{$unit}} {{ state.totalPriceSelected }}</div>
+          <div class="sum-price">{{ $t('cart.sum') }} {{ $unit }} {{ state.totalPriceSelected }}</div>
         </div>
 
         <div class="right">

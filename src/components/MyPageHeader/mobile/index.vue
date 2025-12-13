@@ -8,7 +8,7 @@
     <slot name="left">
       <div class="left">
         <div v-if="leftText" @click.stop="handleLeft">
-          <i class="iconfont icon-dayuhao" v-if="leftIcon"></i>
+          <i class="iconfont icon-dayuhao" v-if="backicon"></i>
           <span v-if="leftText">{{ leftText }}</span>
         </div>
       </div>
