@@ -13,9 +13,24 @@
       </div>
       <div class="item-price">
         <div class="price padding">
-          <span class="unit">{{$unit}}</span>
+          <span class="unit">{{ $unit }}</span>
           {{ item.price }}
         </div>
+      </div>
+
+      <div
+        class="fav-icon"
+        :class="{
+          active: item.name,
+        }"
+      >
+        <i
+          class="iconfont"
+          :class="{
+            'icon-collect': !item.name,
+            'icon-collected1': item.name,
+          }"
+        ></i>
       </div>
     </div>
   </div>
@@ -38,6 +53,33 @@ function handleClick() {
 
 <style scoped lang="less">
 .cube-item {
+  position: relative;
+
+  .fav-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    z-index: 2;
+    &.active {
+      background: var(--adm-color-primary);
+      .iconfont {
+        font-size: 14px;
+        color: #fff;
+      }
+    }
+    .iconfont {
+      font-size: 16px;
+      color: var(--adm-color-textLv1);
+    }
+  }
   :deep(.van-image) {
     width: 100%;
     height: auto;

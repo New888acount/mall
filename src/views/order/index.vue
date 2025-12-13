@@ -159,31 +159,17 @@ const state = reactive({
     pageSize: 10,
     total: 0,
   },
-  status: 0,
+  status: -1,
 })
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
-// 切换事件
+
 const onTabChange = async (name) => {
   const tab = orderNav.find((item) => item.name === name)
-
   if (tab) {
-    state.status = tab.value
-    // 在这里可以根据 value 去请求对应订单列表
-    state.list = []
-    state.pagination.current = 1
-    state.pagination.pageSize = 10
-    state.pagination.total = 0
-    state.tabLoading = true
-    state.tabLoading = false
-
-    // ✅ 路由同步：把当前 tab 写到 query 或 params
-    router.replace({
-      path: '/order',          // 你的订单页路径
-      query: { type: tab.name } // 或者用 tab.name，看你需求
-    })
+    activeName.value = tab?.name
+    router.replace({ name: 'order', query: { type: tab.name } })
   }
-  activeName.value = tab?.name
 }
 
 const detailHandle = (item) => {
@@ -305,14 +291,12 @@ let loadingDiabled = false
 
 const onLoad = async () => {
   if (state.finished || loadingDiabled) return false
-
   await getOrderList()
 }
 
 const getOrderList = async (flag) => {
-  loadingDiabled = true
   state.loading = true
-
+  state.status = route.query?.type - 1
   try {
     const data = await orderListApi({
       pageNum: state.pagination.current,
@@ -320,49 +304,45 @@ const getOrderList = async (flag) => {
       status: state.status,
     })
 
-    data.rows = data?.rows || []
-
-    if (data.rows && data.rows.length > 0) {
-      data.rows.forEach((it) => {
-        it.orderItemList.forEach((item) => {
-          let str = ''
-          const obj = JSON.parse(item.spData)
-          Object.keys(obj).forEach((key) => {
-            str += key + '：' + obj[key] + ' '
-          })
-          item.spDataValue = str
-        })
+    const rows = data?.rows || []
+    rows.forEach((it) => {
+      it.orderItemList.forEach((item) => {
+        const obj = JSON.parse(item.spData)
+        item.spDataValue = Object.entries(obj)
+          .map(([k, v]) => `${k}：${v}`)
+          .join(' ')
       })
-    }
+    })
 
     if (flag) {
-      state.list = data.rows
+      state.list = rows
     } else {
-      state.list.push(...data.rows)
+      state.list.push(...rows)
     }
 
     state.pagination.current++
     state.pagination.total = data.total
-  } finally {
-    state.loading = false
-    loadingDiabled = false
     if (state.list.length >= state.pagination.total) {
       state.finished = true
     }
+  } finally {
+    state.loading = false
+    loadingDiabled = false
   }
 }
+
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
   if (route.query.type) {
     activeName.value = Number(route.query.type)
+    onLoad()
   }
 })
 /** ***生命周期end*****/
-// 监听路由参数 type 的变化
 watch(
   () => route.query.type,
-  (newVal) => {
+  async (newVal) => {
     if (newVal !== undefined) {
       activeName.value = Number(newVal)
     onTabChange(activeName.value)

@@ -197,7 +197,7 @@ const profileList = [
   },
   {
     text: t('profile.tab9'),
-    icon: 'icon-tuichudenglu',
+    icon: 'icon-logout',
     loginShow: true,
     fn: () => {
       userInfoStore.removeToken()
@@ -410,6 +410,7 @@ onMounted(() => {
       .van-badge {
         position: absolute;
         padding: 2px 4px;
+        min-width: 32px;
         height: 20px;
         color: var(--adm-color-white);
         font-family: Roboto;

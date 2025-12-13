@@ -1,6 +1,6 @@
 <template>
   <div class="product">
-    <MobileHeader class="product-header" :backicon="false" :style="{ backgroundColor: navShow ? 'transparent' : '' }">
+    <MobileHeader class="product-header" :backicon="true" :style="{ backgroundColor: navShow ? 'transparent' : '' }">
       <template #title>
         <div class="pro-header" v-if="!navShow" @click="scrollTop">
           <div>{{ $t('goodHeader.tab1') }}</div>
@@ -21,9 +21,7 @@
       <div class="details-wrap">
         <div class="pro-info">
           <div class="price-info">
-            <div class="price">
-              {{$unit}} {{ state.goodsInfo?.product?.price }}
-            </div>
+            <div class="price">{{ $unit }} {{ state.goodsInfo?.product?.price }}</div>
           </div>
           <div class="title">
             {{ state.goodsInfo?.product?.name }}

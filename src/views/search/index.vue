@@ -1,9 +1,9 @@
 <template>
   <div class="search-page">
-    <MobileHeader :title="$t('search.title')" class="cart-header" :backicon="false"></MobileHeader>
+    <MobileHeader :leftText="$t('search.title')" class="cart-header" :backicon="true"></MobileHeader>
 
     <div class="search">
-      <i class="iconfont icon-sousuo"></i>
+      <i class="iconfont icon-searcch"></i>
       <van-field v-model="search" :placeholder="$t('searchInput.placeholder')" clearable @keyup.enter="onSearch" />
     </div>
 
@@ -76,7 +76,7 @@ onMounted(() => {
     margin: 5px 12px;
     border-radius: 23px;
     height: 36px;
-    .icon-sousuo {
+    .icon-searcch {
       font-size: 19px;
       margin: 0 10px;
       color: rgb(192, 196, 204);

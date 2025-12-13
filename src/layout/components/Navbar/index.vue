@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-module">
     <div class="search" @click="goSearch">
-      <i class="iconfont icon-sousuo"></i>
+      <i class="iconfont icon-searcch"></i>
       <van-field v-model="value1" :placeholder="$t('searchInput.placeholder')" clearable readonly />
     </div>
 
@@ -23,11 +23,14 @@
 import { ref, onMounted,  } from 'vue'
 import router from '@/router'
 import { useCartStore } from '@/store/modules/cart'
+import userInfoStore from '@/store/modules/userInfo'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const value1 = ref()
 // 购物车数据
 const cartStore = useCartStore()
+
+const useUserInfoStore = userInfoStore()
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const goSearch = () => {
@@ -62,7 +65,7 @@ onMounted(() => {})
     background: var(--adm-bg-white);
     border-radius: 23px;
     height: 32px;
-    .icon-sousuo {
+    .icon-searcch {
       font-size: 19px;
       margin: 0 10px;
     }

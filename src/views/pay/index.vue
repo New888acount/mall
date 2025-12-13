@@ -1,6 +1,6 @@
 <template>
   <div class="my__paymethods">
-    <MobileHeader class="cart-header" :title="$t('pay.title')" :backicon="false" :callback="close"></MobileHeader>
+    <MobileHeader class="cart-header" :leftText="$t('pay.title')" :backicon="true" :callback="close"></MobileHeader>
     <div class="content">
       <div class="price">{{ state.totalAmount }}</div>
       <h2>{{ $t('pay.methods') }}</h2>
