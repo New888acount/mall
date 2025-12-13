@@ -42,7 +42,7 @@ const tabList = [
     icon: 'icon-Orders',
     bgClass: 'order',
     fn: () => {
-      router.push('/order')
+      router.push('/order?type=0')
     },
   },
   {

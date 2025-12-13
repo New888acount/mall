@@ -37,6 +37,7 @@
   "goodList.tab2": "New arrivals first",
   "goodList.buy": "Go to Buy",
   "goodIndex.selectTip": "Please select specifications",
+  "goodIndex.noStock": "out of stock",
   "cart.title": "Cart {count}",
   "cartHeader.title1": "Total",
   "cartHeader.title2": "Item",

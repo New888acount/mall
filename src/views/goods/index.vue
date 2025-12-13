@@ -199,9 +199,8 @@ const handleFunEvent = async (data, val) => {
     try {
       state.isLoading = true
       // 加入购物车
-      const { msg, code } = await cartStore.add(data)
-      console.log(msg, 'msg')
-      customToast(msg)
+      const res = await cartStore.add(data)
+      customToast(res.msg)
       state.showSelectSku = false
     } catch (err) {
       customToast(err.msg)
@@ -212,7 +211,7 @@ const handleFunEvent = async (data, val) => {
   } else if (val === 'buy') {
     // 进入订单
     router.push({
-      path: '/order', // 跳转的路径
+      path: '/order/list', // 跳转的路径
       query: {
         data: JSON.stringify({
           order_type: 'goods',
