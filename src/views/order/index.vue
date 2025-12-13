@@ -1,12 +1,7 @@
 <template>
   <div class="order-list" v-loading="state.tabLoading">
     <header>
-      <MobileHeader
-        class="paysuccess-header"
-        :leftIcon="false"
-        :leftText="$t('order.list.title')"
-        :backicon="false"
-      ></MobileHeader>
+      <MobileHeader class="paysuccess-header" :leftText="$t('order.list.title')" :backicon="false"></MobileHeader>
 
       <MyTabs
         v-model:active="activeName"
