@@ -286,7 +286,6 @@ let loadingDiabled = false
 const onLoad = async () => {
   if (state.finished || loadingDiabled) return false
 
-  state.pagination.current++
   await getOrderList()
 }
 
@@ -322,6 +321,7 @@ const getOrderList = async (flag) => {
       state.list.push(...data.rows)
     }
 
+    state.pagination.current++
     state.pagination.total = data.total
   } finally {
     state.loading = false
