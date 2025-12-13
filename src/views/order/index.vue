@@ -163,22 +163,13 @@ const state = reactive({
 })
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
-// 切换事件
-let isManualChange = false
 
 const onTabChange = async (name) => {
-  isManualChange = true
   const tab = orderNav.find((item) => item.name === name)
   if (tab) {
-    router.push({ path: '/order', query: { type: tab.name } })
-    state.status = tab.value
-    resetState()
-    state.tabLoading = true
-    await getOrderList()
-    state.tabLoading = false
+    activeName.value = tab?.name
+    router.replace({ name: 'order', query: { type: tab.name } })
   }
-  activeName.value = tab?.name
-  isManualChange = false
 }
 
 const detailHandle = (item) => {
@@ -300,13 +291,10 @@ let loadingDiabled = false
 
 const onLoad = async () => {
   if (state.finished || loadingDiabled) return false
-
   await getOrderList()
 }
 
 const getOrderList = async (flag) => {
-  if (state.loading || loadingDiabled) return
-  loadingDiabled = true
   state.loading = true
   state.status = route.query?.type - 1
   try {
@@ -316,43 +304,39 @@ const getOrderList = async (flag) => {
       status: state.status,
     })
 
-    data.rows = data?.rows || []
-
-    if (data.rows && data.rows.length > 0) {
-      data.rows.forEach((it) => {
-        it.orderItemList.forEach((item) => {
-          let str = ''
-          const obj = JSON.parse(item.spData)
-          Object.keys(obj).forEach((key) => {
-            str += key + '：' + obj[key] + ' '
-          })
-          item.spDataValue = str
-        })
+    const rows = data?.rows || []
+    rows.forEach((it) => {
+      it.orderItemList.forEach((item) => {
+        const obj = JSON.parse(item.spData)
+        item.spDataValue = Object.entries(obj)
+          .map(([k, v]) => `${k}：${v}`)
+          .join(' ')
       })
-    }
+    })
 
     if (flag) {
-      state.list = data.rows
+      state.list = rows
     } else {
-      state.list.push(...data.rows)
+      state.list.push(...rows)
     }
 
     state.pagination.current++
     state.pagination.total = data.total
-  } finally {
-    state.loading = false
-    loadingDiabled = false
     if (state.list.length >= state.pagination.total) {
       state.finished = true
     }
+  } finally {
+    state.loading = false
+    loadingDiabled = false
   }
 }
+
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
   if (route.query.type) {
     activeName.value = Number(route.query.type)
-    onTabChange(activeName.value)
+    onLoad()
   }
 })
 /** ***生命周期end*****/
@@ -363,10 +347,6 @@ watch(
       activeName.value = Number(newVal)
     } else {
       activeName.value = Number(orderNav[0].name)
-    }
-
-    if (!isManualChange) {
-      await getOrderList()
     }
   },
   { immediate: true } // 页面加载时立即执行一次
