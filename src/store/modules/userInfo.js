@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 // 指纹绑定
 import { loginApi, profileApi, registerApi } from '@/api/user'
 import useLocalCache from '@/hooks/storage/localStorage'
+import { useCartStore } from '@/store/modules/cart'
 
 import { homeVisitApi } from '@/api/home'
 import { orderCountApi } from '@/api/order'
@@ -65,19 +66,15 @@ const useUserInfoStore = defineStore('userInfo', {
     },
 
     async getCommonDetails(result) {
-      console.log(result)
       this.token = result.data.token
       setCacheToken(result.data.token)
 
       // 调用用户信息
       await this.getCustomInfo()
-
-      //是否注册成功用户成功注册后，上报首页访问数量+1并将字段值由False 修改为 True，后续登录或注册判断该字段值是否为False，若为False上报+1，若为True不上报。
-      // 注册成功后判断是否需要上报
+      useCartStore().getList()
+      //埋点
       if (!getIsRegister()) {
-        // 上报首页访问数量 +1
-        await homeVisitApi() // 这里写你的埋点上报方法
-        // 修改标记为 true
+        await homeVisitApi()
         setIsRegister(true)
       }
     },

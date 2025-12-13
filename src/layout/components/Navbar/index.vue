@@ -12,8 +12,8 @@
 
       <div class="icon-common">
         <i class="iconfont icon-cart"></i>
-        <div class="dot" v-if="cartStore.list && cartStore.list.length > 0">
-          {{ cartStore.list && cartStore.list.length > 0 ? cartStore.list.length : '' }}
+        <div class="dot" v-if="cartStore.list?.length && useUserInfoStore.token">
+          {{ cartStore.list?.length }}
         </div>
       </div>
     </div>
@@ -25,11 +25,14 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import router from '@/router'
 import { useCartStore } from '@/store/modules/cart'
+import userInfoStore from '@/store/modules/userInfo'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const value1 = ref()
 // 购物车数据
 const cartStore = useCartStore()
+
+const useUserInfoStore = userInfoStore()
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const goSearch = () => {

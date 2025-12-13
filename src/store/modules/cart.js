@@ -1,7 +1,6 @@
 // stores/cart.js
 import { addCartApi, cartListApi, deleteCartApi, updateCartApi } from '@/api/cart'
 import { defineStore } from 'pinia'
-import { customToast } from '@/utils/index'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
