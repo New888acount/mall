@@ -72,7 +72,7 @@ onMounted(() => {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f8f8f8;
+    background: rgba(237, 237, 237, 0.4);
     margin: 5px 12px;
     border-radius: 23px;
     height: 36px;
@@ -85,7 +85,7 @@ onMounted(() => {
       // height: 32px;
       border-radius: 0 23px 23px 0;
       padding: 0;
-      background: #f8f8f8;
+      background: rgba(237, 237, 237, 0.4);
       input::placeholder {
         color: gray; /* 改颜色 */
       }

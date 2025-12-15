@@ -1,6 +1,9 @@
 <template>
   <div class="pro-list" v-loading="state.loading">
     <MobileHeader class="cart-header" :backicon="true">
+      <template #left>
+        <i @click="back" class="header-left iconfont icon-arrow_s"></i>
+      </template>
       <template #title>
         <div class="search">
           <i class="iconfont icon-searcch"></i>
@@ -120,6 +123,10 @@ const onSearch = () => {
   initState()
 }
 
+const back = () => {
+  history.back()
+}
+
 // 切换列表排列方式
 const switchList = () => {
   switchListFlag.value = !switchListFlag.value
@@ -232,26 +239,34 @@ onMounted(() => {
 
 <style scoped lang="less">
 .pro-list {
+  .header-left {
+    display: flex;
+    transform: rotate(180deg);
+    color: var(--adm-color-textlv2);
+    font-family: 'SF Pro';
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 150%;
+    cursor: pointer;
+  }
   .search {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #f8f8f8;
-    margin: 5px 12px;
-    border-radius: 23px;
+    margin-left: 8px;
+    background: rgba(237, 237, 237, 0.4);
+    border-radius: 18px;
     height: 36px;
-    // flex: 1;
     .icon-searcch {
       font-size: 19px;
       margin: 0 10px;
       color: rgb(192, 196, 204);
     }
     :deep(.van-cell) {
-      // height: 32px;
-      border-radius: 0 23px 23px 0;
       padding: 0;
-      background: #f8f8f8;
+      background: transparent;
       input::placeholder {
         color: gray; /* 改颜色 */
       }
