@@ -10,76 +10,83 @@
     :close-on-click-overlay="true"
   >
     <div class="content" v-loading="loading">
-      <!-- 规格产品信息 -->
-      <div class="spec-info">
-        <div class="spec-pro-img">
-          <MyImage
-            v-if="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
-            :src="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
-            alt=""
-            fit="initial"
-          />
-        </div>
-
-        <div class="spec-info-center">
-          <div class="spec-title">
-            {{ props.goodsInfo?.product?.name }}
+      <div class="main-wap">
+        <!-- 规格产品信息 -->
+        <div class="spec-info">
+          <div class="spec-pro-img">
+            <MyImage
+              v-if="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
+              :src="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
+              alt=""
+              fit="initial"
+            />
           </div>
 
-          <div class="spec-info-box">
-            <div class="spec-price">{{ $unit }} {{ goodsPrice.price }}</div>
+          <div class="spec-info-center">
+            <div class="spec-title">
+              {{ props.goodsInfo?.product?.name }}
+            </div>
 
-            <div class="spec-stock">
-              {{
-                state.selectedSkuPrice.stock || state.selectedSkuPrice.stock === 0
-                  ? formatStock('exact', state.selectedSkuPrice.stock)
-                  : formatStock('exact', goodsInfo.totalStock)
-              }}
+            <div class="spec-info-box">
+              <div class="spec-price">{{ $unit }} {{ goodsPrice.price }}</div>
+
+              <div class="spec-stock">
+                {{
+                  state.selectedSkuPrice.stock || state.selectedSkuPrice.stock === 0
+                    ? formatStock('exact', state.selectedSkuPrice.stock)
+                    : formatStock('exact', goodsInfo.totalStock)
+                }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 规格颜色 -->
-      <div class="spec-color" v-for="sku1 in productAttrList" :key="sku1.id">
-        <p>{{ sku1.name }}</p>
-        <div class="option-selector">
-          <div
-            v-for="sku2 in sku1.options.filter((i) => i.name)"
-            :key="sku2.id"
-            class="option-item"
-            @click="onSelectSku(sku2.name, sku1.name)"
-            :class="[
-              {
-                active: state.currentSkuMap[sku1.name] === sku2.name,
-              },
-            ]"
-          >
-            <!-- 文本类型 -->
-            <div class="option-item-text">
-              <span class="text">{{ sku2.name }}</span>
+        <!-- 规格颜色 -->
+        <div class="spec-color" v-for="sku1 in productAttrList" :key="sku1.id">
+          <p>{{ sku1.name }}</p>
+          <div class="option-selector">
+            <div
+              v-for="sku2 in sku1.options.filter((i) => i.name)"
+              :key="sku2.id"
+              class="option-item"
+              @click="onSelectSku(sku2.name, sku1.name)"
+              :class="[
+                {
+                  active: state.currentSkuMap[sku1.name] === sku2.name,
+                },
+              ]"
+            >
+              <!-- 文本类型 -->
+              <a-button
+                class="option-item-text"
+                :class="{
+                  'default-btn-ghost': state.currentSkuMap[sku1.name] !== sku2.name,
+                  'default-btn': state.currentSkuMap[sku1.name] === sku2.name,
+                }"
+              >
+                {{ sku2.name }}
+              </a-button>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 规格数量 -->
-      <div class="spec-qua">
-        <div class="left">
-          <p>{{ $t('cart.Quantity') }}</p>
+        <!-- 规格数量 -->
+        <div class="spec-qua">
+          <div class="left">
+            <p>{{ $t('cart.Quantity') }}</p>
+          </div>
+          <Stepper
+            v-model="state.selectedSkuPrice.buyNum"
+            :max="state.selectedSkuPrice.stock"
+            @change="changeStepper"
+          ></Stepper>
         </div>
-        <Stepper
-          v-model="state.selectedSkuPrice.buyNum"
-          :max="state.selectedSkuPrice.stock"
-          :size="64"
-          @change="changeStepper"
-        ></Stepper>
       </div>
 
       <!-- 购买按钮 -->
       <div class="buy-box">
-        <div class="buy-button" @click="buttonhandle('cart')">{{ $t('good.button1') }}</div>
-        <div class="add-cart" @click="buttonhandle('buy')">{{ $t('good.button2') }}</div>
+        <a-button class="default-btn-ghost buy-button" @click="buttonhandle('cart')">{{ $t('good.button1') }}</a-button>
+        <a-button class="default-btn add-cart" @click="buttonhandle('buy')">{{ $t('good.button2') }}</a-button>
       </div>
     </div>
   </MyPopup>
@@ -251,8 +258,9 @@ onUnmounted(() => {
 <style lang="less">
 .my__spec {
   &.my-popup {
-    border-radius: 10px 10px 0 0;
-    background: linear-gradient(336deg, rgba(201, 255, 207, 0) 57.38%, rgba(255, 96, 0, 0.45) 123.57%), #fff;
+    height: 80%;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(336deg, rgba(201, 255, 207, 0) 57.38%, rgba(69, 150, 117, 0.45) 123.57%), #fff;
     font-size: 16px;
 
     .my-popup__container {
@@ -261,85 +269,90 @@ onUnmounted(() => {
       box-shadow: none;
     }
     .content {
-      .spec-info {
-        display: flex;
-        padding: 40px 10px 20px;
-        .spec-pro-img {
-          border-radius: 6px;
-          img {
-            width: 80px;
-            height: 80px;
-          }
-        }
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100%;
 
-        .spec-info-center {
-          flex: 1;
-          margin: 0 8px;
+      .main-wap {
+        flex: 1;
+        width: 100%;
+
+        .spec-info {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .spec-title {
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            align-self: stretch;
-            text-overflow: ellipsis;
-            font-weight: 500;
+          padding: 16px;
+          .spec-pro-img {
+            border-radius: 6px;
+            img {
+              width: 72px;
+              height: 72px;
+            }
           }
 
-          .spec-info-box {
+          .spec-info-center {
+            flex: 1;
+            margin: 0 8px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
+            .spec-title {
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              align-self: stretch;
+              text-overflow: ellipsis;
+              font-weight: 500;
+            }
+
+            .spec-info-box {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .spec-price {
+              color: var(--adm-color-primary);
+              font-size: 16px;
+              font-weight: 600;
+            }
+
+            .spec-stock {
+              text-align: right;
+              font-size: 16px;
+            }
           }
-          .spec-price {
-            color: var(--adm-color-primary);
-            font-size: 15px;
-            font-weight: 600;
-            height: 30px;
-            line-height: 30px;
-          }
+        }
 
-          .spec-stock {
-            text-align: right;
-            font-size: 15px;
+        .spec-color {
+          margin-bottom: 12px;
+          padding: 0 10px;
+          p {
+            margin-bottom: 12px;
           }
         }
+        .spec-type {
+          margin-bottom: 12px;
+          padding: 0 12px;
 
-        .icon-dengluzhuceguanbi {
-          font-size: 22px;
-          color: #9d9ea2;
+          p {
+            margin-bottom: 12px;
+          }
         }
-      }
 
-      .spec-color {
-        margin-bottom: 16px;
-        padding: 0 10px;
-        p {
-          margin-bottom: 16px;
-        }
-      }
-      .spec-type {
-        margin-bottom: 16px;
-        padding: 0 10px;
-
-        p {
-          margin-bottom: 8px;
-        }
-      }
-
-      .spec-qua {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px;
-        margin-bottom: 20px;
-        .left {
-          .stock {
-            font-size: 12px;
-            color: #717378;
-            margin-top: 4px;
+        .spec-qua {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 10px;
+          margin-bottom: 20px;
+          .left {
+            flex: 1;
+            .stock {
+              font-size: 12px;
+              color: var(--color-textlv2);
+              margin-top: 4px;
+            }
           }
         }
       }
@@ -347,32 +360,22 @@ onUnmounted(() => {
       .buy-box {
         display: flex;
         width: 100%;
-
         padding: 8px 16px 8px 16px;
         justify-content: center;
         align-items: center;
         background: #fff;
         box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
         z-index: 6;
-        text-align: center;
-        font-size: 14px;
-        line-height: 40px;
-        div {
-          width: 50%;
-        }
 
         .buy-button {
+          flex: 1;
           height: 40px;
-          color: var(--adm-color-primary);
-          box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
           border-radius: 20px 0 0 20px;
-          background: rgba(255, 96, 0, 0.2);
         }
 
         .add-cart {
-          background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-          color: #fff;
-          box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+          flex: 1;
+          height: 40px;
           border-radius: 0 20px 20px 0;
         }
       }
@@ -440,10 +443,6 @@ onUnmounted(() => {
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
     background: #17af261a;
   }
-  .text {
-    color: #fff;
-    background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-  }
 }
 
 .option-item:nth-child(5n) .option-item-img {
@@ -461,26 +460,9 @@ onUnmounted(() => {
   }
 }
 
-/* 文本样式 */
 .option-item-text {
   height: 32px;
   margin-right: 8px;
   margin-bottom: 8px;
-  .text {
-    display: inline-block;
-    height: 100%;
-    padding: 0 12px;
-    border-radius: 24px;
-    border: 1px solid #f4f4f4;
-    background: #f9f9f9;
-    font-size: 14px;
-    color: #46494f;
-    line-height: 32px;
-  }
-  .current {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #333;
-  }
 }
 </style>

@@ -102,8 +102,10 @@
 
       <!-- 购买。购物车 -->
       <div class="buy-box">
-        <div class="buy-button" @click="state.showSelectSku = true">{{ $t('good.button1') }}</div>
-        <div class="add-cart" @click="state.showSelectSku = true">{{ $t('good.button2') }}</div>
+        <a-button class="default-btn-ghost buy-button" @click="state.showSelectSku = true">
+          {{ $t('good.button1') }}
+        </a-button>
+        <a-button class="default-btn add-cart" @click="state.showSelectSku = true">{{ $t('good.button2') }}</a-button>
       </div>
     </div>
     <openSpecPopup
@@ -372,33 +374,21 @@ const computedContent = computed(() => {
   }
 
   .details-wrap {
-    padding: 7px 10px;
+    padding: 12px 16px;
 
     .pro-info {
-      padding: 16px;
-      background: #fff;
+      padding: 12px 16px;
+      background: rgba(237, 237, 237, 0.4);
       border-radius: 5px;
-      .title {
-        overflow: hidden;
-        color: #1f2c3c;
-        text-overflow: ellipsis;
-        font-size: 18px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: 150%; /* 27px */
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        align-self: stretch;
-      }
+
       .price-info {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 8px 0;
+
         .price {
           color: var(--adm-color-primary);
-          font-size: 24px;
+          font-size: 20px;
           font-style: normal;
           font-weight: 600;
           line-height: normal;
@@ -406,43 +396,21 @@ const computedContent = computed(() => {
           align-items: center;
           justify-content: center;
         }
-        .price-tag {
-          border-radius: 3px;
-          border: 0.5px solid #f28f1b;
-          background: rgba(242, 143, 27, 0.1);
-          padding: 0 8px;
-          margin-left: 5px;
-        }
       }
 
-      .pro-stats {
-        display: flex;
-        align-items: center;
-        height: 21px;
+      .title {
+        margin-top: 12px;
+        overflow: hidden;
         color: #1f2c3c;
-
-        .icon-yuanrunwujiaoxing {
-          color: #f2bc1b;
-        }
-        .rate {
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 150%; /* 21px */
-          margin-left: 6px;
-        }
-        .line {
-          width: 1px;
-          height: 12px;
-          border: 1px solid #c3d2cc;
-          margin: 0 12px;
-        }
-        .m-sales {
-          font-size: 14px;
-          span {
-            color: #9d9ea2;
-          }
-        }
+        text-overflow: ellipsis;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 150%; /* 27px */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        align-self: stretch;
       }
     }
 
@@ -527,40 +495,41 @@ const computedContent = computed(() => {
           }
 
           .unit {
-            color: #717378;
+            color: var(--color-textlv2);
           }
         }
       }
     }
 
     .pro-spec {
-      padding: 5px 16px;
-      margin-top: 7px;
-      background: #fff;
+      padding: 12px 16px;
+      margin-top: 12px;
+      background: rgba(237, 237, 237, 0.4);
       display: flex;
       align-items: center;
-      height: 35px;
+      height: 40px;
       font-size: 14px;
-      color: #999;
+      color: var(--adm-color-textLv1);
       border-radius: 5px;
       .select {
         flex: 1;
         margin: 0 5px 0 19px;
-        color: #666;
+        color: var(--adm-color-textlv2);
       }
     }
 
     .pro-detail {
-      background: #ffffff;
-      padding: 16px 0;
-      margin-top: 7px;
+      padding-bottom: 16px;
+      margin-top: 12px;
       border-radius: 5px;
       .detail-title {
-        font-size: 16px;
-        padding: 0 10px;
-        border-left: 3px solid var(--color-price);
-        margin-bottom: 15px;
-        margin-left: 10px;
+        padding: 7px 10px;
+        font-size: 14px;
+        color: var(--adm-color-textlv2);
+
+        margin-bottom: 12px;
+        background: rgba(237, 237, 237, 0.4);
+        border-left: 3px solid var(--adm-color-primary);
       }
 
       .detail-line {
@@ -582,7 +551,6 @@ const computedContent = computed(() => {
   .buy-box {
     display: flex;
     width: 100%;
-
     padding: 8px 16px 8px 16px;
     justify-content: center;
     align-items: center;
@@ -593,25 +561,16 @@ const computedContent = computed(() => {
     background: #fff;
     box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
     z-index: 6;
-    text-align: center;
-    font-size: 14px;
-    line-height: 40px;
-    div {
-      width: 50%;
-    }
 
     .buy-button {
+      flex: 1;
       height: 40px;
-      color: var(--adm-color-primary);
-      box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
       border-radius: 20px 0 0 20px;
-      background: rgba(255, 96, 0, 0.2);
     }
 
     .add-cart {
-      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-      color: #fff;
-      box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+      flex: 1;
+      height: 40px;
       border-radius: 0 20px 20px 0;
     }
   }

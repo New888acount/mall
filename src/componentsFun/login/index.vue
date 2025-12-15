@@ -111,46 +111,14 @@ onMounted(() => {})
         color: var(--adm-color-textLv1);
       }
 
-      .van-form {
-        .van-cell {
-          padding: 12px 16px;
-
-          .van-field__error-message {
-            font-size: 12px;
-            line-height: 12px;
-          }
-        }
-
-        .van-field__label {
-          color: var(--adm-color-textLv1);
-          font-family: Roboto;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-        }
-
-        .van-field__control {
-          color: var(--adm-color-textLv1);
-          font-family: Roboto;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          &::placeholder {
-            color: var(--color-textlv2);
-          }
-        }
-
-        .submit-button {
-          position: fixed;
-          bottom: 20px;
-          width: 90%;
-          left: 50%;
-          transform: translate(-50%);
-          border: 0;
-          height: 50px;
-        }
+      .submit-button {
+        position: fixed;
+        bottom: 20px;
+        width: 90%;
+        left: 50%;
+        transform: translate(-50%);
+        border: 0;
+        height: 40px;
       }
     }
   }

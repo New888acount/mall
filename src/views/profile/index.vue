@@ -176,7 +176,6 @@ const profileList = [
     loginShow: true,
     fn: () => {
       router.push('/about')
-
     },
   },
   {

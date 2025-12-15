@@ -347,7 +347,7 @@ watch(
         //   justify-content: space-between;
         align-items: center;
         margin-bottom: 8px;
-        color: #717378;
+        color: var(--color-textlv2);
         .line {
           width: 1px;
           height: 12px;
@@ -356,7 +356,7 @@ watch(
         }
       }
       .address-info {
-        // color: #717378;
+        // color: var(--color-textlv2);
         font-size: 16px;
         margin-bottom: 8px;
       }
@@ -393,7 +393,7 @@ watch(
           margin-bottom: 8px;
         }
         .good-id {
-          color: #717378;
+          color: var(--color-textlv2);
           font-size: 12px;
         }
       }
