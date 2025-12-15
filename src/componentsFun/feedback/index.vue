@@ -100,6 +100,10 @@ onMounted(() => {})
         margin-bottom: 10px;
       }
 
+      .van-field__value {
+        background: #fbf9f9;
+      }
+
       .submit {
         margin-top: 15px;
         background: var(--adm-color-primary);

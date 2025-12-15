@@ -1,6 +1,6 @@
 <template>
   <div class="faq-page">
-    <MobileHeader :title="$t('faq')" class="faq-header" :backicon="false"></MobileHeader>
+    <MobileHeader :leftText="$t('faq')" class="faq-header" :backicon="true"></MobileHeader>
 
     暂无内容
   </div>
