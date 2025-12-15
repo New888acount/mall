@@ -491,7 +491,7 @@ onMounted(() => {
         color: #999;
       }
       p {
-        color: var(--color-light);
+        color: var(--adm-color-primary);
       }
     }
     .detail-required {

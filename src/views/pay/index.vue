@@ -132,7 +132,7 @@ onMounted(async () => {
           height: 43px;
 
           .van-checkbox__icon--checked .van-icon {
-            background: var(--color-light);
+            background: var(--adm-color-primary);
             color: #fff;
             border: 0;
           }
@@ -155,7 +155,7 @@ onMounted(async () => {
         font-weight: 500;
         color: #fff;
         width: 100%;
-        background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+        background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
         margin-bottom: 10px;
         box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
       }

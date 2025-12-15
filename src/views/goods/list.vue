@@ -25,19 +25,19 @@
               <div class="content">
                 <div
                   @click="recommendActivehandle('complex')"
-                  :style="{ color: recommendActive == 'complex' ? 'var(--color-light)' : '' }"
+                  :style="{ color: recommendActive == 'complex' ? 'var(--adm-color-primary)' : '' }"
                 >
                   {{ $t('goodList.tab1.pop1') }}
                 </div>
                 <div
                   @click="recommendActivehandle('ascending')"
-                  :style="{ color: recommendActive == 'ascending' ? 'var(--color-light)' : '' }"
+                  :style="{ color: recommendActive == 'ascending' ? 'var(--adm-color-primary)' : '' }"
                 >
                   {{ $t('goodList.tab1.pop2') }}
                 </div>
                 <div
                   @click="recommendActivehandle('descending')"
-                  :style="{ color: recommendActive == 'descending' ? 'var(--color-light)' : '' }"
+                  :style="{ color: recommendActive == 'descending' ? 'var(--adm-color-primary)' : '' }"
                 >
                   {{ $t('goodList.tab1.pop3') }}
                 </div>
@@ -289,7 +289,7 @@ onMounted(() => {
             bottom: -3px;
             width: 20px;
             height: 3px;
-            background: var(--color-light);
+            background: var(--adm-color-primary);
             // margin-top: 10px;
             border-radius: 100px;
             margin-bottom: 4px;

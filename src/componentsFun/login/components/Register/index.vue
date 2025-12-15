@@ -39,11 +39,8 @@
           </template>
         </van-field>
       </van-cell-group>
-      <van-button round block type="primary" class="submit-button" native-type="submit">
-        <p v-if="!isLoading">
-          {{ $t('login.page.submit') }}
-        </p>
-        <MyLoading v-else class="submit-loading" style="margin-left: 8px" />
+      <van-button round block type="primary" class="default-btn submit-button" native-type="submit">
+        {{ $t('login.page.submit') }}
       </van-button>
     </van-form>
   </div>

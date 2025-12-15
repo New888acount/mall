@@ -40,11 +40,15 @@
         </van-field>
       </van-cell-group>
 
-      <van-button round block type="primary" class="submit-button" native-type="submit">
-        <p v-if="!isLoading">
-          {{ $t('login.page.submit') }}
-        </p>
-        <MyLoading v-else class="submit-loading" style="margin-left: 8px" />
+      <van-button
+        round
+        block
+        type="primary"
+        v-loading="isLoading"
+        class="default-btn submit-button"
+        native-type="submit"
+      >
+        {{ $t('login.page.submit') }}
       </van-button>
     </van-form>
   </div>
@@ -52,7 +56,7 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { h, ref, defineProps, reactive, onMounted, defineEmits,onUnmounted } from 'vue'
+import { h, ref, defineProps, reactive, onMounted, defineEmits, onUnmounted } from 'vue'
 import useUserInfoStore from '@/store/modules/userInfo'
 // import useLocalCache from '@/hooks/storage/localStorage'
 import { useI18n } from 'vue-i18n'
@@ -153,9 +157,7 @@ const onSubmit = async (values) => {
       uuid: formState.uuid,
       username: values.username,
       password: getEncryptPwd(formState.password),
-
     })
-    isLoading.value = false
 
     if (res.code != 200) {
       refreshCaptcha()
@@ -166,6 +168,7 @@ const onSubmit = async (values) => {
     if (error.msg === '验证码错误.') {
       refreshCaptcha()
     }
+  } finally {
     isLoading.value = false
   }
 }

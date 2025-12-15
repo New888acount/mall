@@ -89,7 +89,7 @@ onMounted(() => {})
         width: 56px;
         height: 56px;
         border-radius: 28px;
-        background: var(--color-light);
+        background: var(--adm-color-primary);
         font-size: 33px;
         color: #fff;
         line-height: 56px;
@@ -129,7 +129,7 @@ onMounted(() => {})
           margin: 24px auto;
         }
         .back {
-          background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+          background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
           // margin-bottom: 10px;
           box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
         }
