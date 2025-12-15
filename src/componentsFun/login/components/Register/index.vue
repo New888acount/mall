@@ -142,27 +142,21 @@ const handleFinish = async () => {
   try {
     const registerParams = {
       ...formState,
-      // phoneCode: formState.phone ? phoneCode.value : '',
-      // encryptPwd: getEncryptPwd(formState.password),
       password: getEncryptPwd(formState.password),
-      // encryptPwd: formState.password,
     }
-    // 密码加密，不需要原来的password字段
-    // delete registerParams.password
     const res = await userInfoStore.registerApiFun(registerParams)
 
-    if (res.code != 200) {
+    if (res.code === 200) {
+      // 登录成功
+      props.callback && props.callback(res)
+    } else {
+      // 登录失败（验证码错误、过期、账号密码错误等）
       refreshCaptcha()
     }
-
-    isLoading.value = false
-    props.callback && props.callback(res)
   } catch (error) {
-    if (error.msg === '验证码错误.') {
-      refreshCaptcha()
-    }
+    refreshCaptcha()
+  }finally {
     isLoading.value = false
-    // getCode()
   }
 }
 
@@ -175,7 +169,6 @@ const onFailed = (errorInfo) => {
 /** ***生命周期start*****/
 onMounted(async () => {
   refreshCaptcha()
-  // await getCode()
 })
 
 /** ***生命周期end*****/

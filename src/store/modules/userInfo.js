@@ -42,7 +42,7 @@ const useUserInfoStore = defineStore('userInfo', {
 
         await this.getCommonDetails(result)
 
-        return Promise.resolve(result.data)
+        return Promise.resolve(result)
       } catch (error) {
         console.log(error)
         return Promise.reject(error)

@@ -159,15 +159,15 @@ const onSubmit = async (values) => {
       password: getEncryptPwd(formState.password),
     })
 
-    if (res.code != 200) {
+    if (res.code === 200) {
+      // 登录成功
+      props.callback && props.callback(res)
+    } else {
+      // 登录失败（验证码错误、过期、账号密码错误等）
       refreshCaptcha()
     }
-
-    props.callback && props.callback(res)
   } catch (error) {
-    if (error.msg === '验证码错误.') {
-      refreshCaptcha()
-    }
+    refreshCaptcha()
   } finally {
     isLoading.value = false
   }
