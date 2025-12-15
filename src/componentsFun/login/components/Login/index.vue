@@ -56,7 +56,7 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { h, ref, defineProps, reactive, onMounted, defineEmits, onUnmounted } from 'vue'
+import { h, ref, defineProps, reactive, onMounted, defineEmits, onUnmounted , watch} from 'vue'
 import useUserInfoStore from '@/store/modules/userInfo'
 // import useLocalCache from '@/hooks/storage/localStorage'
 import { useI18n } from 'vue-i18n'
@@ -81,8 +81,18 @@ const props = defineProps({
   },
   resolve: Function,
   reject: Function,
+  visible: Boolean // 父组件传下来的 show
 })
-
+// 监听父组件的关闭
+watch(() => props.visible, (val) => {
+  if (!val) {
+    // 弹窗关闭时清空表单
+    formState.username = ''
+    formState.password = ''
+    formState.code = ''
+    formState.uuid = ''
+  }
+})
 // 表单实例
 const captchaSrc = ref('')
 
@@ -178,8 +188,7 @@ const onFailed = (errorInfo) => {
 /** ***函数 end*****/
 
 /** ***生命周期start*****/
-onMounted(async () => {
-  // 初始化时加载一次
+onMounted(() => {
   refreshCaptcha()
 })
 

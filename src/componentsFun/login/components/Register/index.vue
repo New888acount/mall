@@ -48,7 +48,7 @@
 <script setup lang="jsx">
 /** ***引入相关包start*****/
 import useUserInfoStore from '@/store/modules/userInfo'
-import { h, ref, defineProps, reactive, defineEmits, onMounted } from 'vue'
+import { h, ref, defineProps, reactive, defineEmits, onMounted, watch } from 'vue'
 // 加密、
 import { getEncryptPwd } from '@/utils/encipher'
 import { useI18n } from 'vue-i18n'
@@ -73,8 +73,18 @@ const props = defineProps({
   },
   resolve: Function,
   reject: Function,
+  visible: Boolean // 父组件传下来的 show
 })
-
+// 监听父组件的关闭
+watch(() => props.visible, (val) => {
+  if (!val) {
+    // 弹窗关闭时清空表单
+    formState.username = ''
+    formState.password = ''
+    formState.code = ''
+    formState.uuid = ''
+  }
+})
 const formState = reactive({
   username: '',
   password: '',
@@ -146,7 +156,7 @@ const handleFinish = async () => {
     }
     const res = await userInfoStore.registerApiFun(registerParams)
 
-    if (res.code === 200) {
+    if (Number(res.code) === 200) {
       // 登录成功
       props.callback && props.callback(res)
     } else {
