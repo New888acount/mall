@@ -139,13 +139,12 @@ onMounted(() => {
   const token = getCacheToken()
   if (token) {
     setCacheToken(token)
+    cartStore.getList()
   }
 
   appStore.initApp()
   cacheData.hotlist()
   cacheData.recommendlist()
-
-  cartStore.getList()
 })
 /** ***生命周期end*****/
 </script>
