@@ -175,7 +175,8 @@ const profileList = [
     icon: 'icon-About',
     loginShow: true,
     fn: () => {
-      console.log('关于我们')
+      router.push('/about')
+
     },
   },
   {
@@ -183,7 +184,7 @@ const profileList = [
     icon: 'icon-Policy',
     loginShow: true,
     fn: () => {
-      console.log('隐私协议')
+      router.push('/privacy')
     },
   },
   {
