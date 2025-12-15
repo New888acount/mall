@@ -189,6 +189,28 @@ const router = createRouter({
           },
           component: async () => await import('@/views/faq/index.vue'),
         },
+        {
+          path: 'privacy',
+          name: 'privacy',
+          meta: {
+            navShow: {
+              navbar: false,
+              navigation: false,
+            },
+          },
+          component: async () => await import('@/views/privacy/index.vue'),
+        },
+        {
+          path: 'about',
+          name: 'about',
+          meta: {
+            navShow: {
+              navbar: false,
+              navigation: false,
+            },
+          },
+          component: async () => await import('@/views/about/index.vue'),
+        },
       ],
     },
   ],
