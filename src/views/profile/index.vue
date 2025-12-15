@@ -159,6 +159,7 @@ const profileList = [
     fn: () => {
       router.push({
         path: '/address/list',
+       query: { from: 'profile' }
       })
     },
   },

@@ -187,7 +187,7 @@ const submitOrder = async () => {
 }
 // 选择地址
 const onSelectAddress = () => {
-  router.push({ path: '/address/list' })
+  router.push({ path: '/address/list', query: { from: 'order' } })
 }
 
 const changeConsignee = async (addressInfo) => {

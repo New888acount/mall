@@ -50,9 +50,11 @@ import { customToast } from '@/utils'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { t } = useI18n()
+const route = useRoute()
 const addressStore = useAddressStore()
 const state = reactive({
   list: [],
@@ -96,9 +98,14 @@ const addAddresshandle = () => {
 
 // 选择收货地址
 const onSelect = (addressInfo) => {
-  // 保存选中的地址到 store
-  addressStore.setSelected(addressInfo)
-  router.back()
+  if (route.query.from === 'order') {
+    // 订单入口 → 保存并返回
+    addressStore.setSelected(addressInfo)
+    router.back()
+  } else {
+    // 个人中心入口 → 不做任何事
+    return
+  }
 }
 
 const getAddressList = async () => {
