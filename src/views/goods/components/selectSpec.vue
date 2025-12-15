@@ -93,7 +93,7 @@ import { getMaxZIndex } from '@/utils/index'
 
 import { formatStock } from '@/hooks/useDict/useGoods'
 import { isEmpty } from 'lodash'
-import { computed, defineEmits, defineExpose, defineProps, onMounted, reactive, ref, watch } from 'vue'
+import { computed, defineEmits, defineExpose, defineProps, onMounted, reactive, ref, watch,onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 /** ***引入相关包end*****/
@@ -239,7 +239,12 @@ const onSelectSku = (childName, pname) => {
 onMounted(() => {
   skuList.value = props.goodsInfo.skus
 })
-
+// 组件销毁时局部状态自然回收，无需父组件清空 goodsInfo
+onUnmounted(() => {
+  state.selectedSkuPrice.buyNum = 1
+  state.currentSkuArray = []
+  state.currentSkuMap = {}
+})
 /** ***生命周期end*****/
 </script>
 
