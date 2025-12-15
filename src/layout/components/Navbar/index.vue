@@ -10,9 +10,9 @@
         <i class="iconfont icon-collect"></i>
       </div>
 
-      <div class="icon-common">
+      <div class="icon-common" @click="router.push('/cart')">
         <i class="iconfont icon-cart"></i>
-        <div class="dot" v-if="cartStore.cartCount">{{ cartStore.cartCount }}</div>
+        <div class="dot" v-if="useUserInfoStore.token && cartStore.cartCount">{{ cartStore.cartCount }}</div>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted,  } from 'vue'
+import { ref, onMounted } from 'vue'
 import router from '@/router'
 import { useCartStore } from '@/store/modules/cart'
 import userInfoStore from '@/store/modules/userInfo'
