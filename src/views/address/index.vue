@@ -1,38 +1,40 @@
 <template>
   <div class="address">
     <MobileHeader :leftText="$t('addressList.title')" class="cart-header" :backicon="true"></MobileHeader>
-
-    <div class="address-list" v-loading="state.loading">
-      <div class="item" v-for="item in state.list" :key="item.id" @click="onSelect(item)">
-        <div class="top">
-          <div class="person-info">
-            <div class="person-text">
-              <van-tag color="var(--adm-color-primary)" v-if="item.isDefault">
-                {{ item.isDefault ? $t('order.index.tag') : '' }}
-              </van-tag>
-              <div class="name">{{ item.name }}</div>
-              <div class="phone">{{ item.phone }}</div>
+    <main v-loading="state.loading">
+      <div class="address-list">
+        <div class="item" v-for="item in state.list" :key="item.id" @click="onSelect(item)">
+          <div class="top">
+            <div class="person-info">
+              <div class="person-text">
+                <van-tag color="var(--adm-color-primary)" v-if="item.isDefault">
+                  {{ item.isDefault ? $t('order.index.tag') : '' }}
+                </van-tag>
+                <div class="name">{{ item.name }}</div>
+                <div class="phone">{{ item.phone }}</div>
+              </div>
+            </div>
+            <div class="address-info">
+              {{ item.detailAddress }}
             </div>
           </div>
-          <div class="address-info">
-            {{ item.detailAddress }}
-          </div>
-        </div>
-        <div class="operate">
-          <div class="delete" @click.stop="deleteAddredd(item)">
-            <i class="iconfont icon-lajitong"></i>
-            {{ $t('addressList.delete') }}
-          </div>
-          <div class="edit" @click.stop="editAddredd(item)">
-            <i class="iconfont icon-xieru"></i>
-            {{ $t('addressList.edit') }}
+          <div class="operate">
+            <div class="delete" @click.stop="deleteAddredd(item)">
+              <i class="iconfont icon-lajitong"></i>
+              {{ $t('addressList.delete') }}
+            </div>
+            <div class="edit" @click.stop="editAddredd(item)">
+              <i class="iconfont icon-xieru"></i>
+              {{ $t('addressList.edit') }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
+
     <MyEmptyData v-if="!state.list.length && !state.loading" />
     <div class="add-address" @click="addAddresshandle">
-      <div class="add-button">{{ $t('addressList.button') }}</div>
+      <a-button class="default-btn add-button">{{ $t('addressList.button') }}</a-button>
     </div>
   </div>
 </template>
@@ -122,16 +124,18 @@ onMounted(() => {
 
 <style scoped lang="less">
 .address {
-  color: #1f2c3c;
+  color: var(--adm-color-textlv2);
   background: #fff;
   height: 100%;
 
+  main {
+    padding: 12px 16px;
+  }
+
   .address-list {
-    // padding: 16px;
     .item {
-      // background: #fff;
-      // border-radius: 10px;
-      border-bottom: 0.5px solid #e0e0e0;
+      margin-bottom: 12px;
+      background: rgba(237, 237, 237, 0.4);
       .top {
         padding: 12px 12px 0 12px;
         .person-info {
@@ -143,7 +147,7 @@ onMounted(() => {
           .person-text {
             display: flex;
             justify-content: space-between;
-            font-size: 16px;
+            font-size: 14px;
             align-items: center;
             :deep(.van-tag) {
               font-size: 12px;
@@ -154,29 +158,21 @@ onMounted(() => {
               font-weight: 500;
               margin-right: 8px;
             }
-
-            .tag .van-tag {
-              padding: 0 16px;
-              height: 24px;
-            }
           }
         }
         .address-info {
-          // color: #717378;
-          font-size: 16px;
+          font-size: 14px;
           margin-bottom: 8px;
         }
       }
 
       .operate {
-        border: 0 solid #c3d2cc;
-        // background: #f4f4f4;
         padding: 10px 16px;
         display: flex;
         justify-content: end;
         align-items: center;
         border-radius: 0 0 10px 10px;
-        color: #717378;
+        color: var(--color-textlv2);
         .edit {
           margin-left: 16px;
         }
@@ -186,22 +182,13 @@ onMounted(() => {
   .add-address {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%); /* 保证居中 */
+    right: 0;
     width: 100%;
-    // max-width: 375px; /* 跟 app 一样宽 */
     padding: 10px;
 
     .add-button {
+      width: 100%;
       height: 40px;
-      text-align: center;
-      line-height: 40px;
-      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-      border-radius: 40px;
-      font-size: 15px;
-      font-weight: 500;
-      color: #fff;
-      box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
     }
   }
 }

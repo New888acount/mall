@@ -10,75 +10,77 @@
     :close-on-click-overlay="true"
   >
     <div class="content" v-loading="loading">
-      <!-- 规格产品信息 -->
-      <div class="spec-info">
-        <div class="spec-pro-img">
-          <MyImage
-            v-if="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
-            :src="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
-            alt=""
-            fit="initial"
-          />
-        </div>
-
-        <div class="spec-info-center">
-          <div class="spec-title">
-            {{ props.goodsInfo?.product?.name }}
+      <div class="main-wap">
+        <!-- 规格产品信息 -->
+        <div class="spec-info">
+          <div class="spec-pro-img">
+            <MyImage
+              v-if="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
+              :src="$imgBaseUrl + (state.selectedSkuPrice.pic || props.goodsInfo.product.pic)"
+              alt=""
+              fit="initial"
+            />
           </div>
 
-          <div class="spec-info-box">
-            <div class="spec-price">{{ $unit }} {{ goodsPrice.price }}</div>
+          <div class="spec-info-center">
+            <div class="spec-title">
+              {{ props.goodsInfo?.product?.name }}
+            </div>
 
-            <div class="spec-stock">
-              {{
-                state.selectedSkuPrice.stock || state.selectedSkuPrice.stock === 0
-                  ? formatStock('exact', state.selectedSkuPrice.stock)
-                  : formatStock('exact', goodsInfo.totalStock)
-              }}
+            <div class="spec-info-box">
+              <div class="spec-price">{{ $unit }} {{ goodsPrice.price }}</div>
+
+              <div class="spec-stock">
+                {{
+                  state.selectedSkuPrice.stock || state.selectedSkuPrice.stock === 0
+                    ? formatStock('exact', state.selectedSkuPrice.stock)
+                    : formatStock('exact', goodsInfo.totalStock)
+                }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- 规格颜色 -->
-      <div class="spec-color" v-for="sku1 in productAttrList" :key="sku1.id">
-        <p>{{ sku1.name }}</p>
-        <div class="option-selector">
-          <div
-            v-for="sku2 in sku1.options.filter((i) => i.name)"
-            :key="sku2.id"
-            class="option-item"
-            @click="onSelectSku(sku2.name, sku1.name)"
-            :class="[
-              {
-                active: state.currentSkuMap[sku1.name] === sku2.name,
-              },
-            ]"
-          >
-            <!-- 文本类型 -->
-            <a-button
-              class="option-item-text"
-              :class="{
-                'default-btn-ghost': state.currentSkuMap[sku1.name] !== sku2.name,
-                'default-btn': state.currentSkuMap[sku1.name] === sku2.name,
-              }"
+        <!-- 规格颜色 -->
+        <div class="spec-color" v-for="sku1 in productAttrList" :key="sku1.id">
+          <p>{{ sku1.name }}</p>
+          <div class="option-selector">
+            <div
+              v-for="sku2 in sku1.options.filter((i) => i.name)"
+              :key="sku2.id"
+              class="option-item"
+              @click="onSelectSku(sku2.name, sku1.name)"
+              :class="[
+                {
+                  active: state.currentSkuMap[sku1.name] === sku2.name,
+                },
+              ]"
             >
-              {{ sku2.name }}
-            </a-button>
+              <!-- 文本类型 -->
+              <a-button
+                class="option-item-text"
+                :class="{
+                  'default-btn-ghost': state.currentSkuMap[sku1.name] !== sku2.name,
+                  'default-btn': state.currentSkuMap[sku1.name] === sku2.name,
+                }"
+              >
+                {{ sku2.name }}
+              </a-button>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- 规格数量 -->
-      <div class="spec-qua">
-        <div class="left">
-          <p>{{ $t('cart.Quantity') }}</p>
+        <!-- 规格数量 -->
+        <div class="spec-qua">
+          <div class="left">
+            <p>{{ $t('cart.Quantity') }}</p>
+          </div>
+          <Stepper
+            v-model="state.selectedSkuPrice.buyNum"
+            :max="state.selectedSkuPrice.stock"
+            @change="changeStepper"
+          ></Stepper>
         </div>
-        <Stepper
-          v-model="state.selectedSkuPrice.buyNum"
-          :max="state.selectedSkuPrice.stock"
-          @change="changeStepper"
-        ></Stepper>
       </div>
 
       <!-- 购买按钮 -->
@@ -251,8 +253,9 @@ onMounted(() => {
 <style lang="less">
 .my__spec {
   &.my-popup {
-    border-radius: 10px 10px 0 0;
-    background: linear-gradient(336deg, rgba(201, 255, 207, 0) 57.38%, rgba(255, 96, 0, 0.45) 123.57%), #fff;
+    height: 80%;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(336deg, rgba(201, 255, 207, 0) 57.38%, rgba(69, 150, 117, 0.45) 123.57%), #fff;
     font-size: 16px;
 
     .my-popup__container {
@@ -261,86 +264,90 @@ onMounted(() => {
       box-shadow: none;
     }
     .content {
-      .spec-info {
-        display: flex;
-        padding: 40px 10px 20px;
-        .spec-pro-img {
-          border-radius: 6px;
-          img {
-            width: 80px;
-            height: 80px;
-          }
-        }
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      height: 100%;
 
-        .spec-info-center {
-          flex: 1;
-          margin: 0 8px;
+      .main-wap {
+        flex: 1;
+        width: 100%;
+
+        .spec-info {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          .spec-title {
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
-            align-self: stretch;
-            text-overflow: ellipsis;
-            font-weight: 500;
+          padding: 16px;
+          .spec-pro-img {
+            border-radius: 6px;
+            img {
+              width: 72px;
+              height: 72px;
+            }
           }
 
-          .spec-info-box {
+          .spec-info-center {
+            flex: 1;
+            margin: 0 8px;
             display: flex;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
+            .spec-title {
+              overflow: hidden;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;
+              -webkit-line-clamp: 2;
+              align-self: stretch;
+              text-overflow: ellipsis;
+              font-weight: 500;
+            }
+
+            .spec-info-box {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .spec-price {
+              color: var(--adm-color-primary);
+              font-size: 16px;
+              font-weight: 600;
+            }
+
+            .spec-stock {
+              text-align: right;
+              font-size: 16px;
+            }
           }
-          .spec-price {
-            color: var(--adm-color-primary);
-            font-size: 15px;
-            font-weight: 600;
-            height: 30px;
-            line-height: 30px;
-          }
+        }
 
-          .spec-stock {
-            text-align: right;
-            font-size: 15px;
+        .spec-color {
+          margin-bottom: 12px;
+          padding: 0 10px;
+          p {
+            margin-bottom: 12px;
           }
         }
+        .spec-type {
+          margin-bottom: 12px;
+          padding: 0 12px;
 
-        .icon-dengluzhuceguanbi {
-          font-size: 22px;
-          color: #9d9ea2;
+          p {
+            margin-bottom: 12px;
+          }
         }
-      }
 
-      .spec-color {
-        margin-bottom: 16px;
-        padding: 0 10px;
-        p {
-          margin-bottom: 16px;
-        }
-      }
-      .spec-type {
-        margin-bottom: 16px;
-        padding: 0 10px;
-
-        p {
-          margin-bottom: 8px;
-        }
-      }
-
-      .spec-qua {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px;
-        margin-bottom: 20px;
-        .left {
-          flex: 1;
-          .stock {
-            font-size: 12px;
-            color: #717378;
-            margin-top: 4px;
+        .spec-qua {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 10px;
+          margin-bottom: 20px;
+          .left {
+            flex: 1;
+            .stock {
+              font-size: 12px;
+              color: var(--color-textlv2);
+              margin-top: 4px;
+            }
           }
         }
       }
@@ -348,7 +355,6 @@ onMounted(() => {
       .buy-box {
         display: flex;
         width: 100%;
-
         padding: 8px 16px 8px 16px;
         justify-content: center;
         align-items: center;

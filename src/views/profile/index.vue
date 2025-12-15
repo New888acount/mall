@@ -176,7 +176,6 @@ const profileList = [
     loginShow: true,
     fn: () => {
       router.push('/about')
-
     },
   },
   {
@@ -484,47 +483,6 @@ onMounted(() => {
       background: transparent;
       border-radius: 0;
       box-shadow: none;
-    }
-  }
-
-  .van-picker {
-    .van-picker__title {
-      color: var(--adm-color-textlv2);
-      font-family: Roboto;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-
-    .van-picker__confirm {
-      color: var(--adm-color-primary);
-      font-family: Roboto;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-
-    .van-picker__cancel {
-      color: var(--color-textlv2);
-      font-family: Roboto;
-      font-size: 14px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-    }
-
-    .van-picker-column__item {
-      color: var(--color-textlv2);
-      font-family: Roboto;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 400;
-      line-height: normal;
-      &.van-picker-column__item--selected {
-        color: var(--adm-color-primary);
-      }
     }
   }
 }

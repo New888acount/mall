@@ -47,7 +47,7 @@
         </div>
         <div class="detail-time">
           <span>{{ $t('order.detail.ordertime') }}</span>
-          {{ formatDateTimer(state.orderInfo.createTime, 'YYYY/MM/DD hh:mm:ss') }}
+          {{ state.orderInfo.createTime ? formatDateTimer(state.orderInfo.createTime, 'YYYY/MM/DD hh:mm:ss') : '--' }}
         </div>
         <div class="detail-time" v-if="state.orderInfo.paymentTime">
           <span>{{ $t('order.detail.paytime') }}</span>
@@ -347,7 +347,7 @@ onMounted(() => {
   }
 
   .detail-one {
-    background: #fff;
+    background: rgba(237, 237, 237, 0.4);
     border-radius: 5px;
     padding: 22px 17px 21px 10px;
     .detail-status {
@@ -366,25 +366,26 @@ onMounted(() => {
   }
 
   .detail-two {
-    background: #fff;
     border-radius: 5px;
     margin-top: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f2f2f2;
+    border-top: 1px solid #f2f2f2;
 
     .order-item {
       display: flex;
       justify-content: center;
       padding: 10px;
-      border-bottom: 1px solid #f2f2f2;
-      border-top: 1px solid #f2f2f2;
+
+      background: rgba(237, 237, 237, 0.4);
       .left {
         margin-right: 8px;
         .box-img {
-          width: 82px;
-          height: 82px;
-          margin-bottom: 8px;
+          width: 72px;
+          height: 72px;
         }
         .good-id {
-          color: #717378;
+          color: var(--color-textlv2);
           font-size: 12px;
         }
       }
@@ -393,11 +394,14 @@ onMounted(() => {
         flex: 1;
         .good-title {
           overflow: hidden;
-          color: #1f2c3c;
+          color: var(--adm-color-textlv2);
           text-overflow: ellipsis;
+          font-family: 'PingFang SC';
           font-size: 14px;
+          font-style: normal;
           font-weight: 500;
-          line-height: 150%;
+          line-height: 150%; /* 21px */
+          text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-box-orient: vertical;
           -webkit-line-clamp: 2;
@@ -406,7 +410,7 @@ onMounted(() => {
         }
 
         .good-tag {
-          color: #9d9ea2;
+          color: var(--color-textlv2);
           overflow: hidden;
           text-overflow: ellipsis;
           font-size: 12px;
@@ -424,10 +428,19 @@ onMounted(() => {
           display: flex;
           align-items: center;
 
+          .good-price {
+            color: var(--color-red);
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+          }
+
           .good-qua {
-            color: #999;
-            font-size: 12px;
-            margin-left: 4px;
+            color: var(--color-textlv2);
+            font-size: 14px;
+            margin-left: 8px;
           }
         }
       }
@@ -435,7 +448,7 @@ onMounted(() => {
   }
 
   .detail-timeinfo {
-    background: #fff;
+    background: rgba(237, 237, 237, 0.4);
     border-radius: 5px;
     margin-top: 10px;
     padding: 10px;
@@ -443,10 +456,14 @@ onMounted(() => {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 14px;
+      font-size: 12px;
       margin-bottom: 12px;
       span {
-        color: #999;
+        color: #46494f;
+        text-overflow: ellipsis;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 18px */
       }
 
       .detail-orderid {
@@ -468,27 +485,34 @@ onMounted(() => {
     }
 
     .detail-time {
-      font-size: 14px;
+      font-size: 12px;
       margin-bottom: 12px;
       span {
-        color: #999;
+        color: #46494f;
+        text-overflow: ellipsis;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 18px */
       }
     }
   }
 
   .detail-sum {
-    background: #fff;
+    background: rgba(237, 237, 237, 0.4);
     border-radius: 5px;
     margin-top: 10px;
     padding: 10px;
-    font-size: 14px;
+    font-size: 12px;
     .deatil-total {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      height: 35px;
       span {
-        color: #999;
+        color: #46494f;
+        text-overflow: ellipsis;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 18px */
       }
       p {
         color: var(--adm-color-primary);
@@ -503,11 +527,9 @@ onMounted(() => {
   .detail-operate {
     position: fixed;
     bottom: 0;
-    left: 50%;
-    transform: translateX(-50%); /* 保证居中 */
+    right: 0;
     width: 100%;
-    // max-width: 375px; /* 跟 app 一样宽 */
-    background: #fff;
+    background: rgba(237, 237, 237, 0.4);
     text-align: center;
     display: flex;
     justify-content: flex-end;

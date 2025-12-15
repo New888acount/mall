@@ -1,6 +1,6 @@
 <template>
   <div class="address-detail" v-loading="loading">
-    <MobileHeader :title="$t('addressDetail.title')" class="cart-header" :backicon="false"></MobileHeader>
+    <MobileHeader :leftText="$t('addressDetail.title')" class="cart-header" :backicon="true"></MobileHeader>
 
     <div class="address-form">
       <van-form @submit="onSubmit" @failed="onFailed">
@@ -63,19 +63,11 @@
           </van-field>
         </van-cell-group>
         <!-- <div style="margin: 16px"> -->
-        <van-button round block type="primary" class="save" native-type="submit">
-          <!-- <p> -->
+        <van-button round block type="primary" class="default-btn save" native-type="submit">
           {{ $t('addressDetail.submit') }}
-
-          <!-- </p> -->
         </van-button>
-        <!-- </div> -->
       </van-form>
     </div>
-
-    <!-- <div class="save">
-      <p>保存</p>
-    </div> -->
   </div>
 </template>
 
@@ -354,25 +346,10 @@ onMounted(async () => {
       left: 0;
       bottom: 0;
       flex-wrap: wrap;
-      background: #fff;
       border: 0;
-
       padding: 10px;
-      height: 70px;
+      height: 40px;
       border-radius: 0;
-
-      :deep(.van-button__text) {
-        border-radius: 24px;
-        line-height: 40px;
-        text-align: center;
-        font-size: 14px;
-        font-weight: 500;
-        color: #fff;
-        width: 100%;
-        background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-        margin-bottom: 10px;
-        box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
-      }
     }
   }
 }
