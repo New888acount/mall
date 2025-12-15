@@ -494,7 +494,14 @@ watch(
         justify-content: flex-end;
         align-items: center;
         flex-wrap: wrap;
-        padding: 12px 0;
+        row-gap: 12px;
+        column-gap: 8px;
+
+
+
+
+        
+        padding-top: 12px;
 
         .operate-item {
           height: 26px;
@@ -503,10 +510,6 @@ watch(
           font-style: normal;
           font-weight: 400;
           line-height: 12px;
-        }
-
-        .operate-item + .operate-item {
-          margin-left: 8px;
         }
       }
     }

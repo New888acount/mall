@@ -534,8 +534,9 @@ onMounted(() => {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    height: 50px;
-    padding: 10px;
+    row-gap: 12px;
+    column-gap: 8px;
+    padding: 12px;
     .operate-item {
       height: 26px;
       padding: 0 12px;
@@ -543,10 +544,6 @@ onMounted(() => {
       font-style: normal;
       font-weight: 400;
       line-height: 12px;
-    }
-
-    .operate-item + .operate-item {
-      margin-left: 8px;
     }
   }
 }

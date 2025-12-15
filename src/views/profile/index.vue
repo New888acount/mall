@@ -22,9 +22,9 @@
         <div v-if="userInfoStore.token" class="number">账号/ID: {{ userInfoStore?.userInfo?.id }}</div>
       </div>
 
-      <div class="code-icon">
+      <!-- <div class="code-icon">
         <i class="iconfont icon-QR"></i>
-      </div>
+      </div> -->
     </div>
     <div class="profile-order">
       <div class="order-item" v-for="item in orderNav" :key="item.name" @click="orderTabSwitch(item)">
@@ -159,7 +159,7 @@ const profileList = [
     fn: () => {
       router.push({
         path: '/address/list',
-       query: { from: 'profile' }
+        query: { from: 'profile' },
       })
     },
   },
