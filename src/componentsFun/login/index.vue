@@ -11,7 +11,7 @@
     <div class="content">
       <van-tabs v-model:active="active" color="var(--adm-color-primary)" destroy-on-hide>
         <van-tab :title="item.title" v-for="item in tabsList" :key="item.name">
-          <component class="login-register-container" :is="item.com" :callback="handleLoginSuccess" :key="Date.now()" />
+          <component class="login-register-container" :is="item.com" :callback="handleLoginSuccess" :visible="show"/>
         </van-tab>
       </van-tabs>
     </div>
@@ -80,7 +80,6 @@ const handleLoginSuccess = (res) => {
 
 /** ***生命周期start*****/
 onMounted(() => {})
-
 // 监听显示的消失，需要移除dom
 
 /** ***生命周期end*****/
