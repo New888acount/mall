@@ -154,6 +154,7 @@ const state = reactive({
   list: [],
   loading: false,
   tabLoading: false,
+  finished: false,
   pagination: {
     current: 1,
     pageSize: 10,
@@ -206,7 +207,7 @@ const canceltip = (item) => {
         const res = await orderCancelApi({ idList })
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderList(true)
+          initState()
         }
       } catch (error) {
         console.log(error)
@@ -237,7 +238,7 @@ const onConfirm = (item) => {
         const res = await orderConfirmApi(item.orderId)
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderList(true)
+          initState()
         }
       } catch (error) {
         console.log(error)
@@ -274,7 +275,7 @@ const onDelete = (item) => {
         const res = await orderDeleteApi(item.orderId)
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderList(true)
+          initState()
         }
       } catch (error) {
         console.log(error)
@@ -287,14 +288,24 @@ const onDelete = (item) => {
     })
 }
 
+const initState = () => {
+  state.finished = false
+  state.loading = false
+  state.tabLoading = false
+  state.pagination.current = 1
+  state.pagination.pageSize = 10
+  state.list = []
+  getOrderList()
+}
+
 let loadingDiabled = false
 
 const onLoad = async () => {
   if (state.finished || loadingDiabled) return false
-  await getOrderList()
+  getOrderList()
 }
 
-const getOrderList = async (flag) => {
+const getOrderList = async () => {
   state.loading = true
   state.status = route.query?.type - 1
   try {
@@ -314,10 +325,12 @@ const getOrderList = async (flag) => {
       })
     })
 
-    if (flag) {
+    if (state.pagination.current === 1) {
+      // 首次加载或刷新时，重置列表
       state.list = rows
     } else {
-      state.list.push(...rows)
+      // 加载更多时，追加
+      state.list = [...state.list, ...rows]
     }
 
     state.pagination.current++
@@ -345,8 +358,7 @@ watch(
   async (newVal) => {
     if (newVal !== undefined) {
       activeName.value = Number(newVal)
-    onTabChange(activeName.value)
-
+      onTabChange(activeName.value)
     }
     //  else {
     //   activeName.value = Number(orderNav[0].name)
