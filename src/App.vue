@@ -11,6 +11,7 @@ import useAppStore from './store/modules/app.js'
 import useCacheData from '@/store/modules/cacheData.js'
 import { useCartStore } from '@/store/modules/cart'
 import { getChannerl } from '@/utils'
+import { getSupportApi } from '@/api/common'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const router = useRouter()
@@ -116,22 +117,10 @@ const handleServer = async (res, channel) => {
 
 // 获取客服列表
 const initServer = () => {
-  const channel = getChannerl()
-  reqServerList({ channel }).then((o) => {
-    const res = o.data
-    if (res && res.length) {
-      appStore.serverList.forEach((item) => {
-        const str = item.name.toLowerCase()
-        if (res.includes(str)) {
-          item.show = true
-        }
-      })
-      // 设置已经获取了客服，避免重复获取
-      appStore.setServerList(appStore.serverList)
-      // 处理调用不同类型客服
-      handleServer(res, channel)
-    }
-  })
+  const data = appStore.getServeItem()
+
+  console.log(data, 'data')
+  // handleServer(res, channel)
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
@@ -145,6 +134,8 @@ onMounted(() => {
   appStore.initApp()
   cacheData.hotlist()
   cacheData.recommendlist()
+
+  initServer()
 })
 /** ***生命周期end*****/
 </script>

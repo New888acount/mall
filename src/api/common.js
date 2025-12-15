@@ -35,3 +35,15 @@ export const getPrivacyApi = (params) =>
     method: 'get',
     params,
   })
+
+/**
+ * 查询客服支持
+ * @param
+ * @returns
+ */
+export const getSupportApi = (params) =>
+  request({
+    url: '/mall/no-auth/support',
+    method: 'get',
+    params,
+  })

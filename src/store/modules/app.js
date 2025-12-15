@@ -1,6 +1,6 @@
+import { getSupportApi } from '@/api/common'
 import useLocalCache from '@/hooks/storage/localStorage'
 import { defineStore } from 'pinia'
-
 const { getLanguage } = useLocalCache()
 
 // 定义一个全局 store
@@ -67,13 +67,8 @@ export const useAppStore = defineStore('app', {
       liveEl.window.document.querySelector('body button').click()
     },
     //获取客服详细信息
-    async getServeItem(item) {
-      const type = item.url.toLowerCase()
-      const channel = getChannerl()
-      const { data } = await reqContactInfo({
-        type,
-        channel,
-      })
+    async getServeItem() {
+      const { data } = await getSupportApi({})
       return data
     },
     // 初始化屏幕

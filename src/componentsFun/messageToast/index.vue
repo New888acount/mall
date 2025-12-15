@@ -110,12 +110,13 @@ onMounted(() => {
       align-items: center;
       justify-content: space-between;
       padding: 10px;
-      background: var(--adm-color-textLv1);
+      background: var(--adm-color-textlv2);
       box-shadow: 0px 4px 4px 0px rgba(20, 20, 20, 0.5);
       .left {
         display: flex;
         align-items: center;
         justify-content: center;
+        flex-shrink: 0;
         width: 18px;
         height: 18px;
         background: var(--color-red);
@@ -140,7 +141,6 @@ onMounted(() => {
 
       .right {
         color: var(--adm-color-primary);
-
         font-size: 12px;
         font-style: normal;
         font-weight: 700;
