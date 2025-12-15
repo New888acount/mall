@@ -2,7 +2,30 @@
   <div class="faq-page">
     <MobileHeader :leftText="$t('faq')" class="faq-header" :backicon="true"></MobileHeader>
 
-    暂无内容
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="item-title">¿Puedo hacer un ingreso utilizando la cuenta de pago de otra persona?</div>
+        <div class="item-text">
+          <p>
+            Está estrictamente prohibido y es ilegal utilizar la cuenta de pago de otra persona para realizar un
+            depósito. Si ha depositado accidentalmente en 1234 utilizando la cuenta de pago de otra persona,
+            notifíquenoslo inmediatamente poniéndose en contacto con el servicio de asistencia a través del chat en
+            vivo.
+          </p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="item-title">¿Puedo hacer un ingreso utilizando la cuenta de pago de otra persona?</div>
+        <div class="item-text">
+          <p>
+            Está estrictamente prohibido y es ilegal utilizar la cuenta de pago de otra persona para realizar un
+            depósito. Si ha depositado accidentalmente en 1234 utilizando la cuenta de pago de otra persona,
+            notifíquenoslo inmediatamente poniéndose en contacto con el servicio de asistencia a través del chat en
+            vivo.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,6 +52,23 @@ onMounted(() => {})
     :deep(.title) {
       color: var(--adm-color-textLv1);
       font-weight: 600;
+    }
+  }
+
+  .faq-list {
+    padding: 8px;
+    .faq-item {
+      margin-bottom: 10px;
+      color: var(--adm-color-textLv1);
+      .item-title {
+        font-size: 18px;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+      .item-text {
+        font-size: 15px;
+        // color: var(--color-textlv2);
+      }
     }
   }
 }
