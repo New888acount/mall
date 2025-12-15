@@ -1,15 +1,15 @@
 <template>
   <div class="product">
-    <MobileHeader class="product-header" :backicon="true" :style="{ backgroundColor: navShow ? 'transparent' : '' }">
-      <template #title>
-        <div class="pro-header" v-if="!navShow" @click="scrollTop">
+    <MobileHeader :leftText="$t('goodHeader.tab1')">
+      <!-- <template #title>
+        <div class="pro-header" @click="scrollTop">
           <div>{{ $t('goodHeader.tab1') }}</div>
           <div class="detail-pointer">
             {{ $t('goodHeader.tab2') }}
             <div></div>
           </div>
         </div>
-      </template>
+      </template> -->
     </MobileHeader>
     <!-- 产品信息 -->
     <div class="load" v-if="state.isLoading">

@@ -311,117 +311,19 @@ onMounted(() => {
     flex-wrap: wrap;
     margin-top: 10px;
     padding: 0 10px;
-    :deep(.van-image) {
-      width: 120px;
-      height: auto;
-    }
-    .van-image__img {
-      width: 120px;
-    }
-    .item {
-      width: 48%;
+    .cube-item {
+      width: calc(50% - 4px);
       margin-right: 8px;
       margin-bottom: 8px;
       border-radius: 8px;
-      background-color: #ffffff;
-      img {
-        width: 100%;
-        height: 174px;
-
-        border-radius: 8px 8px 0 0;
-      }
-
-      .padding {
-        margin: 10px 8px;
-      }
-
-      .text {
-        font-size: 13px;
-        display: -webkit-box; /* 弹性伸缩盒子模型 */
-        -webkit-box-orient: vertical; /* 垂直排列子元素 */
-        -webkit-line-clamp: 2; /* 限制显示 2 行 */
-        overflow: hidden; /* 超出部分隐藏 */
-        text-overflow: ellipsis; /* 超出部分显示省略号 */
-        // line-height: 13px;
-      }
-
-      .price {
-        color: var(--color-price);
-        font-size: 15px;
-      }
     }
-
-    .item:nth-child(2n) {
+    .cube-item:nth-child(2n) {
       margin-right: 0px;
     }
   }
   .list-data-vertical {
-    // display: flex;
-    // flex-wrap: wrap;
     margin-top: 10px;
     padding: 0 10px;
-    .item {
-      display: flex;
-      width: 100%;
-      // margin-right: 8px;
-      margin-bottom: 8px;
-      border-radius: 8px;
-      background-color: #ffffff;
-
-      .item-img {
-        width: 140px;
-        height: 140px;
-
-        border-radius: 8px 0 0 8px;
-        margin-right: 10px;
-        img {
-          width: 140px;
-          height: 140px;
-          flex: 1;
-        }
-      }
-
-      .item-info {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex: 1;
-        .text {
-          font-size: 14px;
-          display: -webkit-box; /* 弹性伸缩盒子模型 */
-          -webkit-box-orient: vertical; /* 垂直排列子元素 */
-          -webkit-line-clamp: 2; /* 限制显示 2 行 */
-          overflow: hidden; /* 超出部分隐藏 */
-          text-overflow: ellipsis; /* 超出部分显示省略号 */
-          // line-height: 13px;
-        }
-        .item-price {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          .price {
-            color: var(--color-price);
-            font-size: 15px;
-          }
-
-          .buy {
-            width: 60px;
-            height: 25px;
-            border-radius: 12.5px;
-            font-size: 12px;
-            color: #ffffff;
-            line-height: 26px;
-            text-align: center;
-            background: linear-gradient(90deg, #fe8900, #ff5e00);
-          }
-        }
-      }
-
-      .padding {
-        margin: 10px 0px;
-      }
-    }
   }
 }
 </style>

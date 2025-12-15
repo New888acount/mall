@@ -166,7 +166,7 @@ const onPay = (data) => {
 }
 
 // 取消订单
-const canceltip = (item) => {
+const canceltip = (orderId) => {
   // console.log(item)
   // item = {id:1}
 
@@ -179,11 +179,11 @@ const canceltip = (item) => {
     .then(async () => {
       try {
         state.isLoading = true
-        const idList = [item.orderId]
+        const idList = [orderId]
         const res = await orderCancelApi({ idList })
         if (res.code === 200) {
           customToast(res.msg)
-          await getOrderDetail(item.orderId)
+          await getOrderDetail(orderId)
         } else {
           console.log(res.msg)
         }
@@ -375,6 +375,7 @@ onMounted(() => {
       justify-content: center;
       padding: 10px;
       border-bottom: 1px solid #f2f2f2;
+      border-top: 1px solid #f2f2f2;
       .left {
         margin-right: 8px;
         .box-img {

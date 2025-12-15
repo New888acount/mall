@@ -123,7 +123,7 @@ onMounted(() => {})
           width: 90%;
           left: 50%;
           transform: translate(-50%);
-          background: #fff;
+          background: var(--adm-color-primary);
           border: 0;
           height: 50px;
           .van-button__text {
@@ -132,11 +132,8 @@ onMounted(() => {})
             text-align: center;
             font-size: 20px;
             font-weight: 500;
-            color: #fff;
+            color: var(--adm-color-white);
             width: 100%;
-            background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
-            margin-bottom: 10px;
-            box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
           }
 
           .submit-loading {

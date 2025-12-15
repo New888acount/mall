@@ -1,12 +1,12 @@
 <template>
-  <div class="base-module" @click="startGame(item)">
+  <div class="base-module" @click="productHandle(item)">
     <i class="iconfont icon-caijin icon-adorn"></i>
 
     <component class="img-cover" :is="MyImage" fit="cover" :src="$imgBaseUrl + item.pic" />
 
-    <h1 class="header">{{item.name}}</h1>
+    <h1 class="header">{{ item.name }}</h1>
 
-    <div class="text">{{ $unit }} {{item.price}}</div>
+    <div class="text">{{ $unit }} {{ item.price }}</div>
   </div>
 </template>
 <script setup>
@@ -53,11 +53,13 @@ const goGameBaseFun = (item) => {
   emit('close')
 }
 
-const startGame = (item) => {
-  // if (appStore.device === 'desktop') return
-  // else {
-  //   goGameBaseFun(item)
-  // }
+const productHandle = (item) => {
+  router.push({
+    path: '/goods/index',
+    query: {
+      id: item.id,
+    },
+  })
 }
 
 const getFavorite = async (obj) => {

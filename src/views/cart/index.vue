@@ -140,7 +140,7 @@ const submitOrder = () => {
 
   // 进入订单
   router.push({
-    path: '/order', // 跳转的路径
+    path: '/order/list', // 跳转的路径
     query: {
       // 如果你想用 query 参数
       data: JSON.stringify({
