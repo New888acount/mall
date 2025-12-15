@@ -149,7 +149,7 @@ onMounted(() => {})
           left: 50%;
           transform: translate(-50%);
           border: 0;
-          height: 50px;
+          height: 40px;
         }
       }
     }

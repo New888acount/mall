@@ -102,8 +102,10 @@
 
       <!-- 购买。购物车 -->
       <div class="buy-box">
-        <div class="buy-button" @click="state.showSelectSku = true">{{ $t('good.button1') }}</div>
-        <div class="add-cart" @click="state.showSelectSku = true">{{ $t('good.button2') }}</div>
+        <a-button class="default-btn-ghost buy-button" @click="state.showSelectSku = true">
+          {{ $t('good.button1') }}
+        </a-button>
+        <a-button class="default-btn add-cart" @click="state.showSelectSku = true">{{ $t('good.button2') }}</a-button>
       </div>
     </div>
     <openSpecPopup
@@ -582,7 +584,6 @@ const computedContent = computed(() => {
   .buy-box {
     display: flex;
     width: 100%;
-
     padding: 8px 16px 8px 16px;
     justify-content: center;
     align-items: center;
@@ -593,25 +594,16 @@ const computedContent = computed(() => {
     background: #fff;
     box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
     z-index: 6;
-    text-align: center;
-    font-size: 14px;
-    line-height: 40px;
-    div {
-      width: 50%;
-    }
 
     .buy-button {
+      flex: 1;
       height: 40px;
-      color: var(--adm-color-primary);
-      box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
       border-radius: 20px 0 0 20px;
-      background: rgba(255, 96, 0, 0.2);
     }
 
     .add-cart {
-      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-      color: #fff;
-      box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+      flex: 1;
+      height: 40px;
       border-radius: 0 20px 20px 0;
     }
   }

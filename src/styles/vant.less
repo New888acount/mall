@@ -38,3 +38,66 @@
 .van-button:before {
   background: transparent !important;
 }
+
+.my-stepper {
+  padding: 0 2px;
+  border-radius: 1px;
+  background: rgba(237, 237, 237, 0.4);
+  .van-stepper__input {
+    min-width: 8px;
+    margin: 0 8px;
+    height: 14px;
+    color: var(--adm-color-textLv1);
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 14px */
+    background: transparent;
+  }
+
+  .van-stepper__minus,
+  .van-stepper__plus {
+    width: 16px;
+    height: 16px;
+    color: var(--adm-color-textLv1);
+    background: transparent;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .van-stepper__plus:before,
+  .van-stepper__minus:before {
+    width: 50%;
+  }
+
+  .van-stepper__plus:after {
+    height: 50%;
+  }
+
+  /* 点击高亮（按下时） */
+  .van-stepper__plus:active,
+  .van-stepper__minus:active {
+    background: transparent !important;
+    box-shadow: none; /* 去掉点击态阴影 */
+  }
+  .van-stepper__plus:active:before,
+  .van-stepper__minus:active:before {
+    color: var(--adm-color-primary);
+  }
+  .van-stepper__plus:active:after,
+  .van-stepper__minus:active:after {
+    color: var(--adm-color-primary);
+  }
+
+  /* 禁用状态：不高亮 */
+  .van-stepper__plus--disabled,
+  .van-stepper__minus--disabled {
+    background: transparent;
+    color: var(--color-textlv2);
+    pointer-events: none;
+  }
+  .van-stepper__plus--disabled .van-icon,
+  .van-stepper__minus--disabled .van-icon {
+    color: var(--color-textlv2); /* 禁用时符号灰色 */
+  }
+}

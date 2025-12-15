@@ -56,9 +56,15 @@
             ]"
           >
             <!-- 文本类型 -->
-            <div class="option-item-text">
-              <span class="text">{{ sku2.name }}</span>
-            </div>
+            <a-button
+              class="option-item-text"
+              :class="{
+                'default-btn-ghost': state.currentSkuMap[sku1.name] !== sku2.name,
+                'default-btn': state.currentSkuMap[sku1.name] === sku2.name,
+              }"
+            >
+              {{ sku2.name }}
+            </a-button>
           </div>
         </div>
       </div>
@@ -71,15 +77,14 @@
         <Stepper
           v-model="state.selectedSkuPrice.buyNum"
           :max="state.selectedSkuPrice.stock"
-          :size="64"
           @change="changeStepper"
         ></Stepper>
       </div>
 
       <!-- 购买按钮 -->
       <div class="buy-box">
-        <div class="buy-button" @click="buttonhandle('cart')">{{ $t('good.button1') }}</div>
-        <div class="add-cart" @click="buttonhandle('buy')">{{ $t('good.button2') }}</div>
+        <a-button class="default-btn-ghost buy-button" @click="buttonhandle('cart')">{{ $t('good.button1') }}</a-button>
+        <a-button class="default-btn add-cart" @click="buttonhandle('buy')">{{ $t('good.button2') }}</a-button>
       </div>
     </div>
   </MyPopup>
@@ -331,6 +336,7 @@ onMounted(() => {
         padding: 0 10px;
         margin-bottom: 20px;
         .left {
+          flex: 1;
           .stock {
             font-size: 12px;
             color: #717378;
@@ -349,25 +355,16 @@ onMounted(() => {
         background: #fff;
         box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
         z-index: 6;
-        text-align: center;
-        font-size: 14px;
-        line-height: 40px;
-        div {
-          width: 50%;
-        }
 
         .buy-button {
+          flex: 1;
           height: 40px;
-          color: var(--adm-color-primary);
-          box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
           border-radius: 20px 0 0 20px;
-          background: rgba(255, 96, 0, 0.2);
         }
 
         .add-cart {
-          background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-          color: #fff;
-          box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+          flex: 1;
+          height: 40px;
           border-radius: 0 20px 20px 0;
         }
       }
@@ -435,10 +432,6 @@ onMounted(() => {
     box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
     background: #17af261a;
   }
-  .text {
-    color: #fff;
-    background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-  }
 }
 
 .option-item:nth-child(5n) .option-item-img {
@@ -456,26 +449,9 @@ onMounted(() => {
   }
 }
 
-/* 文本样式 */
 .option-item-text {
   height: 32px;
   margin-right: 8px;
   margin-bottom: 8px;
-  .text {
-    display: inline-block;
-    height: 100%;
-    padding: 0 12px;
-    border-radius: 24px;
-    border: 1px solid #f4f4f4;
-    background: #f9f9f9;
-    font-size: 14px;
-    color: #46494f;
-    line-height: 32px;
-  }
-  .current {
-    margin-top: 12px;
-    font-size: 14px;
-    color: #333;
-  }
 }
 </style>
