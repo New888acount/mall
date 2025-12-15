@@ -9,14 +9,9 @@
     class="my__login-register"
   >
     <div class="content">
-      <van-tabs v-model:active="active" color="var(--color-light)" destroy-on-hide>
+      <van-tabs v-model:active="active" color="var(--adm-color-primary)" destroy-on-hide>
         <van-tab :title="item.title" v-for="item in tabsList" :key="item.name">
-          <component
-            class="login-register-container"
-            :is="item.com"
-            :callback="handleLoginSuccess"
-            :key="Date.now()"
-          />
+          <component class="login-register-container" :is="item.com" :callback="handleLoginSuccess" :key="Date.now()" />
         </van-tab>
       </van-tabs>
     </div>
@@ -94,9 +89,9 @@ onMounted(() => {})
 <style lang="less">
 .my__login-register {
   &.my-popup {
-    padding: 25px 0px;
+    padding: 16px 0px;
     min-height: 400px;
-    border-radius: 20px 20px 0 0;
+    border-radius: 12px 12px 0 0;
     .my-popup__container {
       background: transparent;
       border-radius: 0;
@@ -104,16 +99,46 @@ onMounted(() => {})
     }
     .content {
       .van-tab {
+        color: var(--color-textlv2);
+        font-family: Roboto;
         font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .van-tab--active {
+        color: var(--adm-color-textLv1);
       }
 
       .van-form {
         .van-cell {
-          padding: 10px 16px;
+          padding: 12px 16px;
 
           .van-field__error-message {
             font-size: 12px;
             line-height: 12px;
+          }
+        }
+
+        .van-field__label {
+          color: var(--adm-color-textLv1);
+          font-family: Roboto;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+        }
+
+        .van-field__control {
+          color: var(--adm-color-textLv1);
+          font-family: Roboto;
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          &::placeholder {
+            color: var(--color-textlv2);
           }
         }
 
@@ -123,31 +148,8 @@ onMounted(() => {})
           width: 90%;
           left: 50%;
           transform: translate(-50%);
-          background: #fff;
           border: 0;
           height: 50px;
-          .van-button__text {
-            border-radius: 24px;
-            line-height: 50px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 500;
-            color: #fff;
-            width: 100%;
-            background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
-            margin-bottom: 10px;
-            box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
-          }
-
-          .submit-loading {
-            height: 50px;
-            .loader {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100%;
-            }
-          }
         }
       }
     }

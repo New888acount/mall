@@ -39,7 +39,7 @@ export function formatOrderColor(type) {
   } else if (type === 4 || type === 5) {
     return 'color: var(--color-red)'
   } else if (type === 3) {
-    return 'color: var(--color-light)'
+    return 'color: var(--adm-color-primary)'
   } else if (type === 0) {
     return 'color: var(--adm-color-primary)'
   }

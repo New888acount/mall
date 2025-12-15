@@ -345,8 +345,8 @@ const computedContent = computed(() => {
           display: block;
           width: 30px;
           height: 3px;
-          // border-bottom: 3px solid var(--color-light);
-          background: var(--color-light);
+          // border-bottom: 3px solid var(--adm-color-primary);
+          background: var(--adm-color-primary);
           border-radius: 3px;
           margin-top: 3px;
           text-align: center;
@@ -397,7 +397,7 @@ const computedContent = computed(() => {
         justify-content: space-between;
         margin: 8px 0;
         .price {
-          color: var(--color-light);
+          color: var(--adm-color-primary);
           font-size: 24px;
           font-style: normal;
           font-weight: 600;
@@ -468,11 +468,11 @@ const computedContent = computed(() => {
       }
 
       .custom-icon.active {
-        background-color: var(--color-light); /* 激活时绿色底 */
+        background-color: var(--adm-color-primary); /* 激活时绿色底 */
       }
 
       :deep(.van-step__line) {
-        border-left: 1px dashed var(--color-light); /* 垂直方向虚线 */
+        border-left: 1px dashed var(--adm-color-primary); /* 垂直方向虚线 */
       }
 
       :deep(.van-step:last-child .van-step__line) {
@@ -481,7 +481,7 @@ const computedContent = computed(() => {
 
       // 覆盖完成状态下的线条，让它保持虚线
       :deep(.van-step--finish .van-step__line) {
-        border-left: 1px dashed var(--color-light) !important; /* 垂直方向虚线 */
+        border-left: 1px dashed var(--adm-color-primary) !important; /* 垂直方向虚线 */
         background-color: #dbedf0; /* 去掉激活的底色 */
       }
 
@@ -500,7 +500,7 @@ const computedContent = computed(() => {
           height: 0;
           border-top: 5px solid transparent;
           border-bottom: 5px solid transparent;
-          border-left: 7px solid var(--color-light);
+          border-left: 7px solid var(--adm-color-primary);
           // padding: 0 5px;
           margin: 0 5px;
         }
@@ -508,7 +508,7 @@ const computedContent = computed(() => {
           margin-left: 5px;
 
           .freight-cost {
-            color: var(--color-light);
+            color: var(--adm-color-primary);
             font-size: 12px;
             font-style: normal;
             font-weight: 500;
@@ -602,14 +602,14 @@ const computedContent = computed(() => {
 
     .buy-button {
       height: 40px;
-      color: var(--color-light);
+      color: var(--adm-color-primary);
       box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
       border-radius: 20px 0 0 20px;
       background: rgba(255, 96, 0, 0.2);
     }
 
     .add-cart {
-      background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
       color: #fff;
       box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
       border-radius: 0 20px 20px 0;

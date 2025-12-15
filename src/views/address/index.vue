@@ -7,7 +7,7 @@
         <div class="top">
           <div class="person-info">
             <div class="person-text">
-              <van-tag color="var(--color-light)" v-if="item.isDefault">
+              <van-tag color="var(--adm-color-primary)" v-if="item.isDefault">
                 {{ item.isDefault ? $t('order.index.tag') : '' }}
               </van-tag>
               <div class="name">{{ item.name }}</div>
@@ -196,7 +196,7 @@ onMounted(() => {
       height: 40px;
       text-align: center;
       line-height: 40px;
-      background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
       border-radius: 40px;
       font-size: 15px;
       font-weight: 500;

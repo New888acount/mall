@@ -27,9 +27,7 @@
           </div>
 
           <div class="spec-info-box">
-            <div class="spec-price">
-            {{ $unit }}  {{ goodsPrice.price }}
-            </div>
+            <div class="spec-price">{{ $unit }} {{ goodsPrice.price }}</div>
 
             <div class="spec-stock">
               {{
@@ -291,7 +289,7 @@ onMounted(() => {
             align-items: center;
           }
           .spec-price {
-            color: var(--color-light);
+            color: var(--adm-color-primary);
             font-size: 15px;
             font-weight: 600;
             height: 30px;
@@ -360,14 +358,14 @@ onMounted(() => {
 
         .buy-button {
           height: 40px;
-          color: var(--color-light);
+          color: var(--adm-color-primary);
           box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
           border-radius: 20px 0 0 20px;
           background: rgba(255, 96, 0, 0.2);
         }
 
         .add-cart {
-          background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+          background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
           color: #fff;
           box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
           border-radius: 0 20px 20px 0;
@@ -439,7 +437,7 @@ onMounted(() => {
   }
   .text {
     color: #fff;
-    background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+    background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
   }
 }
 

@@ -62,8 +62,8 @@ const onMinus = () => emit('minus', innerValue.value)
     .van-stepper__minus,
     .van-stepper__plus {
       border-radius: 6px;
-      border: 1px solid var(--color-light);
-      background: var(--color-light);
+      border: 1px solid var(--adm-color-primary);
+      background: var(--adm-color-primary);
       color: #fff;
       border-radius: 50%;
       width: 16px;
@@ -84,8 +84,8 @@ const onMinus = () => emit('minus', innerValue.value)
     .van-stepper__plus:active,
     .van-stepper__minus:active {
       border-radius: 6px;
-      border: 1px solid var(--color-light) !important;
-      background: var(--color-light) !important;
+      border: 1px solid var(--adm-color-primary) !important;
+      background: var(--adm-color-primary) !important;
       border-radius: 50%;
       box-shadow: none; /* 去掉点击态阴影 */
     }

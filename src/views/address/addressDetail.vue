@@ -57,7 +57,7 @@
                 v-model="state.model.is_default"
                 size="22px"
                 inactive-color="#d6d6d6"
-                active-color="var(--color-light)"
+                active-color="var(--adm-color-primary)"
               />
             </template>
           </van-field>
@@ -369,7 +369,7 @@ onMounted(async () => {
         font-weight: 500;
         color: #fff;
         width: 100%;
-        background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+        background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
         margin-bottom: 10px;
         box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
       }

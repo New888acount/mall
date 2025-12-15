@@ -18,7 +18,7 @@
         <div class="person-info">
           <div class="person-text">
             <div class="tag">
-              <van-tag color="var(--color-light)" class="spec-info-tag" v-if="state.addressInfo?.isDefault">
+              <van-tag color="var(--adm-color-primary)" class="spec-info-tag" v-if="state.addressInfo?.isDefault">
                 {{ state.addressInfo?.isDefault ? $t('order.index.tag') : '' }}
               </van-tag>
             </div>
@@ -526,7 +526,7 @@ watch(
       gap: 8px;
       flex-shrink: 0;
       border-radius: 24px;
-      background: linear-gradient(90deg, var(--color-light), rgba(255, 96, 0, 0.6));
+      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
       color: #fff;
       font-size: 14px;
       font-weight: 500;
