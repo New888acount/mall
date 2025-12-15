@@ -28,6 +28,7 @@ import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
 import useCacheData from '@/store/modules/cacheData.js'
+import router from '@/router'
 
 const swiperInstance = ref(null)
 const cacheData = useCacheData()
@@ -87,6 +88,14 @@ onMounted(async () => {
   await nextTick()
 })
 
+const handleActDetail = (n) => {
+  router.push({
+    path: '/goods/index',
+    query: {
+      id: n.id,
+    },
+  })
+}
 watch(
   () => swiperList,
   () => {
