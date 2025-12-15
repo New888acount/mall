@@ -6,7 +6,7 @@ import vueI18n from '@/i18n/index'
 // 登录、注册
 import ShowLogin from '@/componentsFun/login/index.js'
 /*********ant-design-vue 组件引入star */
-import { Button as AButton } from 'ant-design-vue'
+import { Button as AButton, Collapse as ACollapse, CollapsePanel as ACollapsePanel } from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 /*********ant-design-vue 组件引入end */
 /*********vant 组件引入star */
@@ -15,6 +15,8 @@ import { Lazyload } from 'vant'
 export default function setVueAppConfig(app) {
   /*********ant-design-vue 组件引入star */
   app.use(AButton)
+  app.use(ACollapse)
+  app.use(ACollapsePanel)
   /*********ant-design-vue 组件引入end */
 
   /*********vant 组件引入star */
