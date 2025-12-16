@@ -57,7 +57,7 @@ onUnmounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #97a8c7;
+  color: var(--color-textlv2);
   text-align: center;
   font-size: 20px;
   img {
@@ -65,7 +65,7 @@ onUnmounted(() => {
     max-width: 100%;
   }
   a {
-    color: #ff7300;
+    color: var(--adm-color-primary);
   }
 }
 .err404-module {
@@ -75,7 +75,7 @@ onUnmounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: #97a8c7;
+  color: var(--color-textlv2);
   text-align: center;
   font-size: 20px;
   img {
@@ -83,7 +83,7 @@ onUnmounted(() => {
   }
   a {
     display: block;
-    color: #ff7300;
+    color: var(--adm-color-primary);
   }
 }
 </style>
