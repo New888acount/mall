@@ -39,7 +39,14 @@
           </template>
         </van-field>
       </van-cell-group>
-      <van-button round block type="primary" class="default-btn submit-button" native-type="submit">
+      <van-button
+        round
+        block
+        type="primary"
+        v-loading="isLoading"
+        class="default-btn submit-button"
+        native-type="submit"
+      >
         {{ $t('login.page.submit') }}
       </van-button>
     </van-form>
@@ -73,18 +80,21 @@ const props = defineProps({
   },
   resolve: Function,
   reject: Function,
-  visible: Boolean // 父组件传下来的 show
+  visible: Boolean, // 父组件传下来的 show
 })
 // 监听父组件的关闭
-watch(() => props.visible, (val) => {
-  if (!val) {
-    // 弹窗关闭时清空表单
-    formState.username = ''
-    formState.password = ''
-    formState.code = ''
-    formState.uuid = ''
+watch(
+  () => props.visible,
+  (val) => {
+    if (!val) {
+      // 弹窗关闭时清空表单
+      formState.username = ''
+      formState.password = ''
+      formState.code = ''
+      formState.uuid = ''
+    }
   }
-})
+)
 const formState = reactive({
   username: '',
   password: '',
@@ -98,9 +108,9 @@ const validateCustomName = (value) => {
   const prefix = value.split('@')[0]
   const suffix = value.split('@')[1]
   if (!value) {
-    return '请输入您的电子邮件地址'
+    return t('loginAndRegister.CustomName.tips1')
   } else if (value.indexOf('@') === -1) {
-    return '* 输入您的电子邮件地址'
+    return t('loginAndRegister.CustomName.tips2')
   }
 }
 // 密码
@@ -109,21 +119,21 @@ const validatePassword = async (value) => {
   const reg1 = /^[A-Za-z0-9]+$/
   const reg2 = /(?=.*[0-9])(?=.*[a-zA-Z])/
   if (!value) {
-    return '请输入密码'
+    return t('loginAndRegister.Password.tips1')
   } else if (value.length < 6 || value.length > 18) {
-    return '* 密码格式不正确'
+    return t('loginAndRegister.Password.tips2')
   }
 }
 const rulesRegister = {
   username: [
     {
       required: true,
-      message: '请填写邮箱',
+      message: t('loginAndRegister.CustomName.tips3'),
     },
     { validator: validateCustomName, trigger: 'onBlur' },
   ],
   password: [
-    { required: true, message: '请填写密码', trigger: 'onBlur' },
+    { required: true, message: t('loginAndRegister.Password.tips3'), trigger: 'onBlur' },
     { validator: validatePassword, trigger: 'onBlur' },
   ],
 }
@@ -140,7 +150,7 @@ const refreshCaptcha = async () => {
     // 如果需要保存 uuid，用来提交时校验
     formState.uuid = data.uuid
   } catch (err) {
-    console.error('获取验证码失败', err)
+    console.error(err)
   } finally {
     codeLoading.value = false
   }
@@ -165,7 +175,7 @@ const handleFinish = async () => {
     }
   } catch (error) {
     refreshCaptcha()
-  }finally {
+  } finally {
     isLoading.value = false
   }
 }
