@@ -156,5 +156,6 @@
   "loginAndRegister.CustomName.tips3": "请填写邮箱",
   "loginAndRegister.Password.tips1": "* 输入您的电子邮件地址",
   "loginAndRegister.Password.tips2": "* 密码格式不正确",
-  "loginAndRegister.Password.tips3": "请填写密码"
+  "loginAndRegister.Password.tips3": "请填写密码",
+  "homepage.banner.btn": "立即购买"
 }

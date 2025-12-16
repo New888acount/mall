@@ -1,15 +1,16 @@
 <template>
   <div class="van-swiper-module">
     <swiper v-bind="swiperOption" :modules="modules" @swiper="onSwiper" class="my-swipe">
-      <swiper-slide v-for="item in bannerList" :key="item.id" @click="handleActDetail(item)">
-        <component :is="MyImage" fit="initial" :src="item.bannerUrl" :lazyLoad="false" />
+      <swiper-slide v-for="item in cacheData.bannerList" :key="item.id" @click="handleActDetail(item)">
+        <component :is="MyImage" fit="initial" :src="$imgBaseUrl + item.picUrl" :lazyLoad="false" />
         <div class="text-container" @mousedown.prevent>
-          <div class="title">航行家系列发布</div>
+          <div class="title">{{ item.title }}</div>
           <div class="desc">
-            <p>震撼新品上市</p>
-            <p>最高优惠25%</p>
+            <p>{{ item.content }}</p>
           </div>
-          <a-button class="buy-btn default-btn">立即购买</a-button>
+          <a-button v-if="item.jumpUrl" class="buy-btn default-btn" @click="router.push(item.jumpUrl)">
+            {{ item.btn }}
+          </a-button>
         </div>
       </swiper-slide>
     </swiper>
@@ -21,14 +22,16 @@ import { defineComponent, ref, watch, nextTick, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import MyImage from '@/components/MyImage'
 import { myWindowOpen } from '@/utils'
-
 import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
+import useCacheData from '@/store/modules/cacheData'
 
 /** ***ref、reactive、props，等……start*****/
+const cacheData = useCacheData()
+
 // 绑定路由
 const router = useRouter()
 

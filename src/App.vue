@@ -123,6 +123,8 @@ onMounted(() => {
   }
 
   appStore.initApp()
+
+  cacheData.getBanner()
   cacheData.hotlist()
   cacheData.recommendlist()
 

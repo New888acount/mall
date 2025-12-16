@@ -47,3 +47,15 @@ export const getSupportApi = (params) =>
     method: 'get',
     params,
   })
+
+/**
+ * banner图接口
+ * @param
+ * @returns
+ */
+export const getBannerApi = (params) =>
+  request({
+    url: '/mall/no-auth/banner',
+    method: 'get',
+    params,
+  })

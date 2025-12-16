@@ -156,5 +156,6 @@
   "loginAndRegister.CustomName.tips3": "Please enter in your email address",
   "loginAndRegister.Password.tips1": "* Enter your email address",
   "loginAndRegister.Password.tips2": "* Incorrect password format",
-  "loginAndRegister.Password.tips3": "Please enter your password"
+  "loginAndRegister.Password.tips3": "Please enter your password",
+  "homepage.banner.btn": "Buy Now"
 }

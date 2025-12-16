@@ -1,7 +1,7 @@
 // stores/address.js
-import { defineStore } from 'pinia'
+import { getBannerApi } from '@/api/common'
 import { goodsListApi } from '@/api/goods'
-
+import { defineStore } from 'pinia'
 let loadingDisabled = false
 export const useCacheData = defineStore('useCacheData', {
   state: () => ({
@@ -16,6 +16,7 @@ export const useCacheData = defineStore('useCacheData', {
     },
     hotList: [], // 热门商品列表
     finished: false, // 已经完成所有加载
+    bannerList: [], //首页轮播图
   }),
   actions: {
     // 热门商品列表
@@ -79,6 +80,18 @@ export const useCacheData = defineStore('useCacheData', {
     onLoad() {
       if (this.finished || loadingDisabled) return false
       this.prolist()
+    },
+
+    async getBanner() {
+      if (this.bannerList.length) return
+      try {
+        const { data } = await getBannerApi()
+        this.bannerList = data
+
+        console.log(this.bannerList)
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 })

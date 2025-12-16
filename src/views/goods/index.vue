@@ -1,16 +1,6 @@
 <template>
   <div class="product">
-    <MobileHeader :leftText="$t('goodHeader.tab1')">
-      <!-- <template #title>
-        <div class="pro-header" @click="scrollTop">
-          <div>{{ $t('goodHeader.tab1') }}</div>
-          <div class="detail-pointer">
-            {{ $t('goodHeader.tab2') }}
-            <div></div>
-          </div>
-        </div>
-      </template> -->
-    </MobileHeader>
+    <MobileHeader :leftText="$t('goodHeader.tab1')"></MobileHeader>
     <!-- 产品信息 -->
     <div class="load" v-if="state.isLoading">
       <MyLoading />

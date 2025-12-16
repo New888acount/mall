@@ -100,7 +100,7 @@ import { getMaxZIndex } from '@/utils/index'
 
 import { formatStock } from '@/hooks/useDict/useGoods'
 import { isEmpty } from 'lodash'
-import { computed, defineEmits, defineExpose, defineProps, onMounted, reactive, ref, watch,onUnmounted } from 'vue'
+import { computed, defineEmits, defineExpose, defineProps, onMounted, reactive, ref, watch, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 /** ***引入相关包end*****/
