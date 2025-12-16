@@ -1,11 +1,13 @@
 <template>
   <div class="about-page" v-loading="isLoading">
     <MobileHeader :leftText="$t('about')" class="about-header" :backicon="true"></MobileHeader>
-    <main v-if="Object.keys(details)?.length">
-      <div class="title">{{ details?.title }}</div>
-      <div class="content" v-html="details?.content"></div>
+    <main v-if="details?.length">
+      <div class="items" v-for="item in details" :key="item?.title">
+        <div class="title">{{ item?.title }}</div>
+        <div class="content" v-html="item?.content"></div>
+      </div>
     </main>
-    <MyEmptyData v-else-if="!Object.keys(details)?.length && !isLoading" />
+    <MyEmptyData v-else-if="!details?.length && !isLoading" />
   </div>
 </template>
 
@@ -25,7 +27,7 @@ const getAbout = async () => {
   isLoading.value = true
   try {
     const { data } = await getAboutApi()
-    details.value = data[0]
+    details.value = data
   } catch (error) {
     console.log(error)
   } finally {
@@ -51,6 +53,9 @@ onMounted(async () => {
 
   main {
     padding: 12px 16px;
+    .items {
+      margin-bottom: 12px;
+    }
     .title {
       color: var(--adm-color-textLv1);
       font-family: Roboto;
