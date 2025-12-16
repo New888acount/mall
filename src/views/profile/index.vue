@@ -84,12 +84,13 @@ import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getLanguagesListApi } from '@/api/user'
 import Feedback from '@/componentsFun/feedback/index.js'
+import useAppStore from '@/store/modules/app.js'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { setLanguage, getLanguage } = useLocalCache()
 const { t } = useI18n()
 const { getCacheToken, clearCache } = useLocalCache()
-
+const appStore = useAppStore()
 // 用户信息
 const userInfoStore = useUserInfoStore()
 const orderNav = [
@@ -168,7 +169,7 @@ const profileList = [
     icon: 'icon-support',
     loginShow: true,
     fn: () => {
-      console.log('联系客服')
+      appStore.openLiveChat()
     },
   },
   {
