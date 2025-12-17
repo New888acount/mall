@@ -45,13 +45,13 @@ service.interceptors.request.use(
     config.original = !!config.original
     config.message = !config.message
 
+    const token = useLocalCache().getCacheToken()
+
     // 请求头合并
     const header = {
       'Content-Type': 'application/json',
-      authorization: `Bearer ${useLocalCache().getCacheToken()}`,
+      authorization: token ? `Bearer ${token}` : '',
       'accept-language': useAppStore().language,
-      // Country: useLocalCache().getCurrentLanguage()?.split('-')[1],
-      // Skin: 'afun', //皮肤区分
     }
     config.headers = Object.assign(header, config.header)
     if (config.loading) {

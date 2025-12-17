@@ -134,7 +134,7 @@ const profileList = [
     icon: 'icon-collect',
     loginShow: true,
     fn: () => {
-      console.log('我的收藏')
+      router.push('/favorite')
     },
   },
   {

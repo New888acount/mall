@@ -211,6 +211,17 @@ const router = createRouter({
           },
           component: async () => await import('@/views/about/index.vue'),
         },
+        {
+          path: 'favorite',
+          name: 'favorite',
+          meta: {
+            navShow: {
+              navbar: false,
+              navigation: false,
+            },
+          },
+          component: async () => await import('@/views/favorite/index.vue'),
+        },
       ],
     },
   ],

@@ -2,33 +2,34 @@
   <div class="cube-item" @click="handleClick">
     <!-- 图片 -->
     <div class="item-img">
-      <MyImage :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
+      <MyImage :src="$imgBaseUrl + details.pic" alt="" fit="initial" />
     </div>
 
     <!-- 信息 -->
     <div class="item-info">
-      <div class="text">{{ item.name || item.productName }}</div>
-      <div class="tag" v-if="item.spDataValue">
-        {{ item.spDataValue }}
+      <div class="text">{{ details.name || details.productName }}</div>
+      <div class="tag" v-if="details.spDataValue">
+        {{ details.spDataValue }}
       </div>
       <div class="item-price">
         <div class="price padding">
           <span class="unit">{{ $unit }}</span>
-          {{ item.price }}
+          {{ details.price }}
         </div>
       </div>
 
       <div
         class="fav-icon"
         :class="{
-          active: item.name,
+          active: details.isFavorite,
         }"
+        @click.stop="handleFavorite(details)"
       >
         <i
           class="iconfont"
           :class="{
-            'icon-collect': !item.name,
-            'icon-collected1': item.name,
+            'icon-collect': !details.isFavorite,
+            'icon-collected1': details.isFavorite,
           }"
         ></i>
       </div>
@@ -38,16 +39,45 @@
 
 <script setup>
 import MyImage from '@/components/MyImage'
-import { defineEmits, defineProps } from 'vue'
+import { defineEmits, defineProps, ref } from 'vue'
+import { addFavoriteApi, cancelFavoriteApi } from '@/api/home'
+import ShowLogin from '@/componentsFun/login/index.js'
+import useUserInfoStore from '@/store/modules/userInfo'
+import { customToast } from '@/utils/index.js'
+
+const userInfoStore = useUserInfoStore()
 
 const props = defineProps({
   item: { type: Object, required: true },
+  callback: {
+    type: Function,
+    default: () => null,
+  },
 })
 
 const emit = defineEmits(['click'])
 
+const details = ref(props.item)
+
 function handleClick() {
   emit('click', props.item)
+}
+
+const handleFavorite = async (obj) => {
+  if (!userInfoStore.token) {
+    ShowLogin()
+    return
+  }
+  try {
+    const { msg } = obj?.isFavorite
+      ? await cancelFavoriteApi({ productId: obj?.id })
+      : await addFavoriteApi({ productId: obj?.id })
+    details.value.isFavorite = !details.value.isFavorite
+    customToast(msg)
+    props.callback && props.callback(true)
+  } catch (error) {
+    console.log(error)
+  }
 }
 </script>
 
@@ -66,8 +96,8 @@ function handleClick() {
     height: 24px;
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.6);
-    cursor: pointer;
     z-index: 2;
+    cursor: pointer;
     &.active {
       background: var(--adm-color-primary);
       .iconfont {
