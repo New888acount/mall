@@ -215,6 +215,7 @@ const router = createRouter({
           path: 'favorite',
           name: 'favorite',
           meta: {
+            requiresAuth: true,
             navShow: {
               navbar: false,
               navigation: false,

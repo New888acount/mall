@@ -6,7 +6,7 @@
     </div>
 
     <div class="right-icon">
-      <div class="icon-common">
+      <div class="icon-common" @click="router.push('/favorite')">
         <i class="iconfont icon-collect"></i>
       </div>
 
