@@ -284,7 +284,7 @@ onMounted(() => {
       align-items: center;
       background: #fff;
       position: sticky;
-      top: 45px;
+      top: 48px;
       z-index: 99;
 
       .title-box {
