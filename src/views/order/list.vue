@@ -120,7 +120,6 @@ import { useCartStore } from '@/store/modules/cart'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import PaySuccess from './components/payResult.vue'
-import { customToast } from '@/utils'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const paysuccessShow = ref(false)
@@ -281,7 +280,7 @@ watch(
     // margin: 10px;
     border-radius: 10px;
     border: 1px solid #f4f4f4;
-    background: #fff;
+    background: var(--adm-bg-white);
     padding: 12px 15px;
     margin-bottom: 7px;
     // height: 29px;
@@ -374,7 +373,7 @@ watch(
     // border-radius: 10px;
     // padding: 0 16px;
 
-    background: #fff;
+    background: var(--adm-bg-white);
     .order-item {
       display: flex;
       // justify-content: center;
@@ -445,7 +444,7 @@ watch(
   }
   .order-message {
     margin: 7px 0;
-    background: #fff;
+    background: var(--adm-bg-white);
     height: 40px;
     :deep(.van-field) {
       padding-left: 10px;
@@ -456,7 +455,7 @@ watch(
     }
   }
   .list-sum {
-    background: #fff;
+    background: var(--adm-bg-white);
     padding: 10px;
     .sum-item {
       display: flex;
@@ -510,7 +509,7 @@ watch(
     justify-content: space-between;
     align-items: center;
     padding: 8px 16px;
-    background: #fff;
+    background: var(--adm-bg-white);
     box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
 
     .sum-price {
@@ -527,7 +526,7 @@ watch(
       flex-shrink: 0;
       border-radius: 24px;
       background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
-      color: #fff;
+      color: var(--adm-color-white);
       font-size: 14px;
       font-weight: 500;
       line-height: 40px;

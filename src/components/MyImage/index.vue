@@ -110,7 +110,7 @@ const handleLoadingComplete = () => {
     }
     i {
       font-size: 30px;
-      color: #fff;
+      color: var(--adm-color-white);
     }
   }
 
@@ -122,7 +122,7 @@ const handleLoadingComplete = () => {
     width: 100%;
     height: 100%;
     color: #ffffff;
-    background-color: #fff;
+    background-color: var(--adm-color-white);
     span {
       width: 100%;
       padding: 0 6px;

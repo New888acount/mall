@@ -20,11 +20,11 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, defineExpose } from 'vue'
 import MyPopup from '@/components/MyPopup/index.vue'
+import { defineExpose, onMounted, ref } from 'vue'
 
-import logisticsPop from './index.js'
 import { getMaxZIndex } from '@/utils/index'
+import logisticsPop from './index.js'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -87,7 +87,7 @@ onMounted(() => {})
       width: 175px;
       height: 40px;
       padding: 0 24px;
-      color: #fff;
+      color: var(--adm-color-white);
       font-size: 14px;
       line-height: 40px;
       font-weight: 500;

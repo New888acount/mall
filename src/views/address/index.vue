@@ -132,7 +132,7 @@ onMounted(() => {
 <style scoped lang="less">
 .address {
   color: var(--adm-color-textlv2);
-  background: #fff;
+  background: var(--adm-bg-white);
   height: 100%;
 
   main {

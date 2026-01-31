@@ -26,11 +26,11 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, defineExpose, defineProps, onMounted } from 'vue'
 import MyPopup from '@/components/MyPopup/index.vue'
-import msgTaost from './index.js'
 import { customToast, getMaxZIndex } from '@/utils/index'
+import { defineExpose, defineProps, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import msgTaost from './index.js'
 
 /** ***引入相关包end*****/
 
@@ -107,7 +107,7 @@ onMounted(() => {})
       .submit {
         margin-top: 15px;
         background: var(--adm-color-primary);
-        color: #fff;
+        color: var(--adm-color-white);
         padding: 10px 0;
         border-radius: 5px;
         font-size: 16px;

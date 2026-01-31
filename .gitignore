@@ -5,6 +5,7 @@ node_modules
 *.local
 *.zip
 *.tar
+*.7z
 
 # local env files
 .env.local

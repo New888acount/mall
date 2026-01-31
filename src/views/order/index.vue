@@ -109,11 +109,11 @@
 import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderListApi } from '@/api/order'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { getOrderStatusName } from '@/hooks/useDict/useGoods'
-import { useI18n } from 'vue-i18n'
 import router from '@/router'
 import { customToast, formatDateTimer } from '@/utils/index'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 
 /** ***引入相关包end*****/
@@ -413,7 +413,7 @@ watch(
     .data-item {
       padding: 12px 12px 0;
       margin-bottom: 12px;
-      background: #fff;
+      background: var(--adm-bg-white);
       &:last-child {
         margin-bottom: 0;
       }
@@ -497,10 +497,6 @@ watch(
         row-gap: 12px;
         column-gap: 8px;
 
-
-
-
-        
         padding-top: 12px;
 
         .operate-item {

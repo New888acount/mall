@@ -29,8 +29,8 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, defineEmits, reactive } from 'vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import { onMounted, reactive, ref } from 'vue'
 // import { getMaxZIndex } from '@/utils/index'
 import { useRoute } from 'vue-router'
 
@@ -101,7 +101,7 @@ onMounted(async () => {
 .my__paymethods {
   width: 100%;
   height: 100%;
-  background: #fff;
+  background: var(--adm-bg-white);
 
   .content {
     .price {
@@ -133,7 +133,7 @@ onMounted(async () => {
 
           .van-checkbox__icon--checked .van-icon {
             background: var(--adm-color-primary);
-            color: #fff;
+            color: var(--adm-color-white);
             border: 0;
           }
           .van-checkbox__label {
@@ -153,7 +153,7 @@ onMounted(async () => {
         text-align: center;
         font-size: 14px;
         font-weight: 500;
-        color: #fff;
+        color: var(--adm-color-white);
         width: 100%;
         background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
         margin-bottom: 10px;

@@ -79,8 +79,8 @@ import { defineProps, onMounted, reactive, ref, watch } from 'vue'
 import { addressDetailApi, areaApi, createAddressApi, updateAddressApi } from '@/api/address'
 import useLocalCache from '@/hooks/storage/localStorage.js'
 import router from '@/router'
-import { useRoute } from 'vue-router'
 import { customToast } from '@/utils'
+import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
@@ -316,7 +316,7 @@ onMounted(async () => {
     // padding: 0 15px;
     // border-radius: 10px;
     // border: 1px solid #f4f4f4;
-    background: #fff;
+    background: var(--adm-bg-white);
 
     :deep(.van-form) {
       .van-cell-group--inset {

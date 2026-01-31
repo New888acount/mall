@@ -100,7 +100,7 @@ import { getMaxZIndex } from '@/utils/index'
 
 import { formatStock } from '@/hooks/useDict/useGoods'
 import { isEmpty } from 'lodash'
-import { computed, defineEmits, defineExpose, defineProps, onMounted, reactive, ref, watch, onUnmounted } from 'vue'
+import { computed, defineEmits, defineExpose, defineProps, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 /** ***引入相关包end*****/
@@ -363,7 +363,7 @@ onUnmounted(() => {
         padding: 8px 16px 8px 16px;
         justify-content: center;
         align-items: center;
-        background: #fff;
+        background: var(--adm-bg-white);
         box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
         z-index: 6;
 
@@ -427,7 +427,7 @@ onUnmounted(() => {
       .tag {
         border-radius: 24px;
         border: 0 solid #f4f4f4;
-        background: #fff;
+        background: var(--adm-bg-white);
         font-size: 10px;
         width: 40px;
         height: 18px;

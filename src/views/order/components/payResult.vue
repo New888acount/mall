@@ -48,10 +48,10 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, defineEmits } from 'vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import { getMaxZIndex } from '@/utils/index'
 import router from '@/router'
+import { getMaxZIndex } from '@/utils/index'
+import { defineEmits, onMounted, ref } from 'vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -91,12 +91,12 @@ onMounted(() => {})
         border-radius: 28px;
         background: var(--adm-color-primary);
         font-size: 33px;
-        color: #fff;
+        color: var(--adm-color-white);
         line-height: 56px;
         margin: 48px auto 24px;
         i {
           font-size: 30px;
-          color: #fff;
+          color: var(--adm-color-white);
         }
       }
 
@@ -124,7 +124,7 @@ onMounted(() => {})
           text-align: center;
           font-size: 14px;
           font-weight: 500;
-          color: #fff;
+          color: var(--adm-color-white);
           width: 150px;
           margin: 24px auto;
         }

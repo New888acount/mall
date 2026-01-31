@@ -38,12 +38,12 @@
 </template>
 
 <script setup>
-import MyImage from '@/components/MyImage'
-import { defineEmits, defineProps, ref } from 'vue'
 import { addFavoriteApi, cancelFavoriteApi } from '@/api/home'
+import MyImage from '@/components/MyImage'
 import ShowLogin from '@/componentsFun/login/index.js'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { customToast } from '@/utils/index.js'
+import { defineEmits, defineProps, ref } from 'vue'
 
 const userInfoStore = useUserInfoStore()
 
@@ -102,7 +102,7 @@ const handleFavorite = async (obj) => {
       background: var(--adm-color-primary);
       .iconfont {
         font-size: 14px;
-        color: #fff;
+        color: var(--adm-color-white);
       }
     }
     .iconfont {

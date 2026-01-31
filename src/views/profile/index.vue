@@ -75,16 +75,16 @@
 
 <script setup>
 /** ***引入相关包start*****/
+import { getLanguagesListApi } from '@/api/user'
 import MyPopup from '@/components/MyPopup/index.vue'
+import Feedback from '@/componentsFun/feedback/index.js'
 import gotoLogin from '@/componentsFun/login/index'
 import useLocalCache from '@/hooks/storage/localStorage'
 import router from '@/router'
+import useAppStore from '@/store/modules/app.js'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { computed, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { getLanguagesListApi } from '@/api/user'
-import Feedback from '@/componentsFun/feedback/index.js'
-import useAppStore from '@/store/modules/app.js'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { setLanguage, getLanguage } = useLocalCache()
@@ -433,7 +433,7 @@ onMounted(() => {
 
   .profile-list {
     padding: 8px 16px;
-    background: #fff;
+    background: var(--adm-bg-white);
     .list-item {
       flex: 1;
       text-align: center;

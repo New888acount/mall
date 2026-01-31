@@ -60,7 +60,7 @@
 
 <script setup name="MyPopup">
 import MyLoading from '@/components/MyLoading/index.vue'
-import { computed, defineProps, defineEmits } from 'vue'
+import { computed, defineEmits, defineProps } from 'vue'
 const emit = defineEmits(['update:modelValue', 'close', 'confirm'])
 const props = defineProps({
   modelValue: {
@@ -232,7 +232,7 @@ const handleConfirm = () => {
     flex-direction: column;
     width: 100%;
     height: 100%;
-    background: #fff;
+    background: var(--adm-bg-white);
     box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.4);
     box-sizing: border-box;
     overflow: hidden;
@@ -300,7 +300,7 @@ const handleConfirm = () => {
     flex-shrink: 0;
     min-height: 35px;
     margin: 10px 20px 20px 20px;
-    color: #fff;
+    color: var(--adm-color-white);
     font-size: 14px;
     font-weight: 500;
     font-style: normal;
@@ -341,7 +341,7 @@ const handleConfirm = () => {
       content: '\e62c';
       font-size: 20px;
       font-weight: 500;
-      color: #fff;
+      color: var(--adm-color-white);
     }
   }
 }

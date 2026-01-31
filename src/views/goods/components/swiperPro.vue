@@ -1,7 +1,7 @@
 <template>
   <div class="pro-swiper">
     <van-swipe class="my-swipe" :autoplay="3000" @change="onChange">
-      <van-swipe-item v-for="(item,i) in props.list" :key="'swiper' + i">
+      <van-swipe-item v-for="(item, i) in props.list" :key="'swiper' + i">
         <MyImage v-if="$imgBaseUrl + item" :src="$imgBaseUrl + item" alt="" fit="initial" />
       </van-swipe-item>
 
@@ -14,8 +14,8 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, defineProps} from 'vue'
 import MyImage from '@/components/MyImage'
+import { defineProps, onMounted, ref } from 'vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -54,7 +54,7 @@ onMounted(() => {
     // width: 375px;
     height: 375px;
     .van-swipe-item {
-      color: #fff;
+      color: var(--adm-color-white);
       font-size: 20px;
       line-height: 150px;
       text-align: center;
@@ -66,7 +66,7 @@ onMounted(() => {
       bottom: 5px;
       padding: 8px 18px;
       background: rgba(0, 0, 0, 0.4);
-      color: #fff;
+      color: var(--adm-color-white);
       font-size: 18px;
       border-radius: 20px;
       text-align: center;

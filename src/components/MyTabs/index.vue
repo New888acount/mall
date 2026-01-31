@@ -281,7 +281,7 @@ html[data-device='mobile'] {
   }
   :deep(.van-tabs__wrap) {
     min-height: 30px !important;
-    background: #fff;
+    background: var(--adm-bg-white);
   }
   :deep(.van-tabs__nav) {
     background: none;

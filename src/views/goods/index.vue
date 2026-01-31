@@ -405,7 +405,7 @@ const computedContent = computed(() => {
     }
 
     .shipping-info {
-      background: #fff;
+      background: var(--adm-bg-white);
       padding: 12px 5px;
       margin-top: 7px;
       border-radius: 5px;
@@ -418,7 +418,7 @@ const computedContent = computed(() => {
         height: 20px;
         border-radius: 50%; /* 圆形 */
         background-color: #ccc; /* 默认灰色底 */
-        color: #fff; /* 字体白色 */
+        color: var(--adm-color-white); /* 字体白色 */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -548,7 +548,7 @@ const computedContent = computed(() => {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #fff;
+    background: var(--adm-bg-white);
     box-shadow: 0 -1px 4px 0 rgba(0, 0, 0, 0.1);
     z-index: 6;
 

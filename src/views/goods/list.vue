@@ -86,14 +86,13 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted, reactive } from 'vue'
-import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import MyEmptyData from '@/components/MyEmptyData/index.vue'
-import MyPopup from '@/components/MyPopup/index.vue'
 import { goodsListApi } from '@/api/goods'
-import MyImage from '@/components/MyImage'
+import MyEmptyData from '@/components/MyEmptyData/index.vue'
+import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import MyPopup from '@/components/MyPopup/index.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
+import { onMounted, reactive, ref } from 'vue'
 import { useRoute } from 'vue-router'
 // import ProductItem from '@/components/MyGoodsItem/index.vue'
 // import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
@@ -282,7 +281,7 @@ onMounted(() => {
     .list-box {
       display: flex;
       align-items: center;
-      background: #fff;
+      background: var(--adm-bg-white);
       position: sticky;
       top: 48px;
       z-index: 99;

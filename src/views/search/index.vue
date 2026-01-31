@@ -21,10 +21,10 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted } from 'vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import router from '@/router'
 import useLocalCache from '@/hooks/storage/localStorage'
+import router from '@/router'
+import { onMounted, ref } from 'vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { setSearchHistory, getSearchHistory, removeSearchHistory } = useLocalCache()
@@ -66,7 +66,7 @@ onMounted(() => {
 
 <style scoped lang="less">
 .search-page {
-  background: #fff;
+  background: var(--adm-bg-white);
   height: 100%;
   .search {
     display: flex;
