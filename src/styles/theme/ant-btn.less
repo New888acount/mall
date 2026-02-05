@@ -155,3 +155,39 @@
     }
   }
 }
+
+.default-btn-solidlight {
+  background: rgba(237, 237, 237, 0.6);
+  color: var(--adm-color-textLv1);
+  border: none;
+  outline: none;
+  text-shadow: none;
+  border-radius: 0;
+  box-sizing: none !important;
+  > div {
+    //点击阴影
+    display: none !important;
+  }
+  span {
+    word-break: keep-all !important;
+    white-space: normal !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--adm-color-textLv1);
+    text-align: center;
+  }
+  &:hover,
+  &:focus {
+    color: var(--adm-color-textLv1) !important;
+    background: rgba(237, 237, 237, 0.6) !important;
+  }
+  &:disabled {
+    opacity: 0.4;
+    background: rgba(237, 237, 237, 0.6);
+    border-radius: 0;
+
+    &:hover {
+      opacity: 0.4 !important;
+    }
+  }
+}

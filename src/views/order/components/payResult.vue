@@ -129,9 +129,9 @@ onMounted(() => {})
           margin: 24px auto;
         }
         .back {
-          background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
+          background: linear-gradient(90deg, var(--adm-color-primary), var(--adm-color-primary-op6));
           // margin-bottom: 10px;
-          box-shadow: 0 2.8px 7px rgba(255, 96, 0, 0.45);
+          box-shadow: 0 2.8px 7px var(--adm-color-primary-op2);
         }
 
         .check-btn {

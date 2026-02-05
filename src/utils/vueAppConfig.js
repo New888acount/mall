@@ -6,7 +6,16 @@ import vueI18n from '@/i18n/index'
 // 登录、注册
 import ShowLogin from '@/componentsFun/login/index.js'
 /*********ant-design-vue 组件引入star */
-import { Button as AButton, Collapse as ACollapse, CollapsePanel as ACollapsePanel } from 'ant-design-vue'
+import {
+  Button as AButton,
+  Collapse as ACollapse,
+  CollapsePanel as ACollapsePanel,
+  Form as AFom,
+  Popover as APopover,
+  Radio as ARadio,
+  Select as ASelect,
+  Spin as ASpin,
+} from 'ant-design-vue'
 import 'ant-design-vue/dist/reset.css'
 /*********ant-design-vue 组件引入end */
 /*********vant 组件引入star */
@@ -17,6 +26,11 @@ export default function setVueAppConfig(app) {
   app.use(AButton)
   app.use(ACollapse)
   app.use(ACollapsePanel)
+  app.use(AFom)
+  app.use(ASpin)
+  app.use(ARadio)
+  app.use(ASelect)
+  app.use(APopover)
   /*********ant-design-vue 组件引入end */
 
   /*********vant 组件引入star */

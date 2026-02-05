@@ -375,7 +375,7 @@ watch(
   align-items: flex-start;
   justify-content: flex-end;
   height: 100dvh;
-  background: #fbfbfb;
+  background: var(--adm-bg-light);
   header {
     width: 100%;
   }
@@ -398,7 +398,7 @@ watch(
   .line {
     width: 100%;
     height: 12px;
-    background: #fbfbfb;
+    background: var(--adm-bg-light);
   }
 
   .my-pull-refresh-list {

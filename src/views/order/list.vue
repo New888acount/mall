@@ -525,7 +525,7 @@ watch(
       gap: 8px;
       flex-shrink: 0;
       border-radius: 24px;
-      background: linear-gradient(90deg, var(--adm-color-primary), rgba(255, 96, 0, 0.6));
+      background: linear-gradient(90deg, var(--adm-color-primary), var(--adm-color-primary-op6));
       color: var(--adm-color-white);
       font-size: 14px;
       font-weight: 500;

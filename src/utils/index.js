@@ -1,9 +1,9 @@
-import dayjs from 'dayjs'
+import vueI18n from '@/i18n/index'
+import copy from 'copy-to-clipboard'
 import currency from 'currency.js'
+import dayjs from 'dayjs'
 import JSEncrypt from 'jsencrypt'
 import { showToast } from 'vant'
-import copy from 'copy-to-clipboard'
-import vueI18n from '@/i18n/index'
 const { t } = vueI18n.global
 // 动态获取页面z-index 层级，可以更好控制弹框，已经自动加1
 export const getMaxZIndex = () => {
@@ -77,6 +77,12 @@ export const handleMoney = (value) => {
 
 // 判断是否是ios
 export const isIOS = () => window.navigator.userAgent.match(/(iPhone|iPod|ios|iPad)/i)
+
+// 判断是否是Mobile
+export const isMobile = () => {
+  const ua = navigator.userAgent || ''
+  return /Android|iPhone|iPad|iPod|Mobile|iOS/i.test(ua)
+}
 
 // 跳转外链
 export const myWindowOpen = (url) => {

@@ -2,9 +2,7 @@
   <div class="cart-page" v-loading="cartStore.loading">
     <MobileHeader
       :backicon="false"
-      :leftText="
-        $t('cart.title', { count: cartStore.cartCount ? `(${cartStore.cartCount})` : '' })
-      "
+      :leftText="$t('cart.title', { count: cartStore.cartCount ? `(${cartStore.cartCount})` : '' })"
       class="cart-header"
     >
       <template #right>
@@ -209,7 +207,7 @@ onMounted(() => {
   .line {
     width: 100%;
     height: 12px;
-    background: #fbfbfb;
+    background: var(--adm-bg-light);
   }
 
   .cart-wrap {
@@ -236,7 +234,7 @@ onMounted(() => {
     bottom: 56px;
     width: 100%;
     border-top: 0.5px solid var(--, #ededed);
-    background: #fbfbfb;
+    background: var(--adm-bg-light);
 
     display: flex;
     justify-content: space-between;

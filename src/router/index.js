@@ -223,6 +223,42 @@ const router = createRouter({
           },
           component: async () => await import('@/views/favorite/index.vue'),
         },
+        {
+          path: '/authorize',
+          name: 'authorize',
+          meta: {
+            inTitle: 'authorize',
+            bgColor: {
+              desktop: 'html-bg-default',
+              mobile: 'html-bg-mobile-home',
+            },
+            navShow: {
+              desktop: false,
+              mobile: false,
+              navigation: false,
+              footer: false,
+            },
+          },
+          component: async () => await import('@/views/authorize/index.vue'),
+        },
+        {
+          path: '/paying',
+          name: 'paying',
+          meta: {
+            inTitle: 'paying',
+            bgColor: {
+              desktop: 'html-bg-default',
+              mobile: 'html-bg-mobile-home',
+            },
+            navShow: {
+              desktop: false,
+              mobile: false,
+              navigation: false,
+              footer: false,
+            },
+          },
+          component: async () => await import('@/views/order/paying/index.vue'),
+        },
       ],
     },
   ],

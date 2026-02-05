@@ -112,7 +112,7 @@
   "order.result.tip3": "Check order progress",
   "order.result.button1": "Return",
   "order.result.button2": "View Orders",
-  "pay.title": "Cashier",
+  "pay.title": "Settlement",
   "pay.methods": "Please select payment method",
   "pay.button": "Pay Now",
   "empty.text": "No data available",
