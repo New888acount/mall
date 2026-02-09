@@ -73,8 +73,11 @@
   "order.index.address": "Please Select Shipping Address",
   "order.index.tag": "Default",
   "order.index.message.title": "Remarks",
+  "order.index.message.title1": "Transportation Method",
+  "order.index.message.value1": "Limited-time free shipping",
   "order.index.message.placeholder": "Fill in Remarks",
-  "order.index.total": "Total Amount",
+  "order.index.total": "Total",
+  "order.index.freight": "Freight charges",
   "order.index.amount": "Total {0} items",
   "order.index.sum": "Total:",
   "order.index.submit": "Submit",
@@ -157,5 +160,6 @@
   "loginAndRegister.Password.tips1": "* Enter your email address",
   "loginAndRegister.Password.tips2": "* Incorrect password format",
   "loginAndRegister.Password.tips3": "Please enter your password",
-  "homepage.banner.btn": "Buy Now"
+  "homepage.banner.btn": "Buy Now",
+  "cart.free": "Limited-time free shipping"
 }

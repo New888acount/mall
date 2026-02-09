@@ -5,7 +5,7 @@
       <div class="home-game-swiper">
         <swiper v-bind="swiperOption" :modules="modules" @swiper="onSwiper" class="my-swipe">
           <swiper-slide v-for="item in cacheData.hotList" :key="item.id" @click="handleActDetail(item)">
-            <baseModule :item="item" />
+            <baseModule :item="item" :showUpdate="true" />
           </swiper-slide>
         </swiper>
 
@@ -18,17 +18,17 @@
   </div>
 </template>
 <script setup>
-import baseModule from './baseModule.vue'
+import router from '@/router'
+import useCacheData from '@/store/modules/cacheData.js'
 import commenHeader from '@/views/home/components/CommonHeader'
-import { ref, watch, nextTick, onMounted } from 'vue'
 import '@vant/touch-emulator'
-import { Navigation, EffectCoverflow, Autoplay } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
-import useCacheData from '@/store/modules/cacheData.js'
-import router from '@/router'
+import { Autoplay, EffectCoverflow, Navigation } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
+import baseModule from './baseModule.vue'
 
 const swiperInstance = ref(null)
 const cacheData = useCacheData()
@@ -42,7 +42,7 @@ const swiperOption = {
   },
   loop: true,
   initialSlide: 0,
-  slidesPerView: 3,
+  slidesPerView: 2,
   spaceBetween: 8,
   effect: 'faded',
   centeredSlides: false,
@@ -53,32 +53,7 @@ const swiperOption = {
 }
 // import searchGamePop from './components/searchGamePop/index'
 
-const swiperList = ref([
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-  {
-    imgDefault: require('@/assets/images/home/40226.png'),
-  },
-])
+const swiperList = ref([])
 
 const onSwiper = (swiper) => {
   swiperInstance.value = swiper

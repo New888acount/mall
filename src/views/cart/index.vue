@@ -46,7 +46,14 @@
         </div>
 
         <div class="right">
-          <div class="sum-price">{{ $unit }} {{ state.totalPriceSelected }}</div>
+          <div class="price-text">
+            <div class="sum-price">
+              <div class="price">{{ $unit }} {{ state.finalPrice }}</div>
+              <div class="discount">{{ $unit }} {{ state.totalPriceSelected }}</div>
+            </div>
+            <p class="free">{{ $t('cart.free') }}</p>
+          </div>
+
           <a-button class="default-btn-solid sum-submit" @click="onDelete" v-if="state.editMode">
             {{ $t('cart.delete') }}
           </a-button>
@@ -257,13 +264,42 @@ onMounted(() => {
       justify-content: flex-end;
 
       .sum-price {
-        color: var(--color-red);
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+
+        .price {
+          flex: 1;
+          color: var(--color-red);
+          text-align: right;
+          font-family: Roboto;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 18px;
+        }
+
+        .discount {
+          flex: 1;
+          margin-left: 2px;
+          color: var(--adm-color-textlv3);
+          font-family: Roboto;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          text-decoration-line: line-through;
+        }
+      }
+
+      .free {
         text-align: right;
-        font-family: Roboto;
+        color: var(--color-textlv2);
+        font-family: Inter;
         font-size: 12px;
         font-style: normal;
-        font-weight: 500;
-        line-height: normal;
+        font-weight: 400;
+        line-height: 150%; /* 18px */
       }
 
       .sum-submit {

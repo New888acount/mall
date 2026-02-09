@@ -3,6 +3,7 @@
     <!-- 图片 -->
     <div class="item-img">
       <MyImage :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
+      <div class="tag" v-if="item.superDiscount">SALE</div>
     </div>
 
     <!-- 信息 -->
@@ -16,10 +17,21 @@
         </div>
       </div>
       <div class="item-price">
-        <div class="price padding">
-          <span class="unit">{{ $unit }}</span>
-          {{ item.price }}
+        <div class="left">
+          <div class="price padding">
+            <span
+              class="precent"
+              :class="{
+                red: item.superDiscount,
+              }"
+            >
+              {{ $unit }} {{ item.finalPrice }}
+            </span>
+            <div class="discount">{{ $unit }} {{ item.price }}</div>
+          </div>
+          <div class="update">SAVE {{ $unit }} {{ item.discountPrice }}</div>
         </div>
+
         <a-button v-if="buyButton" class="default-btn operate-item">
           {{ $t('goodList.buy') }}
         </a-button>
@@ -107,12 +119,28 @@ watch(
     margin-bottom: 0;
   }
   .item-img {
+    position: relative;
     width: 72px;
     height: 72px;
     margin-right: 8px;
     img {
       width: 100%;
       height: 100%;
+    }
+    .tag {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 4px;
+      color: var(--adm-color-white);
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 12px; /* 100% */
+      text-transform: uppercase;
+      background: #d92211;
+      z-index: 2;
     }
   }
 
@@ -152,12 +180,46 @@ watch(
       align-items: center;
 
       .price {
-        color: var(--color-red);
-        font-family: Roboto;
-        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        .precent {
+          color: var(--adm-color-textLv1);
+          font-family: Roboto;
+          font-size: 12px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 18px;
+          &.red {
+            color: var(--color-red);
+          }
+        }
+
+        .discount {
+          margin-left: 2px;
+          color: var(--adm-color-textlv3);
+          font-family: Roboto;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 18px;
+          text-decoration-line: line-through;
+        }
+      }
+
+      .update {
+        display: inline-block;
+        margin-top: 2px;
+        padding: 1px 6px;
+        text-align: center;
+        color: var(--adm-color-primary);
+        font-family: Inter;
+        font-size: 10px;
         font-style: normal;
-        font-weight: 500;
-        line-height: normal;
+        font-weight: 400;
+        line-height: 150%;
+        border-radius: 2px;
+        border: 1px solid var(--adm-color-primary);
       }
 
       .buy {

@@ -1,49 +1,16 @@
 <template>
-  <div class="cube-item" @click="handleClick">
-    <!-- 图片 -->
-    <div class="item-img">
-      <MyImage :src="$imgBaseUrl + details.pic" alt="" fit="initial" />
-    </div>
-
-    <!-- 信息 -->
-    <div class="item-info">
-      <div class="text">{{ details.name || details.productName }}</div>
-      <div class="tag" v-if="details.spDataValue">
-        {{ details.spDataValue }}
-      </div>
-      <div class="item-price">
-        <div class="price padding">
-          <span class="unit">{{ $unit }}</span>
-          {{ details.price }}
-        </div>
-      </div>
-
-      <div
-        class="fav-icon"
-        :class="{
-          active: details.isFavorite,
-        }"
-        @click.stop="handleFavorite(details)"
-      >
-        <i
-          class="iconfont"
-          :class="{
-            'icon-collect': !details.isFavorite,
-            'icon-collected1': details.isFavorite,
-          }"
-        ></i>
-      </div>
-    </div>
-  </div>
+  <baseModule class="cube-item" @click="handleClick" :item="details" :showUpdate="true" />
 </template>
 
 <script setup>
 import { addFavoriteApi, cancelFavoriteApi } from '@/api/home'
-import MyImage from '@/components/MyImage'
+// import MyImage from '@/components/MyImage'
 import ShowLogin from '@/componentsFun/login/index.js'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { customToast } from '@/utils/index.js'
 import { defineEmits, defineProps, ref } from 'vue'
+
+import baseModule from '@/views/home/components/FavoriteItem/baseModule.vue'
 
 const userInfoStore = useUserInfoStore()
 
@@ -84,6 +51,40 @@ const handleFavorite = async (obj) => {
 <style scoped lang="less">
 .cube-item {
   position: relative;
+
+  .item-img {
+    position: relative;
+    .tag {
+      position: absolute;
+      top: 0;
+      left: 0;
+      padding: 4px;
+      color: var(--adm-color-white);
+      text-align: center;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 12px; /* 100% */
+      text-transform: uppercase;
+      background: #d92211;
+      z-index: 2;
+    }
+  }
+
+  .update {
+    display: inline-block;
+    margin-top: 2px;
+    padding: 1px 6px;
+    text-align: center;
+    color: var(--adm-color-primary);
+    font-family: Inter;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    border-radius: 2px;
+    border: 1px solid var(--adm-color-primary);
+  }
 
   .fav-icon {
     position: absolute;

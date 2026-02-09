@@ -4,13 +4,11 @@
 
     <!-- 收货地址   -->
     <div class="shipping-address" @click="onSelectAddress">
-      <div class="title" v-if="!state.addressInfo">
+      <div class="title" v-if="!Object.keys(state.addressInfo).length">
         <p>
-          <!-- <span>*</span> -->
           {{ $t('order.index.address') }}
         </p>
         <div class="update">
-          <!-- 更改 -->
           <i class="iconfont icon-dayuhao"></i>
         </div>
       </div>
@@ -25,29 +23,18 @@
             <div class="name">{{ state.addressInfo?.name }}</div>
             <div class="phone">{{ state.addressInfo?.phone }}</div>
           </div>
-          <div>
-            <!-- <van-checkbox v-model="checked"></van-checkbox> -->
-          </div>
+          <div></div>
         </div>
-        <!-- <div class="number">
-            <div class="phone">+84 1726393940</div>
-            <div class="line"></div>
-            <div class="code">778000</div>
-          </div> -->
         <div class="address-info">
           {{ state.addressInfo?.detailAddress }}
         </div>
-        <!-- <div class="code">{{state.addressInfo?.phone}}</div> -->
       </div>
     </div>
     <div class="order-list">
       <div class="order-item" v-for="item in state.orderInfo.skuList" :key="item.skuId">
         <div class="left">
           <MyImage class="box-img" v-if="$imgBaseUrl + item.pic" :src="$imgBaseUrl + item.pic" alt="" fit="initial" />
-          <!-- <div class="good-id">
-            <p>商品ID:</p>
-            <p>DG80000348</p>
-          </div> -->
+          <div class="tag" v-if="item.superDiscount">SALE</div>
         </div>
         <div class="right">
           <div class="good-title">
@@ -55,9 +42,20 @@
           </div>
           <div class="good-tag">{{ item.spDataValue }}</div>
           <div class="good-info">
-            <div class="good-price">{{ $unit }} {{ item.price }}</div>
+            <div class="good-price">
+              <div
+                class="price"
+                :class="{
+                  red: item.superDiscount,
+                }"
+              >
+                {{ $unit }} {{ item.finalPrice }}
+              </div>
+              <div class="discount">{{ $unit }} {{ item.price }}</div>
+            </div>
             <div class="good-qua">x {{ item.quantity }}</div>
           </div>
+          <div class="update">SAVE {{ $unit }} {{ item.discountPrice }}</div>
         </div>
       </div>
     </div>
@@ -69,37 +67,31 @@
         clearable
         :placeholder="$t('order.index.message.placeholder')"
       />
+
+      <div class="transport">
+        <div class="lebal">{{ $t('order.index.message.title1') }}</div>
+
+        <div class="tag">{{ $t('order.index.message.value1') }}</div>
+      </div>
     </div>
 
     <div class="list-sum">
-      <!-- <div> -->
-      <!-- <div class="sum-item">
-          <span>商品价格:</span>
-          <p>CNY 68.23</p>
-        </div>
-        <div class="sum-item">
-          <span>到仓运费:</span>
-          <p>CNY 6.00</p>
-        </div> -->
-      <!-- </div> -->
-
-      <!-- <div> -->
       <div class="sum-total">
+        <span>{{ $t('order.index.amount', [state.totalNumber]) }}</span>
+        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount }}</p>
+      </div>
+      <div class="sum-total">
+        <span>{{ $t('order.index.freight') }}</span>
+        <p>{{ $unit }} 0</p>
+      </div>
+      <div class="sum-total total">
         <span>{{ $t('order.index.total') }}</span>
         <p>{{ $unit }} {{ state.orderInfo.productTotalAmount }}</p>
       </div>
-      <div class="sum-amount">
-        <span>{{ $t('order.index.amount', [state.totalNumber]) }}</span>
-        <p>
-          {{ $t('order.index.sum') }}
-          <span>{{ $unit }} {{ state.orderPayload.payAmount }}</span>
-        </p>
-      </div>
-      <!-- </div> -->
     </div>
 
     <div class="order-sum">
-      <div class="sum-price">{{ $unit }} {{ state.orderPayload.payAmount }}</div>
+      <!-- <div class="sum-price">{{ $unit }} {{ state.orderPayload.payAmount }}</div> -->
       <div class="sum-submit" @click="submitOrder">{{ $t('order.index.submit') }}</div>
     </div>
   </div>
@@ -273,9 +265,10 @@ watch(
 
 <style scoped lang="less">
 .order {
-  color: #1f2c3c;
+  padding-bottom: 56px;
+  color: var(--adm-color-textlv2);
   background: #f5f5f5;
-  margin-bottom: 56px;
+  overflow-y: scroll;
   .shipping-address {
     // margin: 10px;
     border-radius: 10px;
@@ -385,15 +378,27 @@ watch(
 
       margin-bottom: 5px;
       .left {
+        position: relative;
         margin-right: 8px;
         .box-img {
           width: 82px;
           height: 82px;
           margin-bottom: 8px;
         }
-        .good-id {
-          color: var(--color-textlv2);
+        .tag {
+          position: absolute;
+          top: 0;
+          left: 0;
+          padding: 4px;
+          color: var(--adm-color-white);
+          text-align: center;
           font-size: 12px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: 12px; /* 100% */
+          text-transform: uppercase;
+          background: #d92211;
+          z-index: 2;
         }
       }
 
@@ -429,9 +434,34 @@ watch(
         .good-info {
           font-size: 14px;
           display: flex;
-          // justify-content: space-between;
           align-items: center;
-          // margin-top: 62px;
+          .good-price {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            .price {
+              color: var(--adm-color-textLv1);
+              font-family: Roboto;
+              font-size: 12px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: 18px;
+              &.red {
+                color: var(--color-red);
+              }
+            }
+            .discount {
+              margin-left: 2px;
+              color: var(--adm-color-textlv3);
+              font-family: Roboto;
+              font-size: 10px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: 18px;
+              text-decoration-line: line-through;
+            }
+          }
 
           .good-qua {
             color: #999;
@@ -439,24 +469,70 @@ watch(
             margin-left: 4px;
           }
         }
+
+        .update {
+          display: inline-block;
+          margin-top: 2px;
+          padding: 1px 6px;
+          text-align: center;
+          color: var(--adm-color-primary);
+          font-family: Inter;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%;
+          border-radius: 2px;
+          border: 1px solid var(--adm-color-primary);
+        }
       }
     }
   }
   .order-message {
     margin: 7px 0;
+    padding: 16px;
     background: var(--adm-bg-white);
-    height: 40px;
     :deep(.van-field) {
-      padding-left: 10px;
-      padding-right: 10px;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+    }
+    :deep(.van-cell:after) {
+      display: none;
     }
     :deep(.van-field__control) {
       text-align: right;
     }
+
+    .transport {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      .lebal {
+        color: var(--adm-color-textLv1);
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      .tag {
+        padding: 1px 6px;
+        color: var(--adm-color-primary);
+        font-family: Inter;
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 15px */
+        border-radius: 2px;
+        border: 1px solid var(--adm-color-primary);
+      }
+    }
   }
   .list-sum {
     background: var(--adm-bg-white);
-    padding: 10px;
+    padding: 16px;
     .sum-item {
       display: flex;
       justify-content: space-between;
@@ -469,15 +545,55 @@ watch(
     }
 
     .sum-total {
+      padding-bottom: 16px;
       color: #1f2c3c;
       font-size: 14px;
-      // font-weight: 600;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      // margin-top: 32px;
-      height: 40px;
-      border-bottom: 1px solid #f2f2f2;
+      // border-bottom: 1px solid #f2f2f2;
+      &:last-child {
+        padding-bottom: 0;
+      }
+
+      span {
+        color: #1a1a1a;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+
+      p {
+        color: #2b3033;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+
+      &.total {
+        padding-top: 12px;
+        border-top: 1px solid var(--color-border);
+        span {
+          color: var(--adm-color-textLv1);
+          font-family: Roboto;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 700;
+          line-height: normal;
+        }
+
+        p {
+          color: var(--color-red);
+          text-align: right;
+          font-family: Roboto;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: normal;
+        }
+      }
     }
 
     .sum-amount {
@@ -519,12 +635,12 @@ watch(
     }
 
     .sum-submit {
-      width: 120px;
+      width: 100%;
       height: 40px;
       padding: 0 24px;
       gap: 8px;
       flex-shrink: 0;
-      border-radius: 24px;
+      border-radius: 2px;
       background: linear-gradient(90deg, var(--adm-color-primary), var(--adm-color-primary-op6));
       color: var(--adm-color-white);
       font-size: 14px;

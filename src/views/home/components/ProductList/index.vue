@@ -3,9 +3,7 @@
     <commenHeader :title="$t('home.recommend')" />
     <MyPullRefreshList v-model:loading="cacheData.loading" :finished="cacheData.finished" @load="cacheData.onLoad">
       <div class="list">
-        <template v-for="(item, i) in cacheData.goodsList" :key="i">
-          <GoodCube :item="item" @click="productHandle" />
-        </template>
+        <GoodCube v-for="(item, i) in cacheData.goodsList" :key="i" :item="item" @click="productHandle" />
       </div>
       <!-- 数据为空 -->
       <div v-if="cacheData.goodsList.length === 0 && cacheData.finished">
@@ -19,11 +17,13 @@
 /** ***引入相关包start*****/
 import commenHeader from '@/views/home/components/CommonHeader'
 
+// import baseModule from '@/views/home/components/FavoriteItem/baseModule.vue'
+
 import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
-import { onMounted, reactive, nextTick, ref } from 'vue'
 import useCacheData from '@/store/modules/cacheData.js'
+import { onMounted, reactive } from 'vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -68,8 +68,8 @@ onMounted(() => {
   padding: 16px 12px 88px;
   .list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 }
 </style>

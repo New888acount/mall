@@ -34,7 +34,7 @@
             <div class="data-timer">{{ formatDateTimer(item.createTime, 'YYYY-MM-DD hh:mm:ss') }}</div>
           </div>
           <div class="data-center">
-            <div class="order-item">
+            <div class="order-details">
               <div class="left">
                 <MyImage
                   class="box-img"
@@ -47,7 +47,11 @@
               </div>
               <div class="right">
                 <div class="data-sum">
-                  <p class="amount">{{ $unit }} {{ item.payAmount }}</p>
+                  <div class="amount">
+                    <div class="price">{{ $unit }} {{ item.finalPrice }}</div>
+
+                    <div class="discount">{{ $unit }} {{ item.payAmount }}</div>
+                  </div>
                   <p class="text">{{ $t('order.list.sum', { count: item.orderItemList.length }) }}</p>
                 </div>
               </div>
@@ -448,17 +452,16 @@ watch(
         }
       }
 
-      .order-item {
+      .order-details {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: space-between;
         padding: 10px 0;
         border-bottom: 1px solid #f2f2f2;
         .left {
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          flex: 1;
           .box-img {
             margin-right: 4px;
             width: 56px;
@@ -470,15 +473,32 @@ watch(
       .data-sum {
         text-align: right;
         .amount {
-          color: var(--color-red);
-          font-family: Roboto;
-          font-size: 14px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: normal;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .price {
+            color: var(--color-red);
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 18px;
+          }
+
+          .discount {
+            margin-left: 2px;
+            color: var(--adm-color-textlv3);
+            font-family: Roboto;
+            font-size: 10px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 18px;
+            text-decoration-line: line-through;
+          }
         }
         .text {
           margin-top: 4px;
+          text-align: right;
           color: var(--adm-color-dark);
           font-family: Roboto;
           font-size: 10px;

@@ -72,12 +72,15 @@
   "order.index.title": "确认订单",
   "order.index.address": "请选择收货地址",
   "order.index.message.title": "订单备注",
+  "order.index.message.title1": "运输方式",
+  "order.index.message.value1": "限时包邮",
   "order.index.message.placeholder": "填写订单备注信息",
   "order.index.tag": "默认",
   "order.index.total": "商品总金额",
+  "order.index.freight": "运费",
   "order.index.amount": "共{0}件",
   "order.index.sum": "合计：",
-  "order.index.submit": "提交订单",
+  "order.index.submit": "结算",
   "order.list.title": "我的订单",
   "order.list.id": "订单号：",
   "order.list.sum": "共{count}件商品",
@@ -157,5 +160,6 @@
   "loginAndRegister.Password.tips1": "* 输入您的电子邮件地址",
   "loginAndRegister.Password.tips2": "* 密码格式不正确",
   "loginAndRegister.Password.tips3": "请填写密码",
-  "homepage.banner.btn": "立即购买"
+  "homepage.banner.btn": "立即购买",
+  "cart.free": "限时免邮"
 }
