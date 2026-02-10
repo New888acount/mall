@@ -19,7 +19,7 @@
       <div class="discount">{{ $unit }} {{ item.price }}</div>
     </div>
 
-    <div class="update">SAVE {{ $unit }} {{ item.discountPrice }}</div>
+    <div class="update">{{ $t('order.list.save') }} {{ $unit }} {{ item.discountPrice }}</div>
   </div>
 </template>
 <script setup>

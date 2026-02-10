@@ -48,10 +48,14 @@
               <div class="right">
                 <div class="data-sum">
                   <div class="amount">
-                    <div class="price">{{ $unit }} {{ item.finalPrice }}</div>
+                    <div class="price">{{ $unit }} {{ item.payAmount }}</div>
 
-                    <div class="discount">{{ $unit }} {{ item.payAmount }}</div>
+                    <div class="discount" v-if="item.discountAmount">{{ $unit }} {{ item.totalAmount }}</div>
                   </div>
+                  <div class="update" v-if="item.discountAmount">
+                    {{ $t('order.list.save') }} {{ $unit }} {{ item.discountAmount }}
+                  </div>
+
                   <p class="text">{{ $t('order.list.sum', { count: item.orderItemList.length }) }}</p>
                 </div>
               </div>
@@ -496,6 +500,22 @@ watch(
             text-decoration-line: line-through;
           }
         }
+
+        .update {
+          display: inline-block;
+          margin-top: 2px;
+          padding: 1px 6px;
+          text-align: center;
+          color: var(--adm-color-primary);
+          font-family: Inter;
+          font-size: 10px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 150%;
+          border-radius: 2px;
+          border: 1px solid var(--adm-color-primary);
+        }
+
         .text {
           margin-top: 4px;
           text-align: right;

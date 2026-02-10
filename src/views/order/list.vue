@@ -55,7 +55,7 @@
             </div>
             <div class="good-qua">x {{ item.quantity }}</div>
           </div>
-          <div class="update">SAVE {{ $unit }} {{ item.discountPrice }}</div>
+          <div class="update">{{ $t('order.list.save') }} {{ $unit }} {{ item.discountPrice }}</div>
         </div>
       </div>
     </div>

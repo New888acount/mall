@@ -84,6 +84,7 @@
   "order.list.title": "My Orders",
   "order.list.id": "Order No:",
   "order.list.sum": "Total {count} items",
+  "order.list.save": "SAVE",
   "order.list.button1": "Details",
   "order.list.button2": "Cancel",
   "order.list.button3": "To Pay",

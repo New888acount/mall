@@ -29,7 +29,7 @@
             </span>
             <div class="discount">{{ $unit }} {{ item.price }}</div>
           </div>
-          <div class="update">SAVE {{ $unit }} {{ item.discountPrice }}</div>
+          <div class="update">{{ $t('order.list.save') }} {{ $unit }} {{ item.discountPrice }}</div>
         </div>
 
         <a-button v-if="buyButton" class="default-btn operate-item">

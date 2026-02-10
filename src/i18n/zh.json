@@ -84,6 +84,7 @@
   "order.list.title": "我的订单",
   "order.list.id": "订单号：",
   "order.list.sum": "共{count}件商品",
+  "order.list.save": "节省",
   "order.list.button1": "查看详情",
   "order.list.button2": "取消订单",
   "order.list.button3": "继续支付",
