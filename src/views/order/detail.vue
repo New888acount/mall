@@ -158,9 +158,7 @@ const onPay = (data) => {
   router.push({
     path: '/pay',
     query: {
-      orderSN: data.orderSn,
-      totalAmount: data.totalAmount,
-      orderType: 'memberConsumer',
+      orderId: data.orderId,
     },
   })
 }

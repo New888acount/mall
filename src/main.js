@@ -1,7 +1,7 @@
 import '@/assets/js/rem'
 import setVueAppConfig from '@/utils/vueAppConfig'
 import Vant from 'vant'
-// import VConsole from 'vconsole'
+import VConsole from 'vconsole'
 import { createApp } from 'vue'
 import App from './App.vue'
 
@@ -15,9 +15,9 @@ import '@/styles/index.less'
 import 'vant/lib/index.css'
 
 /** ****** 组件CSS end  ********/
-// if (process.env.VUE_APP_ENV === 'development') {
-//   new VConsole()
-// }
+if (process.env.VUE_APP_ENV === 'development') {
+  new VConsole()
+}
 const app = createApp(App)
 setVueAppConfig(app)
 app.use(Vant)

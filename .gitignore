@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 /dist
-/pop-pro
+/theme5100
 *.local
 *.zip
 *.tar

@@ -19,7 +19,15 @@ export const useCartStore = defineStore('cart', {
       })
       return price.toFixed(2)
     },
-    cartCount: (state) => state.list.length
+    finalPrice: (state) => {
+      let price = 0
+      if (!state.selectedIds.length) return price.toFixed(2)
+      state.list.forEach((item) => {
+        price += state.selectedIds.includes(item.id) ? Number(item.finalPrice) * item.quantity : 0
+      })
+      return price.toFixed(2)
+    },
+    cartCount: (state) => state.list.length,
   },
   actions: {
     // 获取购物车列表

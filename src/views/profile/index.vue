@@ -19,7 +19,9 @@
 
       <div class="user-name">
         <div class="nickname">{{ userInfoStore?.userInfo?.nickname || $t('profile.username') }}</div>
-        <div v-if="userInfoStore.token" class="number">账号/ID: {{ userInfoStore?.userInfo?.id }}</div>
+        <div v-if="userInfoStore.token" class="number">
+          {{ $t('profile.account') }}: {{ userInfoStore?.userInfo?.id }}
+        </div>
       </div>
 
       <!-- <div class="code-icon">

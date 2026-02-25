@@ -102,6 +102,7 @@ const state = reactive({
 
   //  computed(() => cartStore.isAllSelected),
   totalPriceSelected: computed(() => cartStore.totalPriceSelected),
+  finalPrice: computed(() => cartStore.finalPrice),
 })
 
 const selectedIds = computed({

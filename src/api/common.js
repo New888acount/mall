@@ -59,3 +59,15 @@ export const getBannerApi = (params) =>
     method: 'get',
     params,
   })
+
+/**
+ * 弹窗列表
+ * @param
+ * @returns
+ */
+export const popupListApi = (params) =>
+  request({
+    url: '/mall/api/home/popup',
+    method: 'get',
+    params,
+  })

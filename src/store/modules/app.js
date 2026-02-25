@@ -1,4 +1,4 @@
-import { getSupportApi } from '@/api/common'
+import { getSupportApi, popupListApi } from '@/api/common'
 import useLocalCache from '@/hooks/storage/localStorage'
 import { defineStore } from 'pinia'
 const { getLanguage } = useLocalCache()
@@ -9,6 +9,7 @@ export const useAppStore = defineStore('app', {
     preFix: process.env.VUE_APP_ENV === 'development' ? 'https://hellofun789.one' : '',
     device: '', // mobile,desktop 当前系统是移动还是pc
     language: '' || getLanguage(), //语言
+    popList: [], //首页弹窗列表
   }),
   actions: {
     // 打开livechat
@@ -36,6 +37,16 @@ export const useAppStore = defineStore('app', {
 
       document.documentElement.dataset.device = this.device
       callback && callback(this.device)
+    },
+
+    async getPopupList() {
+      try {
+        if (this.popList.length) return
+        const { data } = await popupListApi()
+        this.popList = data
+      } catch (error) {
+        console.log(error)
+      }
     },
   },
 })

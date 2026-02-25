@@ -7,7 +7,7 @@
           name="username"
           :label="$t('login.page.username')"
           :placeholder="$t('login.page.username.placeholder')"
-          :rules="[{ required: true, message: '请填写用户名' }]"
+          :rules="[{ required: true, message: $t('login.page.username.placeholder') }]"
         />
         <van-field
           v-model="formState.password"
@@ -56,12 +56,12 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { h, ref, defineProps, reactive, onMounted, defineEmits, onUnmounted, watch } from 'vue'
 import useUserInfoStore from '@/store/modules/userInfo'
+import { defineProps, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 // import useLocalCache from '@/hooks/storage/localStorage'
-import { useI18n } from 'vue-i18n'
 import { getCodeApi } from '@/api/user'
 import { getEncryptPwd } from '@/utils/encipher'
+import { useI18n } from 'vue-i18n'
 
 /** ***引入相关包end*****/
 

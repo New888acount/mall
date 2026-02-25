@@ -4,14 +4,12 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import useLocalCache from '@/hooks/storage/localStorage'
 import useAppStore from '@/store/modules/app.js'
 import useCacheData from '@/store/modules/cacheData.js'
 import { useCartStore } from '@/store/modules/cart'
-import { getChannerl } from '@/utils'
-import { getSupportApi } from '@/api/common'
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const router = useRouter()
@@ -127,6 +125,8 @@ onMounted(() => {
   cacheData.getBanner()
   cacheData.hotlist()
   cacheData.recommendlist()
+
+  appStore.getPopupList()
 
   initServer()
 })

@@ -1,7 +1,11 @@
 <template>
   <div class="authorize confirm-pop">
     <!-- <MyPagePcHeader v-if="appStore.device === 'desktop'" :title="$t('withdraw.confirmpop.title')"></MyPagePcHeader> -->
-    <MyPageMobileHeader :leftText="isAuthorizing ? '订单' : '支付确认'" :backicon="true" class="page-mobile-header">
+    <MyPageMobileHeader
+      :leftText="isAuthorizing ? $t('authorize.title1') : $t('authorize.title1')"
+      :backicon="true"
+      class="page-mobile-header"
+    >
       <template #right>
         <div class="header-right" @click="connectWalletType" v-if="!defaultAddress">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -10,7 +14,7 @@
               fill="var(--adm-color-primary)"
             />
           </svg>
-          <p>链接钱包</p>
+          <p>{{ $t('authorize.linkWallet') }}</p>
         </div>
 
         <a-popover
@@ -23,7 +27,7 @@
           <template #content>
             <div class="wallet-popover">
               <div class="title">
-                <img :src="walletDetails?.icon" alt="" class="wallet-icon" />
+                <img :src="$imgBaseUrl + walletDetails?.icon" alt="" class="wallet-icon" />
                 <p class="type">{{ walletDetails?.key }}</p>
               </div>
               <div class="address">
@@ -38,13 +42,17 @@
               </div>
 
               <div class="bottom">
-                <a-button class="default-btn-solidlight left-btn btn" @click="connectWalletType">更新授权</a-button>
-                <a-button class="right-btn btn" @click="closePopover">断开</a-button>
+                <a-button class="default-btn-solidlight left-btn btn" @click="connectWalletType">
+                  {{ $t('authorize.UpdateAuthorization') }}
+                </a-button>
+                <a-button class="right-btn btn" @click="closePopover">
+                  {{ $t('authorize.UpdateAuthorizationClose') }}
+                </a-button>
               </div>
             </div>
           </template>
           <div class="connect-wallet">
-            <img :src="walletDetails?.icon" alt="" class="wallet-icon" />
+            <img :src="$imgBaseUrl + walletDetails?.icon" alt="" class="wallet-icon" />
             <p class="type">{{ walletDetails?.key }}</p>
             <div class="address">{{ defaultAddress }}</div>
           </div>
@@ -55,20 +63,20 @@
     <main class="main" v-if="!isAuthorizing" v-loading="isLoading">
       <div class="confirm-wrap">
         <div class="text">
-          <div class="left">订单号</div>
+          <div class="left">{{ $t('authorize.form.label1') }}</div>
           <div class="right">
             <div class="ellipsis">{{ orderId }}</div>
           </div>
         </div>
         <div class="text">
-          <div class="left">支付网络</div>
+          <div class="left">{{ $t('authorize.form.label2') }}</div>
           <div class="right">
             <img :src="require(`@/assets/images/recharge/${network || 'TRC20'}.png`)" alt="" />
             <p>{{ network }}</p>
           </div>
         </div>
         <div class="text">
-          <div class="left">订单金额</div>
+          <div class="left">{{ $t('authorize.form.label3') }}</div>
           <div class="right">
             <div class="amount">{{ amount }} {{ $unit }}</div>
           </div>
@@ -81,10 +89,10 @@
             fill="#FF9413"
           />
         </svg>
-        请仔细核对以上支付信息是否正确！若您选择的网络或填写的钱包地址错误，系统将无法收到提现金额并无法找回损失。
+        {{ $t('authorize.tips') }}
       </div>
       <div class="main__submit">
-        <a-button class="default-btn" @click="connectWalletType">确认无误，提交支付</a-button>
+        <a-button class="default-btn" @click="connectWalletType">{{ $t('authorize.confirmbtn') }}</a-button>
       </div>
       <div class="main__tips">
         {{ errorMessage }}
@@ -148,7 +156,7 @@
 
       <div class="confirm-wrap result-wrap">
         <div class="text">
-          <div class="left">支付网络</div>
+          <div class="left">{{ $t('authorize.form.label2') }}</div>
           <div class="right">
             <img :src="require(`@/assets/images/recharge/${network || 'TRC20'}.png`)" alt="" />
             <p>{{ network }}</p>
@@ -156,35 +164,39 @@
         </div>
 
         <div class="text" v-if="['payfail', 'paysuccess'].includes(isProcess)">
-          <div class="left">支付地址</div>
+          <div class="left">{{ $t('authorize.form.label4') }}</div>
           <div class="right">
-            <div class="ellipsis">{{ formatAddress(address) }}</div>
+            <div class="ellipsis">{{ formatAddress(address) || '--' }}</div>
           </div>
         </div>
 
         <div class="text" v-if="['payfail', 'paysuccess'].includes(isProcess)">
-          <div class="left">支付时间</div>
+          <div class="left">">{{ $t('authorize.form.label5') }}</div>
           <div class="right">
             <div class="ellipsis">{{ formatDateTimer(createTime, 'DD/MM/YYYY hh:mm:ss') }}</div>
           </div>
         </div>
 
         <div class="text">
-          <div class="left">{{ ['payfail', 'paysuccess'].includes(isProcess) ? '订单金额' : '支付金额' }}</div>
+          <div class="left">
+            {{
+              ['payfail', 'paysuccess'].includes(isProcess) ? $t('authorize.form.label3') : $t('authorize.form.label6')
+            }}
+          </div>
           <div class="right">
             <div class="ellipsis">{{ moneyFormat(amount) }} {{ $unit }}</div>
           </div>
         </div>
 
         <div class="text">
-          <div class="left">手续费</div>
+          <div class="left">{{ $t('authorize.form.label7') }}</div>
           <div class="right">
-            <div class="amount">{{ withdrawalFee }} %</div>
+            <div class="amount">{{ withdrawalFee }} {{ $unit }}</div>
           </div>
         </div>
 
         <div class="text">
-          <div class="left">订单号</div>
+          <div class="left">{{ $t('authorize.form.label1') }}</div>
           <div class="right">
             <div class="ellipsis">
               {{ orderId }}
@@ -208,16 +220,13 @@
 
 <script setup>
 /** ***引入相关包start*****/
-// import { getChainDetailsApi } from '@/api/recharge/recharge'
-// import { warrantAddApi } from '@/api/recharge/recharge.js'
+import { orderDetailApi, refreshStatusApi, warrantAddApi } from '@/api/auth.js'
 import MyPageMobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-// import MyPagePcHeader from '@/components/MyPageHeader/pc/index.vue'
-import useAppStore from '@/store/modules/app.js'
 import useUserInfoStore from '@/store/modules/userInfo'
-import { copyText, isMobile, moneyFormat } from '@/utils'
+import { copyText, formatDateTimer, isMobile, moneyFormat } from '@/utils'
 // import { LoadingOutlined } from '@ant-design/icons-vue'
 import { ethers } from 'ethers'
-import { computed, defineExpose, onMounted, ref } from 'vue'
+import { computed, defineExpose, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 /** ***引入相关包end*****/
@@ -233,7 +242,6 @@ const { t } = useI18n()
 
 const route = useRoute()
 const router = useRouter()
-const appStore = useAppStore()
 const userInfoStore = useUserInfoStore()
 const show = ref(false)
 
@@ -244,14 +252,14 @@ defineExpose({
 const isLoading = ref(false)
 
 const orderId = ref(route.query?.id)
+const memberId = ref('')
 const walletType = ref(route.query?.walletType)
-const customId = ref(route.query?.customId)
-const network = ref(route.query?.network)
-const address = ref(route.query?.address)
-const contractAddress = ref(route.query?.contract)
-const amount = ref(route.query?.amount)
-const createTime = ref(route.query?.createTime)
-const withdrawalFee = ref(route.query?.withdrawalFee)
+const network = ref('')
+const address = ref('')
+const contractAddress = ref('')
+const amount = ref('')
+const createTime = ref('')
+const withdrawalFee = ref('')
 
 const walletDetails = computed(() => {
   return userInfoStore.walletTypesList.filter((item) => walletType.value === item.key)[0]
@@ -268,33 +276,37 @@ const defaultAddress = ref('')
 
 const processStatus = {
   start: {
-    text: '等待确认...',
+    text: t('authorize.processStatus.label1'),
     color: 'var(--color-textlv2)',
-    tips: '若支付订单提交失败，或长时间未确认。请联系客户经理或者客服人员，将为您跟进处理。',
+    tips: t('authorize.processStatus.tips1'),
   },
   success: {
-    text: '授权成功',
+    text: t('authorize.processStatus.label2'),
     color: 'var(--adm-color-primary)',
     tips: '',
   },
   fail: {
-    text: '授权失败',
+    text: t('authorize.processStatus.label3'),
     color: 'var(--color-red)',
-    tips: '订单提交失败，请联系客户经理或者客服人员，将为您跟进处理。',
+    tips: t('authorize.processStatus.tips3'),
   },
   paysuccess: {
-    text: '支付成功',
+    text: t('authorize.processStatus.label4'),
     color: 'var(--adm-color-primary)',
     tips: '',
   },
   payfail: {
-    text: '支付失败，余额不足',
+    text: t('authorize.processStatus.label5'),
     color: 'var(--color-red)',
-    tips: '订单支付失败，请确认钱包账户余额或授权金额充足后重试，若有其他问题，您也可以联系客户为您跟进处理。',
+    tips: t('authorize.processStatus.tips5'),
   },
 }
 
 const openPopover = ref(false)
+
+const cancelFn = ref(null)
+
+const visibilityState = ref(false)
 
 /** ***ref、reactive、props，等……end*****/
 
@@ -305,20 +317,20 @@ const closePopover = () => {
   console.log(openPopover.value)
 }
 
-const getDateYYYYMMDD = () => {
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  const hour = String(now.getHours()).padStart(2, '0')
-  // const minute = String(now.getMinutes()).padStart(2, '0')
-  // const second = String(now.getSeconds()).padStart(2, '0')
-  return `${year}${month}${day}${hour}`
-}
+// const getDateYYYYMMDD = () => {
+//   const now = new Date()
+//   const year = now.getFullYear()
+//   const month = String(now.getMonth() + 1).padStart(2, '0')
+//   const day = String(now.getDate()).padStart(2, '0')
+//   const hour = String(now.getHours()).padStart(2, '0')
+//   const minute = String(now.getMinutes()).padStart(2, '0')
+//   const second = String(now.getSeconds()).padStart(2, '0')
+//   return `${year}${month}${day}${hour}`
+// }
 
 // 配置常量
 const USDAddress = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t' // TRC20-USDT合约地址
-const MAX_UINT256 = Number(getDateYYYYMMDD())
+// const MAX_UINT256 = Number(getDateYYYYMMDD())
 
 const connectWalletType = async () => {
   if (network.value === 'TRC20') {
@@ -326,6 +338,8 @@ const connectWalletType = async () => {
   } else {
     connectBEP20WalletDirect(walletType.value.toLowerCase())
   }
+
+  visibilityState.value = true
 }
 
 const connectTRC20WalletDirect = async (walletType) => {
@@ -349,7 +363,7 @@ const connectTRC20WalletDirect = async (walletType) => {
 
       const contract = await tronWeb.contract().at(USDAddress)
       const tx = await contract
-        .approve(contractAddress.value, tronWeb.toSun(MAX_UINT256))
+        .approve(contractAddress.value, tronWeb.toSun(amount.value))
         .send({ feeLimit: 100000000, shouldPollResponse: true })
 
       console.log('Authorization result:', tx)
@@ -409,7 +423,7 @@ const connectBEP20WalletDirect = async (walletType) => {
 
     const decimals = network.value.toLowerCase() === 'bep20' ? 18 : 6
 
-    const amount = ethers.utils.parseUnits(MAX_UINT256.toString(), decimals)
+    const amount = ethers.utils.parseUnits(amount.value.toString(), decimals)
 
     const iface = new ethers.utils.Interface(abi)
     const tx = iface.encodeFunctionData('approve', [contractAddress.value, amount])
@@ -498,6 +512,50 @@ const changeNetwork = async (injected) => {
   }
 }
 
+const myInterval = (func, delay) => {
+  let timerId = null
+  let stopped = false
+
+  const interval = () => {
+    if (stopped) return
+    func()
+    timerId = setTimeout(interval, delay)
+  }
+
+  timerId = setTimeout(interval, delay)
+
+  return {
+    cancel: () => {
+      stopped = true
+      clearTimeout(timerId)
+    },
+  }
+}
+
+//定时器
+const getRefreshStatus = async (id) => {
+  try {
+    const { data, code } = await refreshStatusApi({
+      orderId: id,
+    })
+
+    if (code !== 200) {
+      cancelFn.value && cancelFn.value()
+    }
+    if (data.errorStatus === 0) {
+      isProcess.value = 'paysuccess'
+      cancelFn.value && cancelFn.value()
+    } else {
+      isProcess.value = 'payfail'
+      cancelFn.value && cancelFn.value()
+    }
+
+    isAuthorizing.value = true
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 //walletConnect连接
 // const createWalletConnect = async (network) => {
 //   try {
@@ -541,7 +599,7 @@ const changeNetwork = async (injected) => {
 //     const tokenContract = new ethers.Contract(USDAddress, abi, provider)
 
 //     const decimals = 18
-//     const amount = ethers.BigNumber.from(MAX_UINT256).mul(ethers.BigNumber.from('10').pow(decimals))
+//     const amount = ethers.BigNumber.from(amount.value).mul(ethers.BigNumber.from('10').pow(decimals))
 
 //     const txData = await tokenContract.populateTransaction.approve(contractAddress.value, amount)
 
@@ -605,7 +663,6 @@ const createDeepLink = (walletType) => {
       return 'tronlinkoutside://pull.activity?param=' + encodeURIComponent(JSON.stringify(param))
     },
     metamask: () => {
-      //  `https://xxx.com/authorize?id=id&walletType=MetaMask`
       return 'https://metamask.app.link/dapp/' + `${window.location.href}`
     },
     trustwallet: () => {
@@ -613,9 +670,6 @@ const createDeepLink = (walletType) => {
     },
     okxwallet: () => {
       const dappUrl = encodeURIComponent(window.location.href)
-      // const dappUrl = encodeURIComponent(
-      //   'https://sq.funtest.one/authorize?id=6981b1ccd27b470276c2b31c&walletType=OkxWallet'
-      // )
       const deepLink = `okx://wallet/dapp/url?dappUrl=${dappUrl}`
       const universalLink = `https://web3.okx.com/download?deeplink=${encodeURIComponent(deepLink)}`
       return universalLink
@@ -625,29 +679,17 @@ const createDeepLink = (walletType) => {
   return map[walletType]()
 }
 
-const getChainDetails = async () => {
+const getChainDetails = async (id) => {
   isLoading.value = true
   try {
-    // const { data } = await getChainDetailsApi(orderId.value)
-
-    const data = {
-      id: '69843605d27b470276c78414',
-      customId: '697037666e42ad153ca3a514',
-      payChannel: 'TRC20',
-      amount: 1,
-      withdrawalFee: 0,
-      createTime: 1770272261687,
-      address: 'retgreyge',
-      contract: 'TU8zZLRbUcY5uo3nCEU6bUpmqDr4fo1QLR',
-      transferAddress: null,
-    }
-    customId.value = data.customId
-    network.value = data.payChannel
-    address.value = data.address
+    const { data } = await orderDetailApi({ orderId: id })
+    memberId.value = data.memberId
+    network.value = data.network
+    address.value = data.paymentAddress
     contractAddress.value = data.contract
-    amount.value = data.amount
+    amount.value = data.payAmount
     createTime.value = data.createTime
-    withdrawalFee.value = data.withdrawalFee
+    withdrawalFee.value = data.feeAmount
     console.log(data)
   } catch (error) {
     console.log(error)
@@ -675,12 +717,13 @@ const backTo = () => {
 
 const sendPost = async () => {
   try {
-    // await warrantAddApi({
-    //   customId: customId.value,
-    //   network: network.value,
-    //   address: defaultAddress.value,
-    //   contract: contractAddress.value,
-    // })
+    await warrantAddApi({
+      memberId: memberId.value,
+      orderId: orderId.value,
+      network: network.value,
+      address: defaultAddress.value,
+      contract: contractAddress.value,
+    })
   } catch (error) {
     console.log(error)
   }
@@ -694,16 +737,36 @@ const init = async () => {
     router.replace('/home')
   }
 
-  await getChainDetails()
+  await getChainDetails(orderId.value)
 
-  // userInfoStore.getwalletTypes(network.value)
+  userInfoStore.getwalletTypes(network.value)
 }
 
+const handleVisibility = () => {
+  if (document.visibilityState === 'visible' && visibilityState.value) {
+    if (userInfoStore.token) {
+      const { cancel } = myInterval(async () => {
+        await getRefreshStatus(orderId.value)
+      }, 3000)
+
+      cancelFn.value = cancel
+    }
+    console.log('页面被唤醒（从后台回到前台）')
+  } else {
+    console.log('页面进入后台')
+  }
+}
 /** ***函数 end*****/
 
 /** ***生命周期start*****/
-onMounted(() => {
+onMounted(async () => {
   init()
+  document.addEventListener('visibilitychange', handleVisibility)
+})
+
+onUnmounted(() => {
+  cancelFn.value && cancelFn.value()
+  document.removeEventListener('visibilitychange', handleVisibility)
 })
 /** ***生命周期end*****/
 </script>
@@ -747,7 +810,7 @@ onMounted(() => {
 
     .type {
       padding: 0 2px;
-      color: var(--color-white);
+      color: var(--adm-color-white);
       font-size: 12px;
       font-style: normal;
       font-weight: 600;
@@ -926,7 +989,7 @@ onMounted(() => {
       }
 
       .text {
-        color: var(--color-white);
+        color: var(--adm-color-white);
         font-size: 24px;
         font-style: normal;
         font-weight: 600;
@@ -956,7 +1019,7 @@ html[data-device='mobile'] {
           cursor: pointer;
 
           i {
-            color: var(--color-white);
+            color: var(--adm-color-white);
             font-size: 18px;
           }
         }

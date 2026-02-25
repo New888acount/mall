@@ -1,49 +1,51 @@
 <template>
-  <div class="my__paymethods">
+  <div class="my__paymethods" v-loading="state.isLoading">
     <MobileHeader class="cart-header" :leftText="$t('pay.title')" :backicon="true" :callback="close"></MobileHeader>
 
     <div class="container">
       <div class="container-header">
-        <div class="price">{{ state.totalAmount }} {{ $unit }}</div>
-        <div class="amount">≈ 0.0000000024ETH</div>
+        <div class="price">{{ state.details.payAmount }} {{ $unit }}</div>
+        <!-- <div class="amount">≈ 0.0000000024ETH</div> -->
       </div>
 
       <div class="container-line"></div>
 
       <div class="container-form">
-        <a-form :model="formState" autocomplete="off" class="my-form page-form" :rules="formRules" @finish="onFinish">
+        <a-form :model="formState" autocomplete="off" class="my-form page-form" @finish="onFinish">
           <!-- 网络 -->
           <a-form-item name="payChannel" class="select-item">
-            <p class="label-value">选择网络</p>
+            <p class="label-value">{{ $t('authorize.pay.label1') }}</p>
 
             <a-radio-group
               v-model:value="formState.payChannel"
               class="my-radios row-radios"
-              v-loading="loadingWalletTypes"
+              @change="changeRadio(formState.payChannel)"
             >
               <a-radio :value="item.value" v-for="(item, index) in networkList" :key="index">
                 <img :src="require(`@/assets/images/recharge/${item.value}.png`)" class="netwrok-icon" alt="" />
                 <p class="value">{{ item.value }}</p>
               </a-radio>
             </a-radio-group>
-            <div class="form__tips network__tips">请确认链网络一致，转错地址可能导致资产无法追回</div>
+            <div class="form__tips network__tips">
+              {{ $t('authorize.pay.label1.tips') }}
+            </div>
           </a-form-item>
 
           <!-- <a-form-item class="border-item"></a-form-item> -->
 
           <a-form-item name="walletType" class="select-item">
-            <p class="label-value">选择钱包</p>
+            <p class="label-value">{{ $t('authorize.pay.label2') }}</p>
 
             <a-radio-group v-model:value="formState.walletType" class="my-radios" v-loading="loadingWalletTypes">
-              <a-radio :value="item.key" v-for="(item, index) in walletTypesList" :key="index">
-                <img :src="item.icon" alt="" class="wallet-icon" />
+              <a-radio :value="item.key" v-for="(item, index) in userInfoStore.walletTypesList" :key="index">
+                <img :src="$imgBaseUrl + item.icon" alt="" class="wallet-icon" />
                 <p class="wallet-text">{{ item.name }}</p>
               </a-radio>
             </a-radio-group>
             <div class="header__below">
               <div class="header__below__left">
-                <span>支付手续费:</span>
-                <strong>1%</strong>
+                <span>{{ $t('authorize.pay.label3') }}:</span>
+                <strong>{{ state.details.feePercent }}%</strong>
               </div>
             </div>
           </a-form-item>
@@ -58,16 +60,16 @@
                   fill="#FF9413"
                 />
               </svg>
-              支付金额为您当前订单商品总额，请务必保证支付钱包和网络一致，否则将无法到账！若您未正确操作，导致的资金遗失，无法找回或退款
+              {{ $t('authorize.pay.label3.tips') }}
             </div>
           </a-form-item>
 
           <a-form-item>
-            <div class="timer-down">
-              请在倒计时结束前完成支付
-              <van-count-down :time="1000 * 1000" format="HH:mm:ss" />
+            <div class="timer-down" v-if="state.details.timeToPay">
+              {{ $t('authorize.paying.timerTips') }}
+              <van-count-down :time="(state.details.timeToPay || 0) * 1000" format="HH:mm:ss" />
             </div>
-            <a-button type="primary" class="default-btn pay-button" html-type="submit" :loading="submitLoading">
+            <a-button type="primary" class="default-btn pay-button" html-type="submit" :loading="state.submitLoading">
               {{ $t('pay.button') }}
             </a-button>
           </a-form-item>
@@ -83,60 +85,27 @@ import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import router from '@/router'
 import { onMounted, reactive, ref } from 'vue'
 // import { getMaxZIndex } from '@/utils/index'
-import { useI18n } from 'vue-i18n'
+import { replenishApi } from '@/api/auth'
+import { orderDetailApi } from '@/api/order'
+import useUserInfoStore from '@/store/modules/userInfo'
 import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-const { t } = useI18n()
-const checked = ref(false)
+const userInfoStore = useUserInfoStore()
+
 const route = useRoute()
 // 检测支付环境
 const state = reactive({
-  orderType: 'goods',
-  payment: 'wechat',
-  totalAmount: '',
-  orderInfo: {},
-  payStatus: 0, // 0=检测支付环境, -2=未查询到支付单信息， -1=支付已过期， 1=待支付，2=订单已支付
-  payMethods: [],
-  payId: '',
+  isLoading: false,
+  details: {},
+  orderId: '',
+  submitLoading: false,
 })
 
 const formState = reactive({
-  amount: '',
-  payChannel: '',
+  payChannel: 'TRC20',
   address: '',
   walletType: '',
-  password: '',
-  paymentType: '',
-  cardId: '',
-  options: [],
-})
-
-const loadingType = ref(false)
-
-const submitLoading = ref(false)
-
-const formRules = ref({
-  address: [
-    {
-      required: true,
-      message: t('withdraw.address.placeholder'),
-      trigger: 'change',
-    },
-  ],
-  password: [
-    {
-      required: true,
-      message: t('withdraw.inputPasswordErrorTip1'),
-      trigger: 'change',
-    },
-    {
-      min: 6,
-      max: 6,
-      message: t('withdraw.inputPasswordErrorTip2'),
-      trigger: 'change',
-    },
-  ],
 })
 
 const networkList = ref([
@@ -154,49 +123,6 @@ const networkList = ref([
   },
 ])
 
-const walletTypesList = ref([
-  {
-    country: null,
-    id: '6966196d4a9e336613d8d9aa',
-    sort: 2,
-    networks: ['ERC20', 'TRC20', 'BEP20'],
-    key: 'ImToken',
-    name: 'ImToken',
-    icon: 'https://funtest.one/static/kwai/20260116/940528de3e8645fe8361e64a30ef6a41.jpg',
-    status: '0',
-  },
-  {
-    country: null,
-    id: '696619884a9e336613d8d9ab',
-    sort: 3,
-    networks: ['TRC20'],
-    key: 'TronLink',
-    name: 'Tron Link',
-    icon: 'https://funtest.one/static/kwai/20260203/dbfb704b3917481a8a28eaa5884c9634.png',
-    status: '0',
-  },
-  {
-    country: null,
-    id: '696856cbb7546a3ca4a07cfe',
-    sort: 5,
-    networks: ['ERC20', 'TRC20', 'BEP20'],
-    key: 'TokenPocket',
-    name: 'Token Pocket',
-    icon: 'https://funtest.one/static/kwai/20260116/d3dc8fb5c1da43fa8c7a3b1f52912758.webp',
-    status: '0',
-  },
-  {
-    country: null,
-    id: '6981650ed27b470276c21e54',
-    sort: 6,
-    networks: ['TRC20', 'ERC20', 'BEP20'],
-    key: 'OkxWallet',
-    name: 'OKX',
-    icon: 'https://funtest.one/static/kwai/20260203/36c6e313896449d8866cf99640c162bd.png',
-    status: '0',
-  },
-])
-
 const loadingWalletTypes = ref(false)
 
 /** ***ref、reactive、props，等……end*****/
@@ -206,50 +132,57 @@ const close = () => {
   history.back()
 }
 
-const onFinish = () => {
-  router.push('/authorize?id=69843605d27b470276c78414&walletType=tokenpocket')
+const onFinish = async () => {
+  state.submitLoading = true
+  try {
+    await replenishApi({
+      orderId: state.orderId,
+      network: formState.payChannel,
+    })
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.submitLoading = false
+    router.push(`/authorize?id=${state.orderId}&walletType=${formState.walletType}`)
+  }
 }
 
-const changePayChannel = async () => {
-  // await walletTypes(true)
+const changeRadio = async () => {
+  await walletTypes(true)
+}
+
+const walletTypes = async (flag) => {
+  if (flag) loadingWalletTypes.value = true
+  try {
+    await userInfoStore.getwalletTypes(formState.payChannel)
+    formState.walletType = userInfoStore.walletTypesList[0]?.key
+  } catch (error) {
+    console.log(error)
+  } finally {
+    if (flag) loadingWalletTypes.value = false
+  }
+}
+const getOrderDetail = async (id) => {
+  try {
+    state.isLoading = true
+    const { data } = await orderDetailApi(id)
+    state.details = data
+  } catch (error) {
+    console.log(error)
+  } finally {
+    state.isLoading = false
+  }
 }
 
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(async () => {
-  // 微信平台支付
-  // const authInfo = sheep.$store('app').authInfo
-  // if (!sheep.$store('user').userInfo.openId && authInfo) {
-  //   await sheep.$api.user.setWechatInfo(Base64.encode(JSON.stringify(authInfo)))
-  //   sheep.$store('user').userInfo.openId = authInfo.openid
-  // }
-
-  // if (
-  //   sheep.$platform.name === 'WechatOfficialAccount' &&
-  //   sheep.$platform.os === 'ios' &&
-  //   !sheep.$platform.landingPage.includes('pages/pay/index')
-  // ) {
-  //   location.reload()
-  //   return
-  // }
-
   if (route.query) {
-    console.log(route.query)
+    state.orderId = route.query.orderId || route.query.id || ''
 
-    if (route.query.totalAmount) {
-      state.totalAmount = route.query.totalAmount
-    }
+    await walletTypes()
 
-    const id = route.query.orderSN || route.query.id || ''
-    state.payId = id
-
-    if (route.query.type === 'recharge') {
-      state.orderType = 'recharge'
-      // setRechargeOrder(id)
-    } else {
-      state.orderType = 'goods'
-      // setGoodsOrder(id)
-    }
+    await getOrderDetail(state.orderId)
   }
 })
 
@@ -297,7 +230,7 @@ onMounted(async () => {
         }
 
         :deep(.ant-input-prefix) {
-          color: var(--color-white) !important;
+          color: var(--adm-color-white) !important;
           font-size: 16px !important;
         }
         :deep(.ant-input-suffix) {

@@ -1,35 +1,35 @@
 <template>
   <div class="paying-order">
     <div class="container">
-      <header>在线支付</header>
+      <header>{{ $t('authorize.paying.title') }}</header>
       <div class="container-header">
-        <div class="price">100 {{ $unit }}</div>
-        <div class="amount">≈ 0.0000000024ETH</div>
+        <div class="price">{{ amount }} {{ $unit }}</div>
+        <!-- <div class="amount">≈ 0.0000000024ETH</div> -->
       </div>
       <div class="container-line"></div>
 
       <main class="main" v-loading="isLoading">
         <div class="confirm-wrap">
           <div class="text">
-            <div class="left">关联订单号</div>
+            <div class="left">{{ $t('authorize.paying.label1') }}</div>
             <div class="right">
               <div class="ellipsis">{{ orderId }}</div>
             </div>
           </div>
           <div class="text">
-            <div class="left">支付网络</div>
+            <div class="left">{{ $t('authorize.form.label2') }}</div>
             <div class="right">
               <img :src="require(`@/assets/images/recharge/${network || 'TRC20'}.png`)" alt="" />
               <p>{{ network }}</p>
             </div>
           </div>
           <div class="text">
-            <div class="left">收款地址</div>
+            <div class="left">{{ $t('authorize.paying.label2') }}</div>
             <div class="right">
               <div class="right">
-                <div class="ellipsis">{{ formatAddress('d7sh7e0wjd9') }}</div>
+                <div class="ellipsis">{{ formatAddress(address) || '--' }}</div>
                 <svg
-                  @click="copyText('d7sh7e0wjd9')"
+                  @click="copyText(address)"
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
                   height="20"
@@ -45,7 +45,7 @@
             </div>
           </div>
         </div>
-        <PayQrcode class="pay-code" :text="'TA452V3rrqwCwqcQpfzGUgutEw6a7QUxzb'" :size="155" />
+        <PayQrcode class="pay-code" :text="address || '--'" :size="155" />
         <div class="tips">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <path
@@ -53,14 +53,14 @@
               fill="#FF9413"
             />
           </svg>
-          支付金额为您实际应转账的金额，转账金额务必与支付金额一致！转账前请务必核对转账网络，否则将无法到账！若您未正确操作，将导致资金遗失，无法找或退款
+          {{ $t('authorize.paying.tips') }}
         </div>
         <div class="main__submit">
-          <div class="timer-down">
-            请在倒计时结束前完成支付
-            <van-count-down :time="1000 * 1000" format="HH:mm:ss" />
+          <div class="timer-down" v-if="timeToPay">
+            {{ $t('authorize.paying.timerTips') }}
+            <van-count-down :time="timeToPay * 1000" format="HH:mm:ss" />
           </div>
-          <a-button class="default-btn" @click="connectWalletType">我已完成支付</a-button>
+          <a-button class="default-btn" @click="connectWalletType">{{ $t('authorize.paying.btn') }}</a-button>
         </div>
         <div class="main__tips">
           {{ errorMessage }}
@@ -72,15 +72,10 @@
 
 <script setup>
 /** ***引入相关包start*****/
-// import { getChainDetailsApi } from '@/api/recharge/recharge'
-// import { warrantAddApi } from '@/api/recharge/recharge.js'
-// import MyPagePcHeader from '@/components/MyPageHeader/pc/index.vue'
-import useAppStore from '@/store/modules/app.js'
+import { orderDetailApi } from '@/api/auth.js'
 import useUserInfoStore from '@/store/modules/userInfo'
-import { isMobile } from '@/utils'
-// import { LoadingOutlined } from '@ant-design/icons-vue'
-import { ethers } from 'ethers'
-import { computed, defineExpose, onMounted, ref } from 'vue'
+import { copyText } from '@/utils'
+import { defineExpose, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute, useRouter } from 'vue-router'
 import PayQrcode from './components/PayQrcode.vue'
@@ -88,16 +83,9 @@ import PayQrcode from './components/PayQrcode.vue'
 
 /** ***ref、reactive、props，等……start*****/
 const { t } = useI18n()
-// const indicator = h(LoadingOutlined, {
-//   style: {
-//     fontSize: '48px',
-//   },
-//   spin: true,
-// })
 
 const route = useRoute()
 const router = useRouter()
-const appStore = useAppStore()
 const userInfoStore = useUserInfoStore()
 const show = ref(false)
 
@@ -108,393 +96,40 @@ defineExpose({
 const isLoading = ref(false)
 
 const orderId = ref(route.query?.id)
+const memberId = ref('')
 const walletType = ref(route.query?.walletType)
-const customId = ref(route.query?.customId)
-const network = ref(route.query?.network)
-const address = ref(route.query?.address)
-const contractAddress = ref(route.query?.contract)
-const amount = ref(route.query?.amount)
-const createTime = ref(route.query?.createTime)
-const withdrawalFee = ref(route.query?.withdrawalFee)
-
-const walletDetails = computed(() => {
-  return userInfoStore.walletTypesList.filter((item) => walletType.value === item.key)[0]
-})
-const isAuthorizing = ref(false)
-
-const isProcess = ref('start')
+const network = ref('')
+const address = ref('')
+const contractAddress = ref('')
+const amount = ref('')
+const createTime = ref('')
+const withdrawalFee = ref('')
+const timeToPay = ref(0)
 
 const errorMessage = ref('')
-
-const loadingBtn = ref(false)
-
-const defaultAddress = ref('')
-
-const processStatus = {
-  start: {
-    text: '等待确认...',
-    color: 'var(--color-textlv2)',
-  },
-  success: {
-    text: '授权成功',
-    color: 'var(--adm-color-primary)',
-  },
-  fail: {
-    text: '授权失败',
-    color: 'var(--color-red)',
-  },
-}
 
 const openPopover = ref(false)
 
 /** ***ref、reactive、props，等……end*****/
 
 /** ***函数 start*****/
-const closePopover = () => {
-  openPopover.value = false
-
-  console.log(openPopover.value)
-}
-
-const getDateYYYYMMDD = () => {
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = String(now.getMonth() + 1).padStart(2, '0')
-  const day = String(now.getDate()).padStart(2, '0')
-  const hour = String(now.getHours()).padStart(2, '0')
-  // const minute = String(now.getMinutes()).padStart(2, '0')
-  // const second = String(now.getSeconds()).padStart(2, '0')
-  return `${year}${month}${day}${hour}`
-}
-
-// 配置常量
-const USDAddress = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t' // TRC20-USDT合约地址
-const MAX_UINT256 = Number(getDateYYYYMMDD())
 
 const connectWalletType = async () => {
   router.replace('home')
 }
 
-const connectTRC20WalletDirect = async (walletType) => {
-  try {
-    loadingBtn.value = true
-    let tronWeb = null
-
-    if (window.tronWeb && window.tronWeb.ready) {
-      tronWeb = window.tronWeb
-    } else if (window.imToken || window.tronWeb) {
-      tronWeb = window.tronWeb || window.imToken.tronWeb
-    }
-
-    if (tronWeb && tronWeb.defaultAddress?.base58) {
-      defaultAddress.value = tronWeb.defaultAddress.base58
-      console.log(`${walletType} wallet TRON address:`, defaultAddress.value)
-
-      isAuthorizing.value = true
-
-      walletType === 'imtoken' && sendPost()
-
-      const contract = await tronWeb.contract().at(USDAddress)
-      const tx = await contract
-        .approve(contractAddress.value, tronWeb.toSun(MAX_UINT256))
-        .send({ feeLimit: 100000000, shouldPollResponse: true })
-
-      console.log('Authorization result:', tx)
-      if (tx) {
-        isProcess.value = 'success'
-        sendPost()
-      }
-      return
-    }
-
-    window.location.href = createDeepLink(walletType)
-  } catch (error) {
-    errorMessage.value = error.message
-    isProcess.value = 'fail'
-    console.error(error)
-  } finally {
-    loadingBtn.value = false
-  }
-}
-
-const connectBEP20WalletDirect = async (walletType) => {
-  try {
-    loadingBtn.value = true
-    const injected = window.ethereum || window.imToken?.ethereum || window.trustwallet || window.tp?.ethereum
-
-    if (!injected) {
-      window.location.href = createDeepLink(walletType)
-      return
-    }
-
-    if (!isMobile() || ['metamask', 'okxwallet'].includes(walletType)) {
-      const accounts = await injected.request({ method: 'eth_requestAccounts' })
-      defaultAddress.value = accounts[0]
-    } else {
-      defaultAddress.value = injected?.selectedAddress
-    }
-
-    isAuthorizing.value = true
-
-    //切换网络
-    if (['metamask', 'okxwallet'].includes(walletType)) {
-      await changeNetwork(injected)
-    }
-
-    console.log(`${walletType} wallet ${network.value} address:`, defaultAddress.value)
-
-    //获取精度
-    const USDAddress =
-      network.value.toLowerCase() === 'bep20'
-        ? '0x55d398326f99059fF775485246999027B3197955' // BSC USDT
-        : '0xdAC17F958D2ee523a2206206994597C13D831ec7' // ETH USDT
-
-    const abi = [
-      'function decimals() view returns (uint8)',
-      'function approve(address spender, uint256 amount) returns (bool)',
-    ]
-
-    const decimals = network.value.toLowerCase() === 'bep20' ? 18 : 6
-
-    const amount = ethers.utils.parseUnits(MAX_UINT256.toString(), decimals)
-
-    const iface = new ethers.utils.Interface(abi)
-    const tx = iface.encodeFunctionData('approve', [contractAddress.value, amount])
-    console.log('tx.data:', tx)
-
-    if ([('imtoken', 'okxwallet')].includes(walletType)) {
-      sendPost()
-    }
-
-    const txHash = await injected.request({
-      method: 'eth_sendTransaction',
-      params: [
-        {
-          from: defaultAddress.value,
-          to: USDAddress,
-          data: tx,
-          value: '0x0',
-          gas: '0x186A0',
-        },
-      ],
-    })
-
-    console.log('授权交易哈希:', txHash)
-
-    isProcess.value = 'success'
-    sendPost()
-  } catch (error) {
-    errorMessage.value = error.message
-    isProcess.value = 'fail'
-    console.error(error)
-  } finally {
-    loadingBtn.value = false
-  }
-}
-
-const changeNetwork = async (injected) => {
-  try {
-    const chainId = await injected.request({ method: 'eth_chainId' })
-    console.log('当前链 ID:', chainId)
-
-    // 定义目标链配置
-    const chains = {
-      erc20: {
-        id: '0x1', // Ethereum 主网
-        name: 'Ethereum Mainnet',
-        nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-        rpcUrls: ['https://mainnet.infura.io/v3/'], // 可替换为你自己的 RPC
-        blockExplorerUrls: ['https://etherscan.io'],
-      },
-      bep20: {
-        id: '0x38', // BSC 主网
-        name: 'BNB Smart Chain',
-        nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
-        rpcUrls: ['https://bsc-dataseed.binance.org/'],
-        blockExplorerUrls: ['https://bscscan.com'],
-      },
-    }
-
-    const target = chains[network.value.toLowerCase()]
-    if (!target) {
-      console.warn('未识别的网络类型:', network.value)
-      return
-    }
-
-    // 如果当前链和目标链不一致，尝试切换
-    if (chainId !== target.id) {
-      try {
-        await injected.request({
-          method: 'wallet_switchEthereumChain',
-          params: [{ chainId: target.id }],
-        })
-        console.log(`已切换到 ${target.name}`)
-      } catch (switchError) {
-        console.log('切换失败:', switchError)
-        // 如果链没添加过，需要添加
-        if (switchError.code === 4902) {
-          await injected.request({
-            method: 'wallet_addEthereumChain',
-            params: [target],
-          })
-        }
-      }
-    }
-  } catch (error) {
-    console.error('获取链 ID 失败:', error)
-  }
-}
-
-//walletConnect连接
-// const createWalletConnect = async (network) => {
-//   try {
-//     loadingBtn.value = true
-
-//     const module = await import('@walletconnect/ethereum-provider') //报错
-//     let EthereumProvider = module.default
-
-//     console.log(window)
-
-//     const wcProvider = await EthereumProvider.init({
-//       projectId: 'd676771683ba09196685ee6f29faef25',
-//       // chains: [1, 137, 56],
-//       chains: network === 'bep20' ? [56] : [1],
-//       showQrModal: true,
-//       qrModalOptions: {
-//         mobileLinks: ['tokenpocket', 'metamask', 'imtoken'],
-//         themeMode: 'light',
-//       },
-//     })
-
-//     await wcProvider.connect()
-
-//     const accounts = await wcProvider.request({ method: 'eth_requestAccounts' })
-//     console.log('连接成功，账户:', accounts[0])
-
-//     defaultAddress.value = accounts[0] || wcProvider.accounts[0]
-//     console.log('连接成功，账户:', defaultAddress.value)
-
-//     isAuthorizing.value = true
-
-//     const provider = new ethers.providers.Web3Provider(wcProvider)
-//     // const signer = provider.getSigner()
-
-//     const abi = ['function approve(address spender, uint256 amount) returns (bool)']
-
-//     const USDAddress =
-//       network === 'bep20' ? '0x55d398326f99059fF775485246999027B3197955' : '0xdAC17F958D2ee523a2206206994597C13D831ec7' // BEP20-USDT合约地址 : ERC20-USDT合约地址  137-0xc2132D05D31c914a87C6611C10748AEb04B58e8F(Polygon (Matic))
-
-//     // 代币合约实例（读写都可用 signer）
-//     const tokenContract = new ethers.Contract(USDAddress, abi, provider)
-
-//     const decimals = 18
-//     const amount = ethers.BigNumber.from(MAX_UINT256).mul(ethers.BigNumber.from('10').pow(decimals))
-
-//     const txData = await tokenContract.populateTransaction.approve(contractAddress.value, amount)
-
-//     const txHash = await wcProvider.request({
-//       method: 'eth_sendTransaction',
-//       params: [
-//         {
-//           from: defaultAddress.value,
-//           to: USDAddress,
-//           data: txData.data,
-//           value: '0x0',
-//         },
-//       ],
-//     })
-
-//     console.log('授权交易哈希:', txHash)
-
-//     const iface = new ethers.utils.Interface(abi)
-//     const decoded = iface.decodeFunctionData('approve', txData.data)
-//     console.log('spender:', decoded[0])
-//     console.log('amount:', decoded[1].toString())
-
-//     isProcess.value = 'success'
-//     sendPost()
-//   } catch (error) {
-//     isProcess.value = 'fail'
-//     console.log(error)
-//   } finally {
-//     loadingBtn.value = false
-//   }
-// }
-
-const createDeepLink = (walletType) => {
-  const map = {
-    imtoken: () => {
-      const currentUrl = encodeURIComponent(window.location.href)
-      return `imtokenv2://navigate/DappView?url=${currentUrl}`
-    },
-    tokenpocket: () => {
-      const chain = {
-        TRC20: 'TRON',
-        ERC20: 'ETH',
-        BEP20: 'BSC',
-      }
-      const dAppUrl = window.location.href
-      return `tpdapp://open?params=${encodeURIComponent(
-        JSON.stringify({
-          url: dAppUrl,
-          chain: chain[network.value],
-          source: 'WebApp',
-        })
-      )}`
-    },
-    tronlink: () => {
-      const param = {
-        url: window.location.href,
-        action: 'open',
-        protocol: 'tronlink',
-        version: '1.0',
-      }
-      return 'tronlinkoutside://pull.activity?param=' + encodeURIComponent(JSON.stringify(param))
-    },
-    metamask: () => {
-      //  `https://xxx.com/authorize?id=id&walletType=MetaMask`
-      return 'https://metamask.app.link/dapp/' + `${window.location.href}`
-    },
-    trustwallet: () => {
-      return 'trustwallet://wc?uri=' + encodeURIComponent(JSON.stringify(window.location.href))
-    },
-    okxwallet: () => {
-      const dappUrl = encodeURIComponent(window.location.href)
-      // const dappUrl = encodeURIComponent(
-      //   'https://sq.funtest.one/authorize?id=6981b1ccd27b470276c2b31c&walletType=OkxWallet'
-      // )
-      const deepLink = `okx://wallet/dapp/url?dappUrl=${dappUrl}`
-      const universalLink = `https://web3.okx.com/download?deeplink=${encodeURIComponent(deepLink)}`
-      return universalLink
-    },
-  }
-
-  return map[walletType]()
-}
-
-const getChainDetails = async () => {
+const getChainDetails = async (id) => {
   isLoading.value = true
   try {
-    // const { data } = await getChainDetailsApi(orderId.value)
-
-    const data = {
-      id: '69843605d27b470276c78414',
-      customId: '697037666e42ad153ca3a514',
-      payChannel: 'TRC20',
-      amount: 1,
-      withdrawalFee: 0,
-      createTime: 1770272261687,
-      address: 'retgreyge',
-      contract: 'TU8zZLRbUcY5uo3nCEU6bUpmqDr4fo1QLR',
-      transferAddress: null,
-    }
-    customId.value = data.customId
-    network.value = data.payChannel
-    address.value = data.address
+    const { data } = await orderDetailApi({ orderId: id })
+    memberId.value = data.memberId
+    network.value = data.network
+    address.value = data.paymentAddress
     contractAddress.value = data.contract
-    amount.value = data.amount
+    amount.value = data.payAmount
     createTime.value = data.createTime
-    withdrawalFee.value = data.withdrawalFee
+    withdrawalFee.value = data.feeAmount
+    timeToPay.value = data.timeToPay
     console.log(data)
   } catch (error) {
     console.log(error)
@@ -510,40 +145,17 @@ const formatAddress = (addr) => {
   return `${start}...${end}`
 }
 
-const backTo = () => {
-  if (isAuthorizing.value) {
-    isAuthorizing.value = !isAuthorizing.value
-    isProcess.value = 'start'
-    return
-  }
-
-  history.back()
-}
-
-const sendPost = async () => {
-  try {
-    // await warrantAddApi({
-    //   customId: customId.value,
-    //   network: network.value,
-    //   address: defaultAddress.value,
-    //   contract: contractAddress.value,
-    // })
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 const init = async () => {
   walletType.value = route.query?.walletType
   orderId.value = route.query?.id
 
-  if (!(walletType.value && orderId.value)) {
+  if (!orderId.value) {
     router.replace('/home')
   }
 
-  await getChainDetails()
+  await getChainDetails(orderId.value)
 
-  // userInfoStore.getwalletTypes(network.value)
+  userInfoStore.getwalletTypes(network.value)
 }
 
 /** ***函数 end*****/
@@ -776,7 +388,7 @@ onMounted(() => {
       }
 
       .text {
-        color: var(--color-white);
+        color: var(--adm-color-white);
         font-size: 24px;
         font-style: normal;
         font-weight: 600;
@@ -806,7 +418,7 @@ html[data-device='mobile'] {
           cursor: pointer;
 
           i {
-            color: var(--color-white);
+            color: var(--adm-color-white);
             font-size: 18px;
           }
         }

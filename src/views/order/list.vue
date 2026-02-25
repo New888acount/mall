@@ -78,7 +78,7 @@
     <div class="list-sum">
       <div class="sum-total">
         <span>{{ $t('order.index.amount', [state.totalNumber]) }}</span>
-        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount }}</p>
+        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount - state.orderInfo.discountTotalAmount }}</p>
       </div>
       <div class="sum-total">
         <span>{{ $t('order.index.freight') }}</span>
@@ -86,7 +86,7 @@
       </div>
       <div class="sum-total total">
         <span>{{ $t('order.index.total') }}</span>
-        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount }}</p>
+        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount - state.orderInfo.discountTotalAmount }}</p>
       </div>
     </div>
 
@@ -106,14 +106,17 @@ import { getAddressDefaultApi } from '@/api/address'
 import { orderCalcApi, orderCreateApi } from '@/api/order'
 import MyImage from '@/components/MyImage'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
+import messageToast from '@/componentsFun/messageToast'
 import router from '@/router'
 import { useAddressStore } from '@/store/modules/address'
 import { useCartStore } from '@/store/modules/cart'
 import { onMounted, reactive, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import PaySuccess from './components/payResult.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+const { t } = useI18n()
 const paysuccessShow = ref(false)
 const route = useRoute()
 const addressStore = useAddressStore()
@@ -134,6 +137,14 @@ const state = reactive({
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const submitOrder = async () => {
+  if (!state.orderPayload.address_id) {
+    messageToast({
+      props: {
+        msg: t('order.index.address'),
+      },
+    })
+    return
+  }
   try {
     state.isLoading = true
     const params = {
@@ -165,9 +176,7 @@ const submitOrder = async () => {
     router.replace({
       path: '/pay',
       query: {
-        orderSN: data,
-        totalAmount: state.orderPayload.payAmount,
-        orderType: 'memberConsumer',
+        orderId: data,
       },
     })
   } catch (error) {
@@ -236,17 +245,17 @@ const getOrderInfo = async () => {
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
-onMounted(() => {
+onMounted(async () => {
   // 初始化当前的地址
   if (route.query.data) {
     state.orderPayload = JSON.parse(route.query.data)
-    // 如果用户没有选择地址 → 用默认地址
     if (!addressStore.selectedAddress) {
       changeConsignee()
     } else {
-      // 用户选择了地址 → 用用户选择的地址
       changeConsignee(addressStore.selectedAddress)
     }
+
+    await getOrderInfo()
   }
 })
 /** ***生命周期end*****/
@@ -270,13 +279,10 @@ watch(
   background: #f5f5f5;
   overflow-y: scroll;
   .shipping-address {
-    // margin: 10px;
-    border-radius: 10px;
     border: 1px solid #f4f4f4;
     background: var(--adm-bg-white);
     padding: 12px 15px;
     margin-bottom: 7px;
-    // height: 29px;
     .title {
       display: flex;
       justify-content: space-between;

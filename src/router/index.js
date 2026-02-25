@@ -242,10 +242,10 @@ const router = createRouter({
           component: async () => await import('@/views/authorize/index.vue'),
         },
         {
-          path: '/paying',
-          name: 'paying',
+          path: '/order-pay',
+          name: 'order-pay',
           meta: {
-            inTitle: 'paying',
+            inTitle: 'order-pay',
             bgColor: {
               desktop: 'html-bg-default',
               mobile: 'html-bg-mobile-home',

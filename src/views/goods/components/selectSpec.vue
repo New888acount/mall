@@ -28,7 +28,17 @@
             </div>
 
             <div class="spec-info-box">
-              <div class="spec-price">{{ $unit }} {{ goodsPrice.price }}</div>
+              <div class="left">
+                <div
+                  class="spec-price"
+                  :class="{
+                    red: goodsPrice.finalPrice,
+                  }"
+                >
+                  {{ $unit }} {{ goodsPrice.finalPrice }}
+                </div>
+                <div class="spec-discount" v-if="goodsPrice.finalPrice">{{ $unit }} {{ goodsPrice.price }}</div>
+              </div>
 
               <div class="spec-stock">
                 {{
@@ -149,7 +159,12 @@ const skuList = ref()
 
 // 默认单规格 todo
 if (props.goodsInfo.skus.length < 2 && props.goodsInfo.skus.length > 0) {
-  state.selectedSkuPrice = { ...props.goodsInfo.skus[0], buyNum: 1, productName: props.goodsInfo.product.name }
+  state.selectedSkuPrice = {
+    ...props.goodsInfo.skus[0],
+    buyNum: 1,
+    productName: props.goodsInfo.product.name,
+    finalPrice: props.goodsInfo.product.finalPrice,
+  }
   console.log(state.selectedSkuPrice)
   state.currentSkuMap = JSON.parse(state.selectedSkuPrice?.spData)
 }
@@ -181,15 +196,17 @@ const productAttrList = computed(() => {
 })
 
 const goodsPrice = computed(() => {
-  let price, score
+  let price, score, finalPrice
   if (isEmpty(state.selectedSkuPrice)) {
     price = props.goodsInfo.product.price
     score = props.goodsInfo.score || 0
+    finalPrice = props.goodsInfo.finalPrice || 0
   } else {
     price = state.selectedSkuPrice.price
     score = state.selectedSkuPrice.score || 0
+    finalPrice = state.selectedSkuPrice.finalPrice || 0
   }
-  return { price, score }
+  return { price, score, finalPrice }
 })
 
 /** ***ref、reactive、props，等……end*****/
@@ -310,14 +327,33 @@ onUnmounted(() => {
               display: flex;
               justify-content: space-between;
               align-items: center;
+              margin-top: 4px;
+              .left {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+              }
             }
             .spec-price {
+              margin-right: 4px;
               color: var(--adm-color-primary);
               font-size: 16px;
               font-weight: 600;
+              &.red {
+                color: var(--color-red);
+              }
+            }
+
+            .spec-discount {
+              color: var(--adm-color-textlv3);
+              font-size: 16px;
+              font-weight: 600;
+              text-decoration-line: line-through;
             }
 
             .spec-stock {
+              flex-shrink: 0;
               text-align: right;
               font-size: 16px;
             }

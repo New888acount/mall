@@ -11,67 +11,21 @@
       <div class="details-wrap">
         <div class="pro-info">
           <div class="price-info">
-            <div class="price">{{ $unit }} {{ state.goodsInfo?.product?.price }}</div>
+            <div
+              class="price"
+              :class="{
+                red: state.goodsInfo?.product?.finalPrice,
+              }"
+            >
+              {{ $unit }} {{ state.goodsInfo?.product?.finalPrice }}
+            </div>
+            <div v-if="state.goodsInfo?.product?.finalPrice" class="discount">
+              {{ $unit }} {{ state.goodsInfo?.product?.price }}
+            </div>
           </div>
           <div class="title">
             {{ state.goodsInfo?.product?.name }}
           </div>
-        </div>
-
-        <!-- 发货信息 -->
-        <div class="shipping-info" v-if="false">
-          <van-steps direction="vertical" :active="active">
-            <van-step>
-              <!-- 已激活图标 -->
-              <template #active-icon>
-                <div class="custom-icon active">1</div>
-              </template>
-              <!-- 未激活图标 -->
-              <template #inactive-icon>
-                <div class="custom-icon">1</div>
-              </template>
-              <!-- 完成步骤图标 -->
-              <template #finish-icon>
-                <div class="custom-icon active">1</div>
-              </template>
-
-              <div class="step-info">
-                商家发货
-                <i class="iconfont icon-wenhao" @click="logisticsPop"></i>
-                <div class="triangle-right"></div>
-                <div class="text">
-                  Fishbuy认证仓库,运费
-                  <span class="freight">10.00</span>
-                  <span class="unit">CNY</span>
-                </div>
-              </div>
-            </van-step>
-
-            <van-step>
-              <!-- 已激活图标 -->
-              <template #active-icon>
-                <div class="custom-icon active">2</div>
-              </template>
-              <!-- 未激活图标 -->
-              <template #inactive-icon>
-                <div class="custom-icon">2</div>
-              </template>
-              <!-- 完成步骤图标 -->
-              <template #finish-icon>
-                <div class="custom-icon active">2</div>
-              </template>
-              <!-- <template #default> -->
-              <div class="step-info">
-                Fishbuy认证仓库
-                <div class="triangle-right"></div>
-                <div class="text">
-                  你的地址,
-                  <span class="freight-cost">国际运费估算</span>
-                </div>
-              </div>
-              <!-- </template> -->
-            </van-step>
-          </van-steps>
         </div>
 
         <!-- 选择规格 -->
@@ -115,7 +69,6 @@
 /** ***引入相关包start*****/
 import { goodsDetailsApi } from '@/api/goods'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
-import logisticsPop from '@/componentsFun/logisticsPop'
 import router from '@/router'
 import { useCartStore } from '@/store/modules/cart'
 import useUserInfoStore from '@/store/modules/userInfo.js'
@@ -373,18 +326,31 @@ const computedContent = computed(() => {
 
       .price-info {
         display: flex;
+        justify-content: flex-start;
         align-items: center;
-        justify-content: space-between;
 
         .price {
           color: var(--adm-color-primary);
+          text-align: right;
+          font-family: Roboto;
           font-size: 20px;
           font-style: normal;
-          font-weight: 600;
-          line-height: normal;
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          font-weight: 500;
+          line-height: 24px;
+          &.red {
+            color: var(--color-red);
+          }
+        }
+
+        .discount {
+          margin-left: 8px;
+          color: var(--adm-color-textlv3);
+          font-family: Roboto;
+          font-size: 20px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 24px;
+          text-decoration-line: line-through;
         }
       }
 
@@ -401,93 +367,6 @@ const computedContent = computed(() => {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
         align-self: stretch;
-      }
-    }
-
-    .shipping-info {
-      background: var(--adm-bg-white);
-      padding: 12px 5px;
-      margin-top: 7px;
-      border-radius: 5px;
-      .van-steps {
-        width: 100%;
-      }
-
-      .custom-icon {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%; /* 圆形 */
-        background-color: #ccc; /* 默认灰色底 */
-        color: var(--adm-color-white); /* 字体白色 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-      }
-
-      .custom-icon.active {
-        background-color: var(--adm-color-primary); /* 激活时绿色底 */
-      }
-
-      :deep(.van-step__line) {
-        border-left: 1px dashed var(--adm-color-primary); /* 垂直方向虚线 */
-      }
-
-      :deep(.van-step:last-child .van-step__line) {
-        display: none; /* 隐藏最后一个步骤的线条 */
-      }
-
-      // 覆盖完成状态下的线条，让它保持虚线
-      :deep(.van-step--finish .van-step__line) {
-        border-left: 1px dashed var(--adm-color-primary) !important; /* 垂直方向虚线 */
-        background-color: #dbedf0; /* 去掉激活的底色 */
-      }
-
-      .step-info {
-        color: #1f2c3c; /* 默认灰色 */
-        display: flex;
-        align-items: center;
-        font-size: 12px;
-        .icon-wenhao {
-          color: #c8c9cb;
-          margin: 0 2px;
-        }
-
-        .triangle-right {
-          width: 0;
-          height: 0;
-          border-top: 5px solid transparent;
-          border-bottom: 5px solid transparent;
-          border-left: 7px solid var(--adm-color-primary);
-          // padding: 0 5px;
-          margin: 0 5px;
-        }
-        .text {
-          margin-left: 5px;
-
-          .freight-cost {
-            color: var(--adm-color-primary);
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: 150%; /* 18px */
-            text-decoration-line: underline;
-          }
-          .freight {
-            border-radius: 6px;
-            border: 1px solid #f4f4f4;
-            background: #f9f9f9;
-            padding: 4px 8px;
-            font-size: 14px;
-            font-weight: 600;
-            line-height: 14px;
-            margin: 0 4px;
-          }
-
-          .unit {
-            color: var(--color-textlv2);
-          }
-        }
       }
     }
 

@@ -81,7 +81,7 @@
               {{ $t('order.list.button2') }}
             </a-button>
             <a-button
-              @click="onPay({ orderSn: item.payId, totalAmount: item.totalAmount })"
+              @click="onPay({ orderId: item.orderId, totalAmount: item.payAmount })"
               class="default-btn operate-item"
               v-if="item.status === 0"
             >
@@ -191,9 +191,7 @@ const onPay = (data) => {
   router.push({
     path: '/pay',
     query: {
-      orderSN: data.orderSn,
-      totalAmount: data.totalAmount,
-      orderType: 'memberConsumer',
+      orderId: data.orderId,
     },
   })
 }

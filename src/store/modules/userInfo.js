@@ -5,6 +5,7 @@ import { loginApi, profileApi, registerApi } from '@/api/user'
 import useLocalCache from '@/hooks/storage/localStorage'
 import { useCartStore } from '@/store/modules/cart'
 
+import { walletTypesApi } from '@/api/auth'
 import { homeVisitApi } from '@/api/home'
 import { orderCountApi } from '@/api/order'
 import i18n from '@/i18n/index'
@@ -31,48 +32,7 @@ const useUserInfoStore = defineStore('userInfo', {
     userInfo: {}, // 用户信息
     priseList: [], //领取数组
     numData: defaultNumData, //订单数据
-    walletTypesList: [
-      {
-        country: null,
-        id: '6966196d4a9e336613d8d9aa',
-        sort: 2,
-        networks: ['ERC20', 'TRC20', 'BEP20'],
-        key: 'ImToken',
-        name: 'ImToken',
-        icon: 'https://funtest.one/static/kwai/20260116/940528de3e8645fe8361e64a30ef6a41.jpg',
-        status: '0',
-      },
-      {
-        country: null,
-        id: '696619884a9e336613d8d9ab',
-        sort: 3,
-        networks: ['TRC20'],
-        key: 'TronLink',
-        name: 'Tron Link',
-        icon: 'https://funtest.one/static/kwai/20260203/dbfb704b3917481a8a28eaa5884c9634.png',
-        status: '0',
-      },
-      {
-        country: null,
-        id: '696856cbb7546a3ca4a07cfe',
-        sort: 5,
-        networks: ['ERC20', 'TRC20', 'BEP20'],
-        key: 'TokenPocket',
-        name: 'Token Pocket',
-        icon: 'https://funtest.one/static/kwai/20260116/d3dc8fb5c1da43fa8c7a3b1f52912758.webp',
-        status: '0',
-      },
-      {
-        country: null,
-        id: '6981650ed27b470276c21e54',
-        sort: 6,
-        networks: ['TRC20', 'ERC20', 'BEP20'],
-        key: 'OkxWallet',
-        name: 'OKX',
-        icon: 'https://funtest.one/static/kwai/20260203/36c6e313896449d8866cf99640c162bd.png',
-        status: '0',
-      },
-    ],
+    walletTypesList: [], //钱包列表
   }),
   actions: {
     //注册接口
@@ -152,6 +112,18 @@ const useUserInfoStore = defineStore('userInfo', {
         }
       } catch (error) {
         console.log(error)
+      }
+    },
+    async getwalletTypes(network) {
+      try {
+        const { data } = await walletTypesApi({
+          network,
+        })
+        this.walletTypesList = data
+        return data
+      } catch (error) {
+        console.log(error)
+        throw error
       }
     },
   },

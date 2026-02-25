@@ -15,11 +15,11 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, defineExpose, defineProps } from 'vue'
 import MyPopup from '@/components/MyPopup/index.vue'
-import closePop from './index.js'
 import { copyText } from '@/utils'
 import PayQrcode from '@/views/rechargeWithdraw/rechargePopup/components/PayQrcode.vue'
+import { defineExpose, defineProps, ref } from 'vue'
+import closePop from './index.js'
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
@@ -61,7 +61,7 @@ html[data-device='desktop'] {
       width: 600px;
       .my-popup__header {
         padding: 30px 30px 0;
-        color: var(--color-primary);
+        color: var(--adm-color-primary);
       }
     }
     .content {
@@ -75,7 +75,7 @@ html[data-device='mobile'] {
     &.my-popup {
       .my-popup__header {
         padding: 0 48px;
-        color: var(--color-white);
+        color: var(--adm-color-white);
         font-size: 12px;
       }
     }
@@ -124,7 +124,7 @@ html[data-device='mobile'] {
     justify-content: center;
     flex-direction: column;
     padding: 17px 12px;
-    color: var(--color-white);
+    color: var(--adm-color-white);
     text-align: center;
     font-size: 12px;
     font-style: normal;
@@ -136,10 +136,10 @@ html[data-device='mobile'] {
     &__cancale {
       flex: 1;
       height: 100%;
-      color: var(--color-primary);
+      color: var(--adm-color-primary);
       border-radius: 10px;
       background: transparent;
-      border: 1px solid var(--color-primary);
+      border: 1px solid var(--adm-color-primary);
       &:hover {
         opacity: 0.8;
       }
@@ -149,7 +149,7 @@ html[data-device='mobile'] {
       height: 100%;
       color: var(--color-globalBg);
       border-radius: 10px;
-      background: var(--color-primary);
+      background: var(--adm-color-primary);
       &:hover {
         opacity: 0.8;
       }

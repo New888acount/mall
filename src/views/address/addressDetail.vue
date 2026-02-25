@@ -32,7 +32,7 @@
             clearable
             :rules="rules.detailAddress"
           />
-          <van-field
+          <!-- <van-field
             v-model="state.model.region"
             is-link
             readonly
@@ -41,7 +41,7 @@
             :placeholder="$t('addressDetail.city.placeholder')"
             :rules="rules.region"
             @click="state.showRegion = true"
-          />
+          /> -->
           <van-popup v-model:show="state.showRegion" destroy-on-close position="bottom">
             <van-area
               :area-list="state.areaList"
@@ -80,12 +80,14 @@ import { addressDetailApi, areaApi, createAddressApi, updateAddressApi } from '@
 import useLocalCache from '@/hooks/storage/localStorage.js'
 import router from '@/router'
 import { customToast } from '@/utils'
+import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
 const route = useRoute()
 const { getAreaHistory, setAreaHistory } = useLocalCache()
+const { t } = useI18n()
 
 defineProps({
   detail: {
@@ -101,7 +103,7 @@ const state = reactive({
     phone: '',
     detailAddress: '',
     is_default: false,
-    region: '',
+    // region: '',
     fullArea: [],
   },
   // rules: {
@@ -119,34 +121,34 @@ const loading = ref(false)
 const validatePhone = (value) => {
   const reg = /^1[23456789]\d{9}$/ // 手机号正则
   if (!value) {
-    return '请输入手机号'
+    return t('address.phone.tips1')
   } else if (!reg.test(value)) {
-    return '手机号码格式不正确'
+    return t('address.phone.tips2')
   }
 }
 const rules = {
   name: [
     {
       required: true,
-      message: '请输入收货人姓名',
+      message: t('address.name.tips1'),
     },
   ],
-  region: [
-    {
-      required: true,
-      message: '请选择您的位置!',
-    },
-  ],
+  // region: [
+  //   {
+  //     required: true,
+  //     message: t('address.region.tips1'),
+  //   },
+  // ],
   detailAddress: [
     {
       required: true,
-      message: '请输入详细地址!',
+      message: t('address.detailAddress.tips1'),
     },
   ],
   phone: [
     {
       required: true,
-      message: '请输入手机号!',
+      message: t('address.phone.tips1'),
       validator: validatePhone,
     },
   ],
@@ -156,7 +158,7 @@ watch(
   (newValue) => {
     if (newValue) {
       state.model.fullArea = [state.model.provinceId, state.model.cityId, state.model.districtId]
-      state.model.region = `${state.model.province}-${state.model.city}-${state.model.district}`
+      // state.model.region = `${state.model.province}-${state.model.city}-${state.model.district}`
     }
   },
   {
@@ -169,7 +171,7 @@ watch(
   ([provinceId, cityId, districtId]) => {
     if (provinceId && cityId && districtId) {
       state.model.fullArea = [provinceId, cityId, districtId]
-      state.model.region = `${state.model.province}-${state.model.city}-${state.model.district}`
+      // state.model.region = `${state.model.province}-${state.model.city}-${state.model.district}`
       // console.log(state.model)
     }
   }
