@@ -109,6 +109,7 @@ import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import messageToast from '@/componentsFun/messageToast'
 import router from '@/router'
 import { useAddressStore } from '@/store/modules/address'
+import useAppStore from '@/store/modules/app'
 import { useCartStore } from '@/store/modules/cart'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -116,6 +117,8 @@ import { useRoute } from 'vue-router'
 import PaySuccess from './components/payResult.vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+const appStore = useAppStore()
+
 const { t } = useI18n()
 const paysuccessShow = ref(false)
 const route = useRoute()
@@ -172,6 +175,9 @@ const submitOrder = async () => {
         },
       })
     }
+    appStore.getTracking({
+      type: 7,
+    })
     // 跳转到支付页面
     router.replace({
       path: '/pay',

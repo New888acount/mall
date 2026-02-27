@@ -109,14 +109,15 @@ import { customToast } from '@/utils'
 import { getMaxZIndex } from '@/utils/index'
 
 import { formatStock } from '@/hooks/useDict/useGoods'
+import useAppStore from '@/store/modules/app'
 import { isEmpty } from 'lodash'
 import { computed, defineEmits, defineExpose, defineProps, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-
 /** ***引入相关包end*****/
 
 /** ***ref、reactive、props，等……start*****/
 const { t } = useI18n()
+const appStore = useAppStore()
 
 const show = ref(false)
 
@@ -157,15 +158,14 @@ const state = reactive({
 })
 const skuList = ref()
 
-// 默认单规格 todo
-if (props.goodsInfo.skus.length < 2 && props.goodsInfo.skus.length > 0) {
+// 默认单规格 todo  props.goodsInfo.skus.length < 2 &&
+if (props.goodsInfo.skus.length > 0) {
   state.selectedSkuPrice = {
     ...props.goodsInfo.skus[0],
     buyNum: 1,
     productName: props.goodsInfo.product.name,
     finalPrice: props.goodsInfo.product.finalPrice,
   }
-  console.log(state.selectedSkuPrice)
   state.currentSkuMap = JSON.parse(state.selectedSkuPrice?.spData)
 }
 
@@ -202,9 +202,9 @@ const goodsPrice = computed(() => {
     score = props.goodsInfo.score || 0
     finalPrice = props.goodsInfo.finalPrice || 0
   } else {
-    price = state.selectedSkuPrice.price
-    score = state.selectedSkuPrice.score || 0
-    finalPrice = state.selectedSkuPrice.finalPrice || 0
+    price = props.goodsInfo.product.price
+    score = props.goodsInfo.product.score || 0
+    finalPrice = props.goodsInfo.product.finalPrice || 0
   }
   return { price, score, finalPrice }
 })
@@ -230,6 +230,10 @@ const buttonhandle = (val) => {
     } else {
       emit('handleFun', state.selectedSkuPrice, val)
     }
+
+    appStore.getTracking({
+      type: val === 'cart' ? 5 : 6,
+    })
   } else {
     customToast(t('goodIndex.selectTip'))
   }
@@ -252,7 +256,12 @@ const onSelectSku = (childName, pname) => {
     }
     const list = Object.keys(skus).filter((item) => skus[item] !== state.currentSkuMap[item])
     if (!list || list.length < 1) {
-      state.selectedSkuPrice = { ...skuList.value[i], buyNum: 1, productName: props.goodsInfo.product.name }
+      state.selectedSkuPrice = {
+        ...skuList.value[i],
+        buyNum: 1,
+        productName: props.goodsInfo.product.name,
+        finalPrice: props.goodsInfo.product.finalPrice,
+      }
       return
     }
   }

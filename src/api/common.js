@@ -71,3 +71,17 @@ export const popupListApi = (params) =>
     method: 'get',
     params,
   })
+
+/**
+ * 商城埋点数据统计
+ * @param
+ * type - 类型,1-首页访问;2-首页三大模块点击;3-商品详情页访问;4-详情页停留时间统计;5-加入购物车;6-购物车-点击【去结算】;7-进入支付页点击【结算】;8-结算授权页-点击【确认提交支付】;
+visitTime - 详情页停留时间(s),如果type类型是4，则visitTime必填
+ * @returns
+ */
+export const trackingApi = (data) =>
+  request({
+    url: '/mall/api/home/tracking',
+    method: 'post',
+    data,
+  })

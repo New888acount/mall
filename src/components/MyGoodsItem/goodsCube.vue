@@ -1,5 +1,11 @@
 <template>
-  <baseModule class="cube-item" @click="handleClick" :item="details" :showUpdate="true" />
+  <baseModule
+    class="cube-item"
+    @click="handleClick"
+    :item="details"
+    :showUpdate="true"
+    @handleFavorite="handleFavorite"
+  />
 </template>
 
 <script setup>

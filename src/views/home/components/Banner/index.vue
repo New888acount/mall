@@ -8,7 +8,7 @@
           <div class="desc">
             <p>{{ item.content }}</p>
           </div>
-          <a-button v-if="item.jumpUrl" class="buy-btn default-btn" @click="router.push(item.jumpUrl)">
+          <a-button v-if="item.jumpUrl" class="buy-btn default-btn" @click="handleBanner(item)">
             {{ item.btn }}
           </a-button>
         </div>
@@ -17,20 +17,21 @@
   </div>
 </template>
 <script setup>
-import '@vant/touch-emulator'
-import { defineComponent, ref, watch, nextTick, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import MyImage from '@/components/MyImage'
-import { myWindowOpen } from '@/utils'
-import { Navigation, Pagination, EffectCoverflow, Autoplay } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/vue'
+import useAppStore from '@/store/modules/app'
+import useCacheData from '@/store/modules/cacheData'
+import '@vant/touch-emulator'
 import 'swiper/css'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
-import useCacheData from '@/store/modules/cacheData'
+import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { nextTick, onMounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 
 /** ***ref、reactive、props，等……start*****/
 const cacheData = useCacheData()
+const appStore = useAppStore()
 
 // 绑定路由
 const router = useRouter()
@@ -79,6 +80,12 @@ const bannerList = ref([
 /** ***ref、reactive、props，等……end*****/
 
 /** ***函数 start*****/
+const handleBanner = ({ jumpUrl }) => {
+  appStore.getTracking({
+    type: 2,
+  })
+  router.push(jumpUrl)
+}
 // 点击轮播图跳转页面
 const handleActDetail = async (item) => {
   console.log(item)

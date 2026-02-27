@@ -1,4 +1,4 @@
-import { getSupportApi, popupListApi } from '@/api/common'
+import { getSupportApi, popupListApi, trackingApi } from '@/api/common'
 import useLocalCache from '@/hooks/storage/localStorage'
 import { defineStore } from 'pinia'
 const { getLanguage } = useLocalCache()
@@ -44,6 +44,16 @@ export const useAppStore = defineStore('app', {
         if (this.popList.length) return
         const { data } = await popupListApi()
         this.popList = data
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    //埋点
+    async getTracking(params) {
+      try {
+        await trackingApi({
+          ...params,
+        })
       } catch (error) {
         console.log(error)
       }

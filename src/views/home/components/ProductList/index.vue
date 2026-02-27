@@ -18,34 +18,24 @@
 import commenHeader from '@/views/home/components/CommonHeader'
 
 // import baseModule from '@/views/home/components/FavoriteItem/baseModule.vue'
-
 import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
+import useAppStore from '@/store/modules/app'
 import useCacheData from '@/store/modules/cacheData.js'
-import { onMounted, reactive } from 'vue'
+import { onMounted } from 'vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
-
-const state = reactive({
-  listData: [], // 列表数据
-  loading: false, //分页是否加载中
-  finished: false, // 已经完成所有加载
-  // 分页
-  pagination: {
-    current: 1,
-    pageSize: 10,
-    total: 0,
-  },
-  // 类型
-  // status: 0,
-})
+const appStore = useAppStore()
 
 const cacheData = useCacheData()
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const productHandle = (n) => {
+  appStore.getTracking({
+    type: 2,
+  })
   router.push({
     path: '/goods/index',
     query: {

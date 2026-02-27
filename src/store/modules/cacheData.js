@@ -79,7 +79,7 @@ export const useCacheData = defineStore('useCacheData', {
 
     onLoad() {
       if (this.finished || loadingDisabled) return false
-      this.prolist()
+      this.recommendlist()
     },
 
     async getBanner() {

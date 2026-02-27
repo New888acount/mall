@@ -29,6 +29,10 @@ onMounted(() => {
         details: appStore.popList,
       },
     })
+
+  appStore.getTracking({
+    type: 1,
+  })
 })
 /** ***生命周期end*****/
 </script>

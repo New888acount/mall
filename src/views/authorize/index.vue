@@ -225,6 +225,7 @@ import MyPageMobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { copyText, formatDateTimer, isMobile, moneyFormat } from '@/utils'
 // import { LoadingOutlined } from '@ant-design/icons-vue'
+import useAppStore from '@/store/modules/app'
 import { ethers } from 'ethers'
 import { computed, defineExpose, onMounted, onUnmounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -233,6 +234,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 /** ***ref、reactive、props，等……start*****/
 const { t } = useI18n()
+const appStore = useAppStore()
 // const indicator = h(LoadingOutlined, {
 //   style: {
 //     fontSize: '48px',
@@ -340,6 +342,12 @@ const connectWalletType = async () => {
   }
 
   visibilityState.value = true
+
+  if (!userInfoStore.token) {
+    appStore.getTracking({
+      type: 8,
+    })
+  }
 }
 
 const connectTRC20WalletDirect = async (walletType) => {

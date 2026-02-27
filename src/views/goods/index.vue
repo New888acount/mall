@@ -70,6 +70,7 @@
 import { goodsDetailsApi } from '@/api/goods'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import router from '@/router'
+import useAppStore from '@/store/modules/app'
 import { useCartStore } from '@/store/modules/cart'
 import useUserInfoStore from '@/store/modules/userInfo.js'
 import { customToast } from '@/utils/index'
@@ -78,13 +79,13 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 import openSpecPopup from './components/selectSpec.vue'
 import SwiperPro from './components/swiperPro.vue'
-
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+const appStore = useAppStore()
 const { t } = useI18n()
 
 const route = useRoute()
-const active = ref(1)
+const enterTime = ref(0)
 const { proxy } = getCurrentInstance()
 const userInfo = useUserInfoStore()
 // 购物车数据
@@ -237,10 +238,24 @@ onMounted(() => {
 
   getDetails(state.id)
   ele.addEventListener('scroll', handleScroll, { passive: true })
+
+  appStore.getTracking({
+    type: 3,
+  })
+
+  enterTime.value = Date.now()
 })
 
 onUnmounted(() => {
   ele.removeEventListener('scroll', handleScroll)
+
+  const leaveTime = Date.now()
+  const visitTime = Math.floor((leaveTime - enterTime.value) / 1000)
+
+  appStore.getTracking({
+    type: 4,
+    visitTime,
+  })
 })
 
 // 计算属性：替换所有相对路径为绝对路径

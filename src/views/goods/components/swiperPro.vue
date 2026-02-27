@@ -15,10 +15,11 @@
 <script setup>
 /** ***引入相关包start*****/
 import MyImage from '@/components/MyImage'
-import { defineProps, onMounted, ref } from 'vue'
 
+import { defineProps, onMounted, ref } from 'vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+
 const current = ref(0)
 
 const props = defineProps({
@@ -40,6 +41,7 @@ const onChange = (index) => {
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
+
   total.value = props.list.length
 })
 /** ***生命周期end*****/

@@ -19,6 +19,7 @@
 </template>
 <script setup>
 import router from '@/router'
+import useAppStore from '@/store/modules/app'
 import useCacheData from '@/store/modules/cacheData.js'
 import commenHeader from '@/views/home/components/CommonHeader'
 import '@vant/touch-emulator'
@@ -30,6 +31,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import { nextTick, onMounted, ref, watch } from 'vue'
 import baseModule from './baseModule.vue'
 
+const appStore = useAppStore()
 const swiperInstance = ref(null)
 const cacheData = useCacheData()
 // 轮播图配置
@@ -64,6 +66,9 @@ onMounted(async () => {
 })
 
 const handleActDetail = (n) => {
+  appStore.getTracking({
+    type: 2,
+  })
   router.push({
     path: '/goods/index',
     query: {

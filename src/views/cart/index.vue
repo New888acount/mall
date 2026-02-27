@@ -82,14 +82,15 @@ import GoodsVertical from '@/components/MyGoodsItem/goodsVertical.vue'
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import useLocalCache from '@/hooks/storage/localStorage.js'
 import router from '@/router'
+import useAppStore from '@/store/modules/app'
 import { useCartStore } from '@/store/modules/cart'
 import { customToast } from '@/utils'
 import { computed, onMounted, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
-
 // const userInfo = useUserInfoStore()
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+const appStore = useAppStore()
 // 购物车数据
 const cartStore = useCartStore()
 const { t } = useI18n()
@@ -143,6 +144,10 @@ const submitOrder = () => {
     customToast(t('cart.submitTip'))
     return
   }
+
+  appStore.getTracking({
+    type: 6,
+  })
 
   // 进入订单
   router.push({
