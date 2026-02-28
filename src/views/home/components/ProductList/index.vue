@@ -15,14 +15,11 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import commenHeader from '@/views/home/components/CommonHeader'
-
-// import baseModule from '@/views/home/components/FavoriteItem/baseModule.vue'
 import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
-import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
 import useAppStore from '@/store/modules/app'
 import useCacheData from '@/store/modules/cacheData.js'
+import commenHeader from '@/views/home/components/CommonHeader'
 import { onMounted } from 'vue'
 
 /** ***引入相关包end*****/
@@ -30,6 +27,7 @@ import { onMounted } from 'vue'
 const appStore = useAppStore()
 
 const cacheData = useCacheData()
+
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const productHandle = (n) => {
@@ -46,9 +44,7 @@ const productHandle = (n) => {
 
 /** ***函数 end*****/
 /** ***生命周期start*****/
-onMounted(() => {
-  cacheData.onLoad()
-})
+onMounted(() => {})
 
 /** ***生命周期end*****/
 </script>

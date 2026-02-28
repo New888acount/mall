@@ -78,7 +78,8 @@
     <div class="list-sum">
       <div class="sum-total">
         <span>{{ $t('order.index.amount', [state.totalNumber]) }}</span>
-        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount - state.orderInfo.discountTotalAmount }}</p>
+        <!-- <p>{{ $unit }} {{ state.orderPayload.payAmount }}</p> -->
+        <p>{{ $unit }} {{ state.orderInfo.saleProductTotalAmount }}</p>
       </div>
       <div class="sum-total">
         <span>{{ $t('order.index.freight') }}</span>
@@ -86,7 +87,8 @@
       </div>
       <div class="sum-total total">
         <span>{{ $t('order.index.total') }}</span>
-        <p>{{ $unit }} {{ state.orderInfo.productTotalAmount - state.orderInfo.discountTotalAmount }}</p>
+        <!-- <p>{{ $unit }} {{ state.orderPayload.payAmount }}</p> -->
+        <p>{{ $unit }} {{ state.orderInfo.saleProductTotalAmount }}</p>
       </div>
     </div>
 
@@ -244,7 +246,10 @@ const getOrderInfo = async () => {
       item.spDataValue = str
       state.totalNumber += item.quantity
     })
-    state.orderPayload.payAmount = state.orderInfo.orderTotalAmount
+    state.orderPayload.payAmount = state.orderInfo.skuList.reduce((acc, curr) => {
+      acc += curr.quantity * curr.finalPrice.toFixed(2)
+      return acc.toFixed(2)
+    }, 0)
   } catch (error) {
     console.log(error)
   }

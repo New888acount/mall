@@ -79,7 +79,7 @@
   "order.index.message.placeholder": "Fill in Remarks",
   "order.index.total": "Total",
   "order.index.freight": "Freight charges",
-  "order.index.amount": "Total {0} items",
+  "order.index.amount": "{0} items",
   "order.index.sum": "Total:",
   "order.index.submit": "Submit",
   "order.list.title": "My Orders",

@@ -18,14 +18,13 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import commenHeader from '@/views/home/components/CommonHeader'
-import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { getFavoriteListApi } from '@/api/home'
 import GoodCube from '@/components/MyGoodsItem/goodsCube.vue'
+import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import MyPullRefreshList from '@/components/MyPullRefreshList/index.vue'
 import router from '@/router'
-import { onMounted, reactive, nextTick, ref } from 'vue'
 import useCacheData from '@/store/modules/cacheData.js'
+import { onMounted, reactive } from 'vue'
 
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
@@ -123,8 +122,8 @@ onMounted(() => {
   }
   .list {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 8px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
   }
 }
 </style>

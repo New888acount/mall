@@ -11,7 +11,7 @@ export const useCacheData = defineStore('useCacheData', {
     orderSort: 'desc',
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 20,
       total: 0,
     },
     hotList: [], // 热门商品列表
@@ -48,7 +48,6 @@ export const useCacheData = defineStore('useCacheData', {
 
     // 推荐商品列表
     async recommendlist() {
-      if (this.loading || loadingDisabled) return // 防止并发
       loadingDisabled = true
       this.loading = true
 

@@ -39,7 +39,7 @@ const modules = [Navigation, EffectCoverflow, Autoplay]
 // 轮播图
 const swiperOption = {
   autoplay: {
-    delay: 3000,
+    delay: 300000,
     disableOnInteraction: false,
   },
   loop: true,

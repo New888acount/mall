@@ -80,8 +80,18 @@ watch(
 .base-module {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   cursor: pointer;
+
+  :deep(.van-image) {
+    width: 100%;
+    height: auto;
+  }
+
+  :deep(.van-skeleton-image) {
+    width: 100%;
+    height: 100%;
+  }
 
   .tag {
     position: absolute;

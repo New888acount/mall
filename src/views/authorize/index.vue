@@ -94,9 +94,9 @@
       <div class="main__submit">
         <a-button class="default-btn" @click="connectWalletType">{{ $t('authorize.confirmbtn') }}</a-button>
       </div>
-      <div class="main__tips">
+      <!-- <div class="main__tips">
         {{ errorMessage }}
-      </div>
+      </div> -->
     </main>
 
     <main class="main" v-else>

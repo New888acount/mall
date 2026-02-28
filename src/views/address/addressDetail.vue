@@ -119,12 +119,13 @@ const loading = ref(false)
 
 // 登录
 const validatePhone = (value) => {
-  const reg = /^1[23456789]\d{9}$/ // 手机号正则
+  // const reg = /^1[23456789]\d{9}$/ // 手机号正则
   if (!value) {
     return t('address.phone.tips1')
-  } else if (!reg.test(value)) {
-    return t('address.phone.tips2')
   }
+  // else if (!reg.test(value)) {
+  //   return t('address.phone.tips2')
+  // }
 }
 const rules = {
   name: [

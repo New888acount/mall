@@ -41,7 +41,7 @@
             checked-color="var(--adm-color-primary)"
           >
             {{ $t('cart.allSelect') }}
-            <span v-if="selectedIds?.length">( {{ $t('order.index.amount', [selectedIds?.length]) }})</span>
+            <span v-if="selectedIds?.length">({{ $t('order.index.amount', [selectedIds?.length]) }})</span>
           </van-checkbox>
         </div>
 
@@ -49,7 +49,7 @@
           <div class="price-text">
             <div class="sum-price">
               <div class="price">{{ $unit }} {{ state.finalPrice }}</div>
-              <div class="discount">{{ $unit }} {{ state.totalPriceSelected }}</div>
+              <!-- <div class="discount">{{ $unit }} {{ state.totalPriceSelected }}</div> -->
             </div>
             <p class="free">{{ $t('cart.free') }}</p>
           </div>
