@@ -39,7 +39,7 @@
   "goodList.buy": "去购买",
   "goodIndex.selectTip": "请选择规格",
   "goodIndex.noStock": "没有库存",
-  "cart.title": "购物车{count}",
+  "cart.title": "购物车({0})",
   "cartHeader.title1": "共",
   "cartHeader.title2": "件商品",
   "cartHeader.edit": "编辑",
@@ -201,5 +201,6 @@
   "authorize.pay.label1.tips": "请确认链网络一致，转错地址可能导致资产无法追回",
   "authorize.pay.label2": "选择钱包",
   "authorize.pay.label3": "支付手续费",
-  "authorize.pay.label3.tips": "支付金额为您当前订单商品总额，请务必保证支付钱包和网络一致，否则将无法到账！若您未正确操作，导致的资金遗失，无法找回或退款"
+  "authorize.pay.label3.tips": "支付金额为您当前订单商品总额，请务必保证支付钱包和网络一致，否则将无法到账！若您未正确操作，导致的资金遗失，无法找回或退款",
+  "authorize.feePercent": "含{0}%手续费"
 }

@@ -32,12 +32,14 @@
                 <div
                   class="spec-price"
                   :class="{
-                    red: goodsPrice.finalPrice,
+                    red: state.selectedSkuPrice.discount,
                   }"
                 >
-                  {{ $unit }} {{ goodsPrice.finalPrice }}
+                  {{ $unit }} {{ (state.selectedSkuPrice.price - state.selectedSkuPrice.discount).toFixed(2) }}
                 </div>
-                <div class="spec-discount" v-if="goodsPrice.finalPrice">{{ $unit }} {{ goodsPrice.price }}</div>
+                <div class="spec-discount" v-if="state.selectedSkuPrice.discount">
+                  {{ $unit }} {{ state.selectedSkuPrice.price }}
+                </div>
               </div>
 
               <div class="spec-stock">
@@ -224,12 +226,14 @@ const changeStepper = (val) => {
 }
 const buttonhandle = (val) => {
   if (state.selectedSkuPrice.id) {
-    if (state.selectedSkuPrice.stock < 1) {
-      // 没有库存
-      customToast(t('goodIndex.noStock'))
-    } else {
-      emit('handleFun', state.selectedSkuPrice, val)
-    }
+    // if (state.selectedSkuPrice.stock < 1) {
+    //   // 没有库存
+    //   customToast(t('goodIndex.noStock'))
+    // } else {
+    //   emit('handleFun', state.selectedSkuPrice, val)
+    // }
+
+    emit('handleFun', state.selectedSkuPrice, val)
 
     appStore.getTracking({
       type: val === 'cart' ? 5 : 6,

@@ -62,9 +62,13 @@
       <div class="detail-sum">
         <div class="deatil-total">
           <span>{{ $t('order.detail.sum') }}</span>
-          <p>{{ $unit }} {{ state.orderInfo.totalAmount }}</p>
+          <p>{{ $unit }} {{ state.orderInfo.payAmount }}</p>
         </div>
-        <div class="detail-required">
+        <div class="detail-required" v-if="state.orderInfo.feeAmount">
+          {{ $t('authorize.form.label7') }}
+          <span>{{ $unit }} {{ state.orderInfo.feeAmount }}</span>
+        </div>
+        <div class="detail-required red">
           {{ [1, 2, 3].includes(state.status) ? $t('order.detail.paid') : $t('order.detail.required') }}
           <span>{{ $unit }} {{ state.orderInfo.payAmount }}</span>
         </div>
@@ -512,13 +516,18 @@ onMounted(() => {
         font-weight: 400;
         line-height: 150%; /* 18px */
       }
-      p {
-        color: var(--adm-color-primary);
-      }
+      // p {
+      //   color: var(--adm-color-primary);
+      // }
     }
     .detail-required {
       text-align: right;
       margin-top: 10px;
+      &.red {
+        span {
+          color: var(--color-price);
+        }
+      }
     }
   }
 

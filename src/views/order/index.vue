@@ -43,6 +43,7 @@
                   :src="$imgBaseUrl + obj.pic"
                   alt=""
                   fit="initial"
+                  @click="productHandle(obj)"
                 />
               </div>
               <div class="right">
@@ -97,7 +98,7 @@
             <a-button
               class="default-btn-solidgrey operate-item"
               @click="onDelete(item)"
-              v-if="[0, 4, 5].includes(item.status)"
+              v-if="[4, 5].includes(item.status)"
             >
               {{ $t('order.list.button6') }}
             </a-button>
@@ -118,15 +119,16 @@ import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderListApi } from '@
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { getOrderStatusName } from '@/hooks/useDict/useGoods'
 import router from '@/router'
+import useAppStore from '@/store/modules/app'
 import { customToast, formatDateTimer } from '@/utils/index'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
-
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const { t } = useI18n()
+const appStore = useAppStore()
 const route = useRoute()
 const selectItem = ref({})
 const orderNav = [
@@ -172,6 +174,17 @@ const state = reactive({
 })
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
+const productHandle = (n) => {
+  appStore.getTracking({
+    type: 2,
+  })
+  router.push({
+    path: '/goods/index',
+    query: {
+      id: n.productId,
+    },
+  })
+}
 
 const onTabChange = async (name) => {
   const tab = orderNav.find((item) => item.name === name)

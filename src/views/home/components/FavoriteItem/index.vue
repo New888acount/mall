@@ -67,7 +67,7 @@ onMounted(async () => {
 
 const handleActDetail = (n) => {
   appStore.getTracking({
-    type: 2,
+    type: 9,
   })
   router.push({
     path: '/goods/index',

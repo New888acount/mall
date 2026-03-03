@@ -190,15 +190,15 @@ const profileList = [
       router.push('/privacy')
     },
   },
-  // {
-  //   text: t('profile.tab8'),
-  //   icon: 'icon-Language',
-  //   rightText: getLanguage()?.toUpperCase(),
-  //   loginShow: true,
-  //   fn: async () => {
-  //     await getLanguagesList()
-  //   },
-  // },
+  {
+    text: t('profile.tab8'),
+    icon: 'icon-Language',
+    rightText: getLanguage()?.toUpperCase(),
+    loginShow: true,
+    fn: async () => {
+      await getLanguagesList()
+    },
+  },
   {
     text: t('profile.tab9'),
     icon: 'icon-logout',

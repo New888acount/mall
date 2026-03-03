@@ -7,6 +7,8 @@ import vanEnUS from 'vant/es/locale/lang/en-US'
 import vanZhCN from 'vant/es/locale/lang/zh-CN'
 // 系统国际化
 import en from './en.json'
+import th from './th.json'
+import vi from './vi.json'
 import zh from './zh.json'
 const { setLanguage, getLanguage } = useLocalCache()
 
@@ -17,6 +19,8 @@ const i18n = createI18n({
   messages: {
     en,
     zh,
+    vi,
+    th,
   },
   legacy: false,
 })

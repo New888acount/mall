@@ -1,10 +1,6 @@
 <template>
   <div class="cart-page" v-loading="cartStore.loading">
-    <MobileHeader
-      :backicon="false"
-      :leftText="$t('cart.title', { count: cartStore.cartCount ? `(${cartStore.cartCount})` : '' })"
-      class="cart-header"
-    >
+    <MobileHeader :backicon="false" :leftText="$t('cart.title', [cartStore.cartCount || ''])" class="cart-header">
       <template #right>
         <div class="cart-header-right">
           <p :class="[state.editMode ? 'edit' : 'cancle']" @click="edithandle">

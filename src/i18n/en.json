@@ -39,7 +39,7 @@
   "goodList.buy": "Go to Buy",
   "goodIndex.selectTip": "Please select specifications",
   "goodIndex.noStock": "out of stock",
-  "cart.title": "Cart {count}",
+  "cart.title": "Cart ({0})",
   "cartHeader.title1": "Total",
   "cartHeader.title2": "Item",
   "cartHeader.edit": "Edit",
@@ -67,7 +67,7 @@
   "addressDetail.city.placeholder": "Click to select province, city, and district",
   "addressDetail.default": "Set as default address",
   "addressDetail.submit": "Save",
-  "addressDetail.delete.text": "Are you sure you want to delete the address？",
+  "addressDetail.delete.text": "Are you sure you want to delete the address?",
   "addressDetail.delete.button1": "Cancel",
   "addressDetail.delete.button2": "Confirm",
   "order.index.title": "Confirm Order",
@@ -201,5 +201,6 @@
   "authorize.pay.label1.tips": "Please verify the blockchain network consistency. Sending funds to the wrong address may result in irrecoverable assets.",
   "authorize.pay.label2": "Select Wallet",
   "authorize.pay.label3": "Payment Fee",
-  "authorize.pay.label3.tips": "The payment amount is the total cost of your current order. Please ensure your payment wallet and network are consistent; otherwise, the payment will not be processed. If you fail to follow the correct procedure and funds are lost as a result, they cannot be recovered or refunded."
+  "authorize.pay.label3.tips": "The payment amount is the total cost of your current order. Please ensure your payment wallet and network are consistent; otherwise, the payment will not be processed. If you fail to follow the correct procedure and funds are lost as a result, they cannot be recovered or refunded.",
+  "authorize.feePercent": "Includes {0}% handling fee"
 }

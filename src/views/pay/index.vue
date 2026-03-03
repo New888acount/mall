@@ -5,7 +5,7 @@
     <div class="container">
       <div class="container-header">
         <div class="price">{{ state.details.payAmount }} {{ $unit }}</div>
-        <!-- <div class="amount">≈ 0.0000000024ETH</div> -->
+        <div class="amount">{{ $t('authorize.feePercent', [state.details.feePercent]) }}</div>
       </div>
 
       <div class="container-line"></div>

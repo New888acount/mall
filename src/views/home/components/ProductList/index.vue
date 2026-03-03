@@ -32,7 +32,7 @@ const cacheData = useCacheData()
 /** ***函数 start*****/
 const productHandle = (n) => {
   appStore.getTracking({
-    type: 2,
+    type: 10,
   })
   router.push({
     path: '/goods/index',
