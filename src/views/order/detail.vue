@@ -62,7 +62,7 @@
       <div class="detail-sum">
         <div class="deatil-total">
           <span>{{ $t('order.detail.sum') }}</span>
-          <p>{{ $unit }} {{ state.orderInfo.payAmount }}</p>
+          <p>{{ $unit }} {{ (state.orderInfo.payAmount - state.orderInfo.feeAmount).toFixed(2) }}</p>
         </div>
         <div class="detail-required" v-if="state.orderInfo.feeAmount">
           {{ $t('authorize.form.label7') }}
@@ -93,7 +93,7 @@
       </a-button>
       <a-button
         class="default-btn operate-item"
-        @click="onPay({ orderSn: state.orderInfo.payId, totalAmount: state.orderInfo.totalAmount })"
+        @click="onPay({ orderId: state.orderInfo.orderId })"
         v-if="state.orderInfo.status === 0"
       >
         {{ $t('order.list.button3') }}
@@ -159,6 +159,7 @@ const copyOrder = (item) => {
 
 // 继续支付
 const onPay = (data) => {
+  console.log(data.orderId, ' data.orderId')
   router.push({
     path: '/pay',
     query: {

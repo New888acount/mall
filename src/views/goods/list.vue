@@ -112,6 +112,7 @@ const state = reactive({
   orderField: 'sort',
   orderSort: 'desc',
   search: '',
+  superDiscount: null,
   pagination: {
     current: 1,
     pageSize: 10,
@@ -167,6 +168,7 @@ const initState = () => {
   state.finished = false
   state.pagination.current = 1
   state.pagination.pageSize = 10
+  state.superDiscount = null
   state.listData = []
   prolist()
 }
@@ -207,6 +209,7 @@ const prolist = async () => {
       orderField: state.orderField,
       orderSort: state.orderSort,
       search: state.search,
+      superDiscount: state.superDiscount,
       // 商品上架状态
       publishStatus: 1,
     })
@@ -236,6 +239,10 @@ onMounted(() => {
   if (route.query?.search) {
     state.search = route.query?.search
   }
+  if (route.query?.superDiscount) {
+    state.superDiscount = route.query?.superDiscount
+  }
+
   prolist()
 })
 /** ***生命周期end*****/
