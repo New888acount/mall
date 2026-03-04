@@ -505,7 +505,7 @@ watch(
         .amount {
           display: flex;
           align-items: center;
-          justify-content: flex-start;
+          justify-content: flex-end;
           .price {
             color: var(--color-red);
             font-family: Roboto;
