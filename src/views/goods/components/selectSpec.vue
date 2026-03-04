@@ -32,12 +32,12 @@
                 <div
                   class="spec-price"
                   :class="{
-                    red: state.selectedSkuPrice.discount,
+                    red: state.selectedSkuPrice.finalPrice,
                   }"
                 >
-                  {{ $unit }} {{ (state.selectedSkuPrice.price - state.selectedSkuPrice.discount).toFixed(2) }}
+                  {{ $unit }} {{ state.selectedSkuPrice.finalPrice }}
                 </div>
-                <div class="spec-discount" v-if="state.selectedSkuPrice.discount">
+                <div class="spec-discount" v-if="state.selectedSkuPrice.finalPrice">
                   {{ $unit }} {{ state.selectedSkuPrice.price }}
                 </div>
               </div>
@@ -264,7 +264,7 @@ const onSelectSku = (childName, pname) => {
         ...skuList.value[i],
         buyNum: 1,
         productName: props.goodsInfo.product.name,
-        finalPrice: props.goodsInfo.product.finalPrice,
+        finalPrice: skuList.value[i].finalPrice,
       }
       return
     }

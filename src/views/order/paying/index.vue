@@ -58,7 +58,7 @@
         <div class="main__submit">
           <div class="timer-down" v-if="timeToPay">
             {{ $t('authorize.paying.timerTips') }}
-            <van-count-down :time="timeToPay * 1000" format="HH:mm:ss" />
+            <van-count-down :time="timeToPay" format="HH:mm:ss" />
           </div>
           <a-button class="default-btn" @click="connectWalletType">{{ $t('authorize.paying.btn') }}</a-button>
         </div>

@@ -81,11 +81,7 @@
             <a-button class="default-btn-solidgrey operate-item" @click="canceltip(item)" v-if="item.status === 0">
               {{ $t('order.list.button2') }}
             </a-button>
-            <a-button
-              @click="onPay({ orderId: item.orderId, totalAmount: item.payAmount })"
-              class="default-btn operate-item"
-              v-if="item.status === 0"
-            >
+            <a-button @click="onPay(item)" class="default-btn operate-item" v-if="item.status === 0">
               {{ $t('order.list.button3') }}
             </a-button>
             <a-button
@@ -152,6 +148,16 @@ const orderNav = [
     name: 3,
     value: 2,
   },
+  {
+    text: t('order.status4'),
+    name: 4,
+    value: 3,
+  },
+  {
+    text: t('order.status5'),
+    name: 5,
+    value: 4,
+  },
   // {
   //   text: t('order.tab4'),
   //   name: 4,
@@ -201,6 +207,15 @@ const detailHandle = (item) => {
 
 // 继续支付
 const onPay = (data) => {
+  if (data.paymentAddress) {
+    router.push({
+      path: '/order-pay',
+      query: {
+        id: data.orderId,
+      },
+    })
+    return
+  }
   router.push({
     path: '/pay',
     query: {
