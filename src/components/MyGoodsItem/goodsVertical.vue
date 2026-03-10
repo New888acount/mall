@@ -55,8 +55,10 @@
 
 <script setup>
 import MyImage from '@/components/MyImage'
+import useAppStore from '@/store/modules/app'
 import { defineEmits, defineProps, ref, watch } from 'vue'
 
+const appStore = useAppStore()
 const props = defineProps({
   // 商品详情
   item: { type: Object, default: () => null },
@@ -74,9 +76,11 @@ const props = defineProps({
 
 const emit = defineEmits(['click', 'update:modelValue', 'plus', 'minus', 'change'])
 
-function handleClick() {
-  // 没有购买按钮不进行详情页面跳转
-  if (!props.buyButton) return
+const handleClick = () => {
+  appStore.getTracking({
+    type: 2,
+  })
+  // if (!props.buyButton) return
   emit('click', props.item)
 }
 // 计数值

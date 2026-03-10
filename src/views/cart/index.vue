@@ -22,7 +22,12 @@
                 {{ item.name }}
               </van-checkbox>
             </div>
-            <GoodsVertical :item="item" :quantityButton="!state.editMode" @change="onNumberChange($event, item)" />
+            <GoodsVertical
+              :item="item"
+              :quantityButton="!state.editMode"
+              @change="onNumberChange($event, item)"
+              @click="productHandle"
+            />
           </div>
         </div>
       </van-checkbox-group>
@@ -155,6 +160,18 @@ const submitOrder = () => {
         goods_list,
         from: 'cart',
       }),
+    },
+  })
+}
+
+const productHandle = (n) => {
+  appStore.getTracking({
+    type: 2,
+  })
+  router.push({
+    path: '/goods/index',
+    query: {
+      id: n.productId,
     },
   })
 }

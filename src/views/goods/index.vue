@@ -105,7 +105,7 @@ const selectSpecValue = computed(() => {
   if (state.selectedSkuPrice?.spData) {
     const obj = JSON.parse(state.selectedSkuPrice.spData)
     Object.keys(obj).forEach((key) => {
-      str += key + '：' + obj[key] + ' '
+      str += (appStore.unitLangList[key] || key) + ': ' + obj[key] + ' '
     })
   } else {
     str = t('goodSpec.tip')

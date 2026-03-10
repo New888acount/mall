@@ -55,7 +55,7 @@
 
         <!-- 规格颜色 -->
         <div class="spec-color" v-for="sku1 in productAttrList" :key="sku1.id">
-          <p>{{ sku1.name }}</p>
+          <p>{{ appStore.unitLangList[sku1.name] || sku1.name }}</p>
           <div class="option-selector">
             <div
               v-for="sku2 in sku1.options.filter((i) => i.name)"

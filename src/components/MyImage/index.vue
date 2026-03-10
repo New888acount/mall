@@ -84,6 +84,8 @@ const handleLoadingComplete = () => {
     box-sizing: border-box;
   }
   :deep(.van-skeleton-image) {
+    width: 100%;
+    height: 100%;
     color: #fe771c;
     background-color: #f7f8fa;
   }

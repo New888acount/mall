@@ -1,7 +1,7 @@
 <template>
   <div class="game-list-module">
     <div class="game-list-all">
-      <commenHeader :title="$t('home.hot')" />
+      <commenHeader :title="$t('home.hot')" @rightEvent="router.push('/goods/list?superDiscount=1')" />
       <div class="home-game-swiper">
         <swiper v-bind="swiperOption" :modules="modules" @swiper="onSwiper" class="my-swipe">
           <swiper-slide v-for="item in cacheData.hotList" :key="item.id" @click="handleActDetail(item)">

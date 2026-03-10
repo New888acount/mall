@@ -116,6 +116,7 @@ import { orderCancelApi, orderConfirmApi, orderDeleteApi, orderDetailApi } from 
 import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import { formatOrderColor, getOrderStatusName } from '@/hooks/useDict/useGoods'
 import router from '@/router'
+import useAppStore from '@/store/modules/app'
 import { copyText, customToast, formatDateTimer } from '@/utils/index'
 import { showConfirmDialog } from 'vant'
 import { onMounted, reactive, ref } from 'vue'
@@ -123,6 +124,7 @@ import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
+const appStore = useAppStore()
 const { t } = useI18n()
 const minute = ref(0)
 const second = ref(0)
@@ -284,7 +286,7 @@ const getOrderDetail = async (id) => {
       let str = ''
       const obj = JSON.parse(item.spData)
       Object.keys(obj).forEach((key) => {
-        str += key + '：' + obj[key] + ' '
+        str += (appStore.unitLangList[key] || key) + ': ' + obj[key] + ' '
       })
       item.spDataValue = str
     })

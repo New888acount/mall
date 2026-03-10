@@ -12,7 +12,7 @@ export const goodsListApi = (data) =>
     data,
   })
 
-  /**
+/**
  * 商品详情
  * @param
  * @returns
@@ -23,3 +23,13 @@ export const goodsDetailsApi = (id) =>
     method: 'get',
   })
 
+/**
+ * 商品规格多语言
+ * @param
+ * @returns
+ */
+export const getUnitLangApi = (id) =>
+  request({
+    url: '/mall/no-auth/sku/unit/lang',
+    method: 'get',
+  })

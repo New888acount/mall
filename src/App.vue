@@ -114,12 +114,6 @@ const initServer = async () => {
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onMounted(() => {
-  const token = getCacheToken()
-  if (token) {
-    setCacheToken(token)
-    cartStore.getList()
-  }
-
   appStore.initApp()
 
   cacheData.getBanner()
@@ -127,6 +121,14 @@ onMounted(() => {
   cacheData.recommendlist()
 
   appStore.getPopupList()
+
+  appStore.getUnitLang()
+
+  const token = getCacheToken()
+  if (token) {
+    setCacheToken(token)
+    cartStore.getList()
+  }
 
   initServer()
 })

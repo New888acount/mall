@@ -1,4 +1,5 @@
 import { getSupportApi, popupListApi, trackingApi } from '@/api/common'
+import { getUnitLangApi } from '@/api/goods'
 import useLocalCache from '@/hooks/storage/localStorage'
 import { defineStore } from 'pinia'
 const { getLanguage } = useLocalCache()
@@ -10,6 +11,7 @@ export const useAppStore = defineStore('app', {
     device: '', // mobile,desktop 当前系统是移动还是pc
     language: '' || getLanguage(), //语言
     popList: [], //首页弹窗列表
+    unitLangList: [], //规格翻译列表
   }),
   actions: {
     // 打开livechat
@@ -54,6 +56,16 @@ export const useAppStore = defineStore('app', {
         await trackingApi({
           ...params,
         })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    //规格翻译列表
+    async getUnitLang() {
+      try {
+        if (this.unitLangList.length) return
+        const { data } = await getUnitLangApi()
+        this.unitLangList = data
       } catch (error) {
         console.log(error)
       }

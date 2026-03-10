@@ -1,6 +1,6 @@
 <template>
   <div class="product-list">
-    <commenHeader :title="$t('home.recommend')" />
+    <commenHeader :title="$t('home.recommend')" @rightEvent="router.push('/goods/list')" />
     <MyPullRefreshList v-model:loading="cacheData.loading" :finished="cacheData.finished" @load="cacheData.onLoad">
       <div class="list">
         <GoodCube v-for="(item, i) in cacheData.goodsList" :key="i" :item="item" @click="productHandle" />

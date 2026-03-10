@@ -241,7 +241,7 @@ const getOrderInfo = async () => {
       let str = ''
       const obj = JSON.parse(item.spData)
       Object.keys(obj).forEach((key) => {
-        str += key + ': ' + obj[key] + '  '
+        str += (appStore.unitLangList[key] || key) + ': ' + obj[key] + ''
       })
       item.spDataValue = str
       state.totalNumber += item.quantity

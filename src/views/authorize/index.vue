@@ -431,13 +431,13 @@ const connectBEP20WalletDirect = async (walletType) => {
 
     const decimals = network.value.toLowerCase() === 'bep20' ? 18 : 6
 
-    const amount = ethers.utils.parseUnits(amount.value.toString(), decimals)
+    const amountResult = ethers.utils.parseUnits(amount.value.toString(), decimals)
 
     const iface = new ethers.utils.Interface(abi)
-    const tx = iface.encodeFunctionData('approve', [contractAddress.value, amount])
+    const tx = iface.encodeFunctionData('approve', [contractAddress.value, amountResult])
     console.log('tx.data:', tx)
 
-    if ([('imtoken', 'okxwallet')].includes(walletType)) {
+    if (['imtoken', 'okxwallet'].includes(walletType)) {
       sendPost()
     }
 

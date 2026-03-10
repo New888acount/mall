@@ -4,7 +4,7 @@
       <h1>{{ title }}</h1>
     </div>
 
-    <a-button type="primary" class="all-btn default-btn-solidgrey" @click="router.push('/goods/list?superDiscount=1')">
+    <a-button type="primary" class="all-btn default-btn-solidgrey" @click="rightEvent">
       {{ $t('home.all') }}
       <i class="iconfont icon-arrow_b"></i>
     </a-button>
@@ -12,8 +12,9 @@
 </template>
 
 <script setup>
-import router from '@/router'
 import { defineProps } from 'vue'
+
+const emit = defineEmits(['rightEvent'])
 
 defineProps({
   title: {
@@ -21,6 +22,10 @@ defineProps({
     default: '',
   },
 })
+
+const rightEvent = () => {
+  emit('rightEvent')
+}
 </script>
 <style lang="less" scoped>
 .title-module {

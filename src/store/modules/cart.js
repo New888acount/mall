@@ -1,6 +1,7 @@
 // stores/cart.js
 import { addCartApi, cartListApi, deleteCartApi, updateCartApi } from '@/api/cart'
 import { defineStore } from 'pinia'
+import useAppStore from './app'
 
 export const useCartStore = defineStore('cart', {
   state: () => ({
@@ -40,7 +41,7 @@ export const useCartStore = defineStore('cart', {
           let str = ''
           const obj = JSON.parse(it.spData)
           Object.keys(obj).forEach((key) => {
-            str += key + '：' + obj[key] + ' '
+            str += (useAppStore().unitLangList[key] || key) + ': ' + obj[key] + ' '
           })
           it.spDataValue = str
         })
