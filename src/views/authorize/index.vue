@@ -556,7 +556,7 @@ const getRefreshStatus = async (id) => {
     if (data.errorStatus === 0) {
       isProcess.value = 'paysuccess'
       cancelFn.value && cancelFn.value()
-    } else if ([1.2].includes(data.errorStatus)) {
+    } else if ([1, 2].includes(data.errorStatus)) {
       isProcess.value = 'payfail'
       cancelFn.value && cancelFn.value()
     }
