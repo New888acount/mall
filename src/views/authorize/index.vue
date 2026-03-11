@@ -746,7 +746,7 @@ const replenish = async () => {
       memberId: memberId.value,
       orderId: orderId.value,
       network: network.value,
-      address: defaultAddress.value,
+      linkAddress: defaultAddress.value,
       contract: contractAddress.value,
     })
   } catch (error) {
@@ -769,7 +769,7 @@ const init = async () => {
 
 const handleVisibility = () => {
   if (document.visibilityState === 'visible' && visibilityState.value) {
-    if (userInfoStore.token) {
+    if (userInfoStore.token && !cancelFn.value) {
       const { cancel } = myInterval(async () => {
         await getRefreshStatus(orderId.value)
       }, 3000)
