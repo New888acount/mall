@@ -6,8 +6,12 @@
     </div>
 
     <div class="right-icon">
-      <div class="icon-common" @click="router.push('/favorite')">
+      <!-- <div class="icon-common" @click="router.push('/favorite')">
         <i class="iconfont icon-collect"></i>
+      </div> -->
+
+      <div class="icon-common" @click="openLanguagePop">
+        <i class="iconfont icon-Language"></i>
       </div>
 
       <div class="icon-common" @click="router.push('/cart')">
@@ -20,22 +24,52 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { ref, onMounted } from 'vue'
+import languagePop from '@/componentsFun/languagePop'
+import useLocalCache from '@/hooks/storage/localStorage'
 import router from '@/router'
+import useAppStore from '@/store/modules/app.js'
 import { useCartStore } from '@/store/modules/cart'
 import userInfoStore from '@/store/modules/userInfo'
+import { onMounted, ref } from 'vue'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const value1 = ref()
+const { setLanguage, getLanguage } = useLocalCache()
 // 购物车数据
 const cartStore = useCartStore()
+const appStore = useAppStore()
 
 const useUserInfoStore = userInfoStore()
+
+const isLoading = ref(false)
+const columns = ref([])
+const currentLang = ref([getLanguage() || 'zh'])
 /** ***ref、reactive、props，等……end*****/
 /** ***函数 start*****/
 const goSearch = () => {
   // 跳转到搜索页面
   router.push('/search')
+}
+
+// 确认选择
+const onConfirm = (lang) => {
+  currentLang.value = lang
+  setLanguage(lang)
+  languagePop({
+    type: 'unmount',
+  })
+  location.reload()
+}
+
+const openLanguagePop = async () => {
+  languagePop({
+    props: {
+      columns: appStore.languagesList,
+      onConfirm,
+      onChange: () => null,
+      currentLang: currentLang.value,
+    },
+  })
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/

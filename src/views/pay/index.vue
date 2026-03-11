@@ -85,7 +85,6 @@ import MobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import router from '@/router'
 import { onMounted, reactive, ref } from 'vue'
 // import { getMaxZIndex } from '@/utils/index'
-import { replenishApi } from '@/api/auth'
 import { orderDetailApi } from '@/api/order'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { useRoute } from 'vue-router'
@@ -133,18 +132,7 @@ const close = () => {
 }
 
 const onFinish = async () => {
-  state.submitLoading = true
-  try {
-    await replenishApi({
-      orderId: state.orderId,
-      network: formState.payChannel,
-    })
-  } catch (error) {
-    console.log(error)
-  } finally {
-    state.submitLoading = false
-    router.push(`/authorize?id=${state.orderId}&walletType=${formState.walletType}`)
-  }
+  router.push(`/authorize?id=${state.orderId}&walletType=${formState.walletType}`)
 }
 
 const changeRadio = async () => {

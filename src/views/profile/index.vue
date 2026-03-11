@@ -61,25 +61,12 @@
       </div>
     </div>
   </div>
-
-  <!-- 底部弹出 Picker -->
-  <MyPopup v-model="showPicker" position="bottom" class="my__language">
-    <van-picker
-      :title="$t('selectlanguage.title')"
-      :columns="columns"
-      @confirm="onConfirm"
-      @cancel="onCancel"
-      @change="onChange"
-      v-model="currentLang"
-    />
-  </MyPopup>
 </template>
 
 <script setup>
 /** ***引入相关包start*****/
-import { getLanguagesListApi } from '@/api/user'
-import MyPopup from '@/components/MyPopup/index.vue'
 import Feedback from '@/componentsFun/feedback/index.js'
+import languagePop from '@/componentsFun/languagePop'
 import gotoLogin from '@/componentsFun/login/index'
 import useLocalCache from '@/hooks/storage/localStorage'
 import router from '@/router'
@@ -196,7 +183,7 @@ const profileList = [
     rightText: getLanguage()?.toUpperCase(),
     loginShow: true,
     fn: async () => {
-      await getLanguagesList()
+      await openLanguagePop()
     },
   },
   {
@@ -259,7 +246,6 @@ const profileList = [
 ]
 // 语言选项
 const columns = ref([])
-const showPicker = ref(false)
 const currentLang = ref([getLanguage() || 'zh'])
 const numData = computed(() => userInfoStore.numData)
 
@@ -274,42 +260,24 @@ const orderTabSwitch = (item) => {
   })
 }
 // 确认选择
-const onConfirm = ({ selectedOptions }) => {
-  const lang = selectedOptions[0].value
+const onConfirm = (lang) => {
   currentLang.value = lang
-  // console.log(lang,'lang')
   setLanguage(lang)
-  showPicker.value = false
-  // 如果部分文案不刷新，可以强制刷新页面
+  languagePop({
+    type: 'unmount',
+  })
   location.reload()
 }
 
-// 取消选择
-const onCancel = () => {
-  showPicker.value = false
-}
-
-// 实时预览选中的语言
-const onChange = ({ selectedOptions }) => {
-  console.log('当前选择:', selectedOptions[0].text)
-}
-
-const getLanguagesList = async () => {
-  try {
-    isLoading.value = true
-    const { data } = await getLanguagesListApi()
-    columns.value = data.map((item) => {
-      item.text = item.name
-      item.value = item.code
-      return item
-    })
-    console.log(data)
-  } catch (error) {
-    console.log(error)
-  } finally {
-    isLoading.value = false
-    showPicker.value = true
-  }
+const openLanguagePop = async () => {
+  languagePop({
+    props: {
+      columns: appStore.languagesList,
+      onConfirm,
+      onChange: () => null,
+      currentLang: currentLang.value,
+    },
+  })
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/

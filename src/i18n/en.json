@@ -17,6 +17,8 @@
   "order.tab5": "All",
   "order.tab6": "All",
   "selectlanguage.title": "Select Language",
+  "selectlanguage.cancel": "cancel",
+  "selectlanguage.confirm": "confirm",
   "search.title": "Search",
   "searchInput.placeholder": "Please Enter Keywords",
   "searchTag.title": "History",

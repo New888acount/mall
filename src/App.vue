@@ -124,6 +124,8 @@ onMounted(() => {
 
   appStore.getUnitLang()
 
+  appStore.getLanguagesList()
+
   const token = getCacheToken()
   if (token) {
     setCacheToken(token)
