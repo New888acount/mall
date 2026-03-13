@@ -8,12 +8,12 @@ import useLocalCache from '@/hooks/storage/localStorage'
 import useAppStore from '@/store/modules/app.js'
 import useCacheData from '@/store/modules/cacheData.js'
 import { useCartStore } from '@/store/modules/cart'
-import { onMounted } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const router = useRouter()
-const { setCacheToken, getCacheToken } = useLocalCache()
+const { setCacheToken, getCacheToken, setLocationSearch } = useLocalCache()
 // 获取store
 const appStore = useAppStore()
 const cacheData = useCacheData()
@@ -111,8 +111,20 @@ const initServer = async () => {
   data.length && handleServer(data[0]?.url)
   console.log(data, 'data')
 }
+
+// 埋点
+const checkUrl = () => {
+  const { search } = location
+  if (search) {
+    setLocationSearch(search.substring(1))
+  }
+}
 /** ***函数 end*****/
 /** ***生命周期start*****/
+onBeforeMount(() => {
+  checkUrl()
+})
+
 onMounted(() => {
   appStore.initApp()
 

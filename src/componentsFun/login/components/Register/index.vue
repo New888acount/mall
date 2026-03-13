@@ -55,16 +55,17 @@
 <script setup lang="jsx">
 /** ***引入相关包start*****/
 import useUserInfoStore from '@/store/modules/userInfo'
-import { h, ref, defineProps, reactive, defineEmits, onMounted, watch } from 'vue'
+import { defineProps, onMounted, reactive, ref, watch } from 'vue'
 // 加密、
+import { getCodeApi } from '@/api/user'
+import useLocalCache from '@/hooks/storage/localStorage'
 import { getEncryptPwd } from '@/utils/encipher'
 import { useI18n } from 'vue-i18n'
-import { myWindowOpen } from '@/utils'
-import { getCodeApi } from '@/api/user'
 
 /** ***引入相关包end*****/
 
 /** ***ref、reactive，等……start*****/
+const { getLocationSearch } = useLocalCache()
 const { t } = useI18n()
 // 注册请求 加载
 const isLoading = ref(false)
@@ -163,6 +164,7 @@ const handleFinish = async () => {
     const registerParams = {
       ...formState,
       password: getEncryptPwd(formState.password),
+      click_id: getLocationSearch()?.split('=')?.[1] || '',
     }
     const res = await userInfoStore.registerApiFun(registerParams)
 

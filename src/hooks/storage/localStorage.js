@@ -74,6 +74,19 @@ export default function useLocalCache() {
     store.remove('areaData')
   }
 
+  // 1.埋点专用key start
+  function getLocationSearch() {
+    return store.get('locationSearch')
+  }
+  // 2.设置埋点专用key
+  function setLocationSearch(res) {
+    store.set('locationSearch', res)
+  }
+  // 3.移除埋点专用key
+  function removeLocationSearch() {
+    store.remove('locationSearch')
+  }
+
   return {
     getLanguage,
     setLanguage,
@@ -91,5 +104,8 @@ export default function useLocalCache() {
     setAreaHistory,
     getAreaHistory,
     removeAreaHistory,
+    getLocationSearch,
+    setLocationSearch,
+    removeLocationSearch,
   }
 }
