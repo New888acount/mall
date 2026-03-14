@@ -3,6 +3,7 @@ import { getUnitLangApi } from '@/api/goods'
 import { getLanguagesListApi } from '@/api/user'
 import useLocalCache from '@/hooks/storage/localStorage'
 import { defineStore } from 'pinia'
+import useUserInfoStore from './userInfo'
 
 const { getLanguage } = useLocalCache()
 
@@ -58,6 +59,7 @@ export const useAppStore = defineStore('app', {
       try {
         await trackingApi({
           ...params,
+          memberId: useUserInfoStore().userInfo.id || '',
         })
       } catch (error) {
         console.log(error)
