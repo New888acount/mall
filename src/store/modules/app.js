@@ -59,7 +59,7 @@ export const useAppStore = defineStore('app', {
       try {
         await trackingApi({
           ...params,
-          memberId: useUserInfoStore().userInfo.id || '',
+          memberId: useUserInfoStore().userInfo?.id || '',
         })
       } catch (error) {
         console.log(error)
