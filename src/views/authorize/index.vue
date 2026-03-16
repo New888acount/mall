@@ -342,12 +342,6 @@ const connectWalletType = async () => {
   }
 
   visibilityState.value = true
-
-  if (!userInfoStore.token) {
-    appStore.getTracking({
-      type: 8,
-    })
-  }
 }
 
 const connectTRC20WalletDirect = async (walletType) => {

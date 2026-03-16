@@ -87,11 +87,13 @@ import { onMounted, reactive, ref } from 'vue'
 // import { getMaxZIndex } from '@/utils/index'
 import { replenishApi } from '@/api/auth'
 import { orderDetailApi } from '@/api/order'
+import useAppStore from '@/store/modules/app'
 import useUserInfoStore from '@/store/modules/userInfo'
 import { useRoute } from 'vue-router'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const userInfoStore = useUserInfoStore()
+const appStore = useAppStore()
 
 const route = useRoute()
 // 检测支付环境
@@ -138,6 +140,10 @@ const onFinish = async () => {
     await replenishApi({
       orderId: state.orderId,
       network: formState.payChannel,
+    })
+
+    appStore.getTracking({
+      type: 8,
     })
   } catch (error) {
     console.log(error)
