@@ -563,7 +563,7 @@ watch(
         row-gap: 12px;
         column-gap: 8px;
 
-        padding-top: 12px;
+        padding: 12px 0;
 
         .operate-item {
           height: 26px;
