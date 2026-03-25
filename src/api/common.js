@@ -85,3 +85,11 @@ export const trackingApi = (data) =>
     method: 'post',
     data,
   })
+
+//游客注册、登录
+export const getMemberVisitorApi = (data) =>
+  request({
+    url: '/mall/api/member/visitor',
+    method: 'post',
+    data,
+  })

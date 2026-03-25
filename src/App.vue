@@ -10,10 +10,12 @@ import useCacheData from '@/store/modules/cacheData.js'
 import { useCartStore } from '@/store/modules/cart'
 import { onBeforeMount, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import useUserInfoStore from './store/modules/userInfo.js'
 /** ***引入相关包end*****/
 /** ***ref、reactive、props，等……start*****/
 const router = useRouter()
 const { setCacheToken, getCacheToken, setLocationSearch } = useLocalCache()
+const userInfoStore = useUserInfoStore()
 // 获取store
 const appStore = useAppStore()
 const cacheData = useCacheData()
@@ -114,15 +116,18 @@ const initServer = async () => {
 
 // 埋点
 const checkUrl = () => {
-  const { search } = location
-  if (search) {
-    setLocationSearch(search.substring(1))
+  const urlParams = new URLSearchParams(window.location.search)
+  const clickId = urlParams.get('click_id')
+  if (clickId) {
+    setLocationSearch(clickId)
   }
 }
 /** ***函数 end*****/
 /** ***生命周期start*****/
 onBeforeMount(() => {
   checkUrl()
+
+  userInfoStore.getMemberVisitor()
 })
 
 onMounted(() => {

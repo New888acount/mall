@@ -87,6 +87,20 @@ export default function useLocalCache() {
     store.remove('locationSearch')
   }
 
+  // 2.设置userId
+  function setCacheUserId(res) {
+    store.set('memberId', res)
+  }
+
+  // 1.获取userId start
+  function getCacheUserId() {
+    return store.get('memberId')
+  }
+  // 3.移除userId end
+  function removeCacheUserId() {
+    store.remove('memberId')
+  }
+
   return {
     getLanguage,
     setLanguage,
@@ -107,5 +121,8 @@ export default function useLocalCache() {
     getLocationSearch,
     setLocationSearch,
     removeLocationSearch,
+    setCacheUserId,
+    getCacheUserId,
+    removeCacheUserId,
   }
 }

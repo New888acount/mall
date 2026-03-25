@@ -1,17 +1,26 @@
 import { defineStore } from 'pinia'
 // 加密
 // 指纹绑定
-import { loginApi, profileApi, registerApi } from '@/api/user'
-import useLocalCache from '@/hooks/storage/localStorage'
-import { useCartStore } from '@/store/modules/cart'
-
 import { walletTypesApi } from '@/api/auth'
+import { getMemberVisitorApi } from '@/api/common'
 import { homeVisitApi } from '@/api/home'
 import { orderCountApi } from '@/api/order'
+import { loginApi, profileApi, registerApi } from '@/api/user'
+import useLocalCache from '@/hooks/storage/localStorage'
 import i18n from '@/i18n/index'
+import { useCartStore } from '@/store/modules/cart'
 import resetFun from '@/store/reset.js'
 
-const { setCacheToken, removeCacheToken, getCacheToken, setIsRegister, getIsRegister } = useLocalCache()
+const {
+  setCacheToken,
+  removeCacheToken,
+  getCacheToken,
+  setIsRegister,
+  getIsRegister,
+  setCacheUserId,
+  getCacheUserId,
+  getLocationSearch,
+} = useLocalCache()
 // const { handleRecharge } = handleRechargeComposation()
 const t = i18n.global.t
 // 默认订单、优惠券等其他资产信息
@@ -67,10 +76,26 @@ const useUserInfoStore = defineStore('userInfo', {
       }
     },
 
+    //游客登录注册
+    async getMemberVisitor() {
+      try {
+        const result = await getMemberVisitorApi({
+          memberId: getCacheUserId() || '',
+          click_id: getLocationSearch() || '',
+        })
+        await this.getCommonDetails(result)
+
+        return Promise.resolve(result.data)
+      } catch (error) {
+        console.log(error)
+        throw error
+      }
+    },
+
     async getCommonDetails(result) {
       this.token = result.data.token
       setCacheToken(result.data.token)
-
+      setCacheUserId(result.data.memberId)
       // 调用用户信息
       await this.getCustomInfo()
       useCartStore().getList()
